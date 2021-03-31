@@ -1,0 +1,19 @@
+.search-bar {
+    margin-top: 2.5em;
+    width: 100%;
+    
+}
+
+.search-bar input{
+    height: 36px;
+    border-radius: 5px;
+    border: none;
+    width: 40%;
+    font-size: 24px;
+    padding: 5px 15px;
+}
+
+.search-bar input:focus {
+    border-radius: 5px;
+    outline: none;
+}
