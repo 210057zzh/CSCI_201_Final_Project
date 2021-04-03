@@ -15,7 +15,7 @@ The server will start on localhost:8080
 
 # Running with Spring Tools for Development:
 
-Installing Spring Tools:
+Installing Spring Tools for Eclipse:
 1. At the top, click "Help" -> "Eclipse Marketplace..."
 2. Search for "Spring Tools 4 (aka Spring Tool Suite 4)..." and click Install
 	a. Select the Spring Tool Suite and NOT the "Spring Tools Add-On"
