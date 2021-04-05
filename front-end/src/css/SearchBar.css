@@ -14,6 +14,5 @@
 }
 
 .search-bar input:focus {
-    border-radius: 5px;
     outline: none;
 }

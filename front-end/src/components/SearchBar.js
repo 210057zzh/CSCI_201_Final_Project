@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import '../css/SearchBar.css';
-import axios from 'axios'
+import axios from 'axios';
 
 function SearchBar() {
     const [search, setSearch] = useState('');
@@ -12,7 +12,6 @@ function SearchBar() {
 
     function submitSearch(e) {
         e.preventDefault();
-		setSearch(e);
 		axios.get(REST_API_CALL).then(resp => {
 			document.getElementById("temporary").value = resp.data;
 		});

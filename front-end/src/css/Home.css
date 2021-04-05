@@ -1,11 +1,75 @@
 .home-search{
     width: 100vw;
-    height: 100%;
+    height: 41vh;
 }
 .sprout {
+    position: relative;
     color: white;
     font-size: 52px;
     font-weight: bold;
-    margin-top: 10%;
+    padding-top: 10%;
     width: 100%;
+}
+
+.home {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+}
+
+.lower {
+    height: 49vh;
+}
+
+.login-popup {
+    position: fixed;
+    width: 80vw;
+    height: 75vh;
+    background-color: white;
+    z-index: 2;
+    left: 10vw;
+    top: 12.5vh;
+    border-radius: 10px;
+}
+
+.darkened {
+    background: rgba(0,0,0,0.4);
+}
+
+.login-form {
+    margin-top: 3em;
+}
+
+.login-form input {
+    display: block;
+    border-radius: 5px;
+    margin-top: 1em;
+    border-width: 1px;
+    height: 42px;
+    width: 75%;
+    margin-left: 12.5%;
+    font-size: 24px;
+    padding: 5px 15px;
+
+}
+
+.login-btn {
+    width: 300px;
+    background: linear-gradient(90deg, #0BA360, #3CBA92);
+    color: white;
+    font-weight: bold;
+    font-size: 32px;
+    margin: auto;
+    margin-top: 1.5em;
+    border-radius: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.login-btn p {
+    margin: 0;
+}
+
+.login-btn:hover {
+    cursor: pointer;
 }
