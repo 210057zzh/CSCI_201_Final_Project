@@ -1,20 +1,20 @@
-import {NavLink, withRouter} from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
 
 import '../css/Navbar.css';
 
 function Navbar(props) {
     // *Need to set toggleLogin* as a required prop later.
     function showLoginScreen() {
-        if(props.toggleLoginOn) {
+        if (props.toggleLoginOn) {
             props.toggleLoginOn();
         }
     }
     function hideLoginScreen() {
-        if(props.toggleLoginOff) {
+        if (props.toggleLoginOff) {
             props.toggleLoginOff();
         }
     }
-    return(
+    return (
         <div className={'navbar ' + props.className}>
             <div className='navbar-left' onClick={hideLoginScreen}>
                 <NavLink className='navlink' exact to='/'>Home</NavLink>
@@ -22,10 +22,11 @@ function Navbar(props) {
                 <NavLink className='navlink' exact to='/dashboard'>MyDashboard</NavLink>
             </div>
             <div className='navbar-right' >
-                <div className='navlink' style={{display:"inline-block"}} onClick={showLoginScreen}>Log in</div>
-                <div className='navlink' style={{display:"inline-block"}} onClick={hideLoginScreen}>Sign up</div>
+                <div onClick={hideLoginScreen}></div>
+                <div className='navlink' style={{ display: "inline-block" }} onClick={props.showLogin ? hideLoginScreen : showLoginScreen}>Log in</div>
+                <div className='navlink' style={{ display: "inline-block" }} onClick={hideLoginScreen}>Sign up</div>
             </div>
-            
+
         </div>
     )
 }
