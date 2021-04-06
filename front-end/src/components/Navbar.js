@@ -1,5 +1,4 @@
 import { NavLink, withRouter } from 'react-router-dom';
-import GoogleLogout from './UserAuth/GoogleLogout'
 
 import '../css/Navbar.css';
 
