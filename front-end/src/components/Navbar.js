@@ -22,9 +22,9 @@ function Navbar(props) {
 
     function logout() {
         toggleLoginStatusOff();
-
     }
-    if (props.LoginStatus == false) {
+
+    if (props.LoginStatus === false) {
         return (
             <div className={'navbar ' + props.className}>
                 <div className='navbar-left' onClick={hideLoginScreen}>
@@ -38,7 +38,7 @@ function Navbar(props) {
             </div>
         )
     }
-    else if (props.LoginStatus == true) {
+    else if (props.LoginStatus === true) {
         hideLoginScreen();
         return (
             <div className={'navbar ' + props.className}>
@@ -47,7 +47,7 @@ function Navbar(props) {
                     <NavLink className='navlink' exact to='/discover'>Discover</NavLink>
                     <NavLink className='navlink' exact to='/dashboard'>MyDashboard</NavLink>
                 </div>
-                <div className='navbar-right' >
+                <div className='navbar-right' style={{ whiteSpace: 'noWrap' }}>
                     <div className='navlink' style={{ display: "inline-block" }} onClick={logout}>Log out</div>
                 </div>
 

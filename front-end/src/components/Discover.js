@@ -6,7 +6,7 @@ import { useState } from 'react';
 import DiscoverSnippet from './DiscoverSnippet'
 import axios from 'axios';
 
-function Discover() {
+function Discover(props) {
     const [showLogin, setShowLogin] = useState(false);
 
     function toggleLoginOn() {
@@ -14,6 +14,14 @@ function Discover() {
     }
     function toggleLoginOff(e) {
         setShowLogin(false);
+    }
+    function toggleLoginStatusOn() {
+        if (props.toggleLoginStatusOn)
+            props.toggleLoginStatusOn();
+    }
+    function toggleLoginStatusOff() {
+        if (props.toggleLoginStatusOff)
+            props.toggleLoginStatusOff();
     }
 
     function getData() {
@@ -33,8 +41,8 @@ function Discover() {
                     reviewCount: 44,
                     phoneNumber: '(123) 123-4566',
                     address: '5678 Fake Street',
-                    description: "This is Dale’s plumbing services ad description.  I offer better phlumbing than Bob.  I have a 5-star rated service on Sprout and 44 reviews.  Contact me at the phone number"   
-                }, 
+                    description: "This is Dale’s plumbing services ad description.  I offer better phlumbing than Bob.  I have a 5-star rated service on Sprout and 44 reviews.  Contact me at the phone number"
+                },
                 {
                     businessName: "Jim's Plumbing Services",
                     rating: 1,
@@ -51,19 +59,23 @@ function Discover() {
 
     return (
         <div className='discover'>
-            {showLogin ? <Login /> : null}
-            <Navbar toggleLoginOn={toggleLoginOn} toggleLoginOff={toggleLoginOff} className={showLogin ? 'darkened' : ''} showLogin={showLogin} />
+            {showLogin ? <Login LoginStatus={props.LoginStatus} toggleLoginStatusOn={toggleLoginStatusOn} toggleLoginStatusOff={toggleLoginStatusOff} LoginbyGoogle={props.LoginbyGoogle} setLoginbyGoogle={props.setLoginbyGoogle} /> : null}
+            <Navbar toggleLoginOn={toggleLoginOn}
+                toggleLoginOff={toggleLoginOff}
+                className={showLogin ? 'darkened' : ''}
+                showLogin={showLogin}
+                LoginStatus={props.LoginStatus}
+                toggleLoginStatusOn={toggleLoginStatusOn}
+                toggleLoginStatusOff={toggleLoginStatusOff} />
             <div className={showLogin ? 'darkened home-search' : 'home-search'} onClick={toggleLoginOff}>
                 <div style={{ paddingTop: "1px" }}></div>
                 <SearchBar />
                 <div style={{ paddingTop: "2vh" }}></div>
                 {
-                    getData().map( business =>
-                        <DiscoverSnippet businessName={business.businessName} rating={business.rating} reviewCount={business.reviewCount} phoneNumber={business.phoneNumber} address={business.address} description={business.description}/>
+                    getData().map(business =>
+                        <DiscoverSnippet businessName={business.businessName} rating={business.rating} reviewCount={business.reviewCount} phoneNumber={business.phoneNumber} address={business.address} description={business.description} />
                     )
                 }
-                
-
             </div>
             <div className={showLogin ? 'darkened lower' : 'lower'} onClick={toggleLoginOff}>
             </div>

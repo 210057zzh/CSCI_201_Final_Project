@@ -29,7 +29,8 @@ function Home(props) {
             <Navbar toggleLoginOn={toggleLoginOn}
                 toggleLoginOff={toggleLoginOff}
                 className={showLogin ? 'darkened' : ''}
-                showLogin={showLogin} LoginStatus={props.LoginStatus}
+                showLogin={showLogin}
+                LoginStatus={props.LoginStatus}
                 toggleLoginStatusOn={toggleLoginStatusOn}
                 toggleLoginStatusOff={toggleLoginStatusOff} />
             <div className={showLogin ? 'darkened home-search' : 'home-search'} onClick={toggleLoginOff}>
