@@ -10,7 +10,7 @@ function App() {
         <Switch>
           <Route exact path='/'
             render={(props) => <Home {...props} LoginStatus={LoginStatus} toggleLoginStatusOn={toggleLoginStatusOn} toggleLoginStatusOff={toggleLoginStatusOff} />}
-          >
+          ></Route>
           <Route exact path='/Discover' component={Discover}></Route>
         </Switch>
       </BrowserRouter>

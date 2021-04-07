@@ -31,7 +31,7 @@ function Navbar(props) {
                     <NavLink className='navlink' exact to='/'>Home</NavLink>
                     <NavLink className='navlink' exact to='/discover'>Discover</NavLink>
                 </div>
-               <div className='navbar-right' style={{whiteSpace: 'noWrap'}}>
+                <div className='navbar-right' style={{ whiteSpace: 'noWrap' }}>
                     <div className='navlink' style={{ display: "inline-block" }} onClick={props.showLogin ? hideLoginScreen : showLoginScreen}>Log in</div>
                     <div className='navlink' style={{ display: "inline-block" }} onClick={hideLoginScreen}>Sign up</div>
                 </div>
