@@ -109,6 +109,7 @@ public class Utils {
 
 		Business business = new Business(businessID, ownerID, name, phone_number, startHour, endHour, description, cost,
 				average_rating, address, business_type);
+		business.setNumReviews(24);
 		results.add(business);
 
 		businessID = 2;
@@ -125,6 +126,7 @@ public class Utils {
 
 		business = new Business(businessID, ownerID, name, phone_number, startHour, endHour, description, cost,
 				average_rating, address, business_type);
+		business.setNumReviews(44);
 		results.add(business);
 
 		businessID = 3;
@@ -141,6 +143,7 @@ public class Utils {
 
 		business = new Business(businessID, ownerID, name, phone_number, startHour, endHour, description, cost,
 				average_rating, address, business_type);
+		business.setNumReviews(36);
 		results.add(business);
 
 		return results;
