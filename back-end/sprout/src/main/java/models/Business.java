@@ -93,4 +93,12 @@ public class Business {
 	public void setBusiness_type(String business_type) {
 		this.business_type = business_type;
 	}
+	@Override
+	public String toString() {
+		return "Business [businessId=" + businessId + ", ownerId=" + ownerId + ", name=" + name + ", phone_number="
+				+ phone_number + ", startHour=" + startHour + ", endHour=" + endHour + ", description=" + description
+				+ ", cost=" + cost + ", average_rating=" + average_rating + ", address=" + address + ", business_type="
+				+ business_type + "]";
+	}
+	
 }
