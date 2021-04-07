@@ -4,7 +4,7 @@ import axios from 'axios';
 
 
 function GoogleLogin(props) {
-  const REST_API_CALL = 'http://localhost:8080/api/googlelogin'
+    const REST_API_CALL = 'http://localhost:8080/api/googlelogin'
     function toggleLoginStatusOn() {
         if (props.toggleLoginStatusOn)
             props.toggleLoginStatusOn();
@@ -29,16 +29,16 @@ function GoogleLogin(props) {
     };
 
     const onSuccess = (res) => {
-       toggleLoginStatusOn();
+        toggleLoginStatusOn();
         var id_token = res.getAuthResponse().id_token;
         // Post to the backend to check if the user currently exists or if they need to set up their account
-        axios.post(REST_API_CALL, id_token).then(resp=> {
-            if(resp.data===true){ // The user already exists and has successfully logged in
+        axios.post(REST_API_CALL, id_token).then(resp => {
+            if (resp.data === true) { // The user already exists and has successfully logged in
                 console.log('Login Success: currentUser:', res.profileObj);
                 alert(
                     `Logged in successfully welcome ${res.profileObj.name} 😍. \n See console for full profile object.`
                 );
-            }else{ // The user does not already exist and needs to be redirected to the signup page
+            } else { // The user does not already exist and needs to be redirected to the signup page
                 console.log('User must be redirected to signup page')
             }
         });
