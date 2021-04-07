@@ -10,7 +10,7 @@ import { useEffect } from 'react';
 function Discover(props) {
     const [showLogin, setShowLogin] = useState(false);
     const REST_API_CALL = 'http://localhost:8080/api/discover' 
-    const [data, setDate] = useState([]);
+    const [data, setData] = useState([]);
 
     function toggleLoginOn() {
         setShowLogin(true);
@@ -34,8 +34,7 @@ function Discover(props) {
                 category: category
             }
         });
-
-        setDate(result.data)
+        setData(result.data)
     }, [])
 
     return (
@@ -55,7 +54,7 @@ function Discover(props) {
                 {
                     //TODO make it so all of the info is actually displaying (just naming differences between this and db and # of reviews needs to be added to db)
                     data.map(business =>
-                        <DiscoverSnippet businessName={business.name} rating={business.average_rating} reviewCount={business.reviewCount} phoneNumber={business.phone_number} address={business.address} description={business.description} />
+                        <DiscoverSnippet businessName={business.name} rating={business.average_rating} reviewCount={business.numReviews} phoneNumber={business.phone_number} address={business.address} description={business.description} />
                     )
                 }
             </div>
