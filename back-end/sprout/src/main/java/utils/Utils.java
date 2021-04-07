@@ -118,10 +118,10 @@ public class Utils {
 		phone_number = "(123) 123-4566";
 		startHour = -1;
 		endHour = -1;
-		description = "This is Dale’s plumbing services ad description.  I offer better phlumbing than Bob.  I have a 5-star rated service on Sprout and 44 reviews.  Contact me at the phone number";
+		description = "This is Dale’s plumbing services ad description.  I offer better plumbing than Bob.  I have a 5-star rated service on Sprout and 44 reviews.  Contact me at the phone number.";
 		cost = -1;
 		average_rating = 5;
-		address = "1234 Fake Street";
+		address = "1235 Fake Street";
 		business_type = "store";
 
 		business = new Business(businessID, ownerID, name, phone_number, startHour, endHour, description, cost,
