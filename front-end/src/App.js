@@ -8,7 +8,9 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Switch>
-          <Route exact path='/' component={Home}></Route>
+          <Route exact path='/'
+            render={(props) => <Home {...props} LoginStatus={LoginStatus} toggleLoginStatusOn={toggleLoginStatusOn} toggleLoginStatusOff={toggleLoginStatusOff} />}
+          >
           <Route exact path='/Discover' component={Discover}></Route>
         </Switch>
       </BrowserRouter>

@@ -1,6 +1,10 @@
 import GoogleLoginReact from 'react-google-login';
 
-function GoogleLogin() {
+function GoogleLogin(props) {
+    function toggleLoginStatusOn() {
+        if (props.toggleLoginStatusOn)
+            props.toggleLoginStatusOn();
+    }
     const refreshTokenSetup = (res) => {
         // Timing to renew access token
         let refreshTiming = (res.tokenObj.expires_in || 3600 - 5 * 60) * 1000;
@@ -21,6 +25,7 @@ function GoogleLogin() {
     };
 
     const onSuccess = (res) => {
+        toggleLoginStatusOn();
         console.log('Login Success: currentUser:', res.profileObj);
         alert(
             `Logged in successfully welcome ${res.profileObj.name} 😍. \n See console for full profile object.`
