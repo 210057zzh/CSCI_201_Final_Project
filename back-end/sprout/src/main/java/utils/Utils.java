@@ -95,39 +95,42 @@ public class Utils {
 	public static ArrayList<Business> getPlaceholderBusinesses() {
 		ArrayList<Business> results = new ArrayList<>();
 
-		int businessID = 1;
+		
+		int businessID = 2;
 		int ownerID = -1;
-		String name = "Bob\'s Plumbing Services";
-		String phone_number = "(123) 456-7891";
+		String name = "Dale\'s Plumbing Services";
+		String phone_number = "(123) 123-4566";
 		int startHour = -1;
 		int endHour = -1;
-		String description = "This is Bob’s plumbing services ad description. I offer the best plumbing in town. I have a 4-star rated service on Sprout and 24 reviews. service on Sprout and 24 reviews. Contact me at the listed phone number of at my address. Although I am already done with my description, I am going to keep writing. you will see how it will not go past the second line even if I keep writing. Look!. I\'ll start to count to 15. One, two, three, four, five six, seven, eight, nine, ten, eleven, twelve, thirteen, fourteen, fifteen!";
+		String description = "This is Dale’s plumbing services ad description.  I offer better plumbing than Bob.  I have a 5-star rated service on Sprout and 44 reviews.  Contact me at the phone number.";
 		int cost = -1;
-		int average_rating = 4;
-		String address = "1234 Fake Street";
+		int average_rating = 5;
+		String address = "1235 Fake Street";
 		String business_type = "store";
 
 		Business business = new Business(businessID, ownerID, name, phone_number, startHour, endHour, description, cost,
 				average_rating, address, business_type);
-		business.setNumReviews(24);
+		business.setNumReviews(44);
 		results.add(business);
-
-		businessID = 2;
+		
+		
+		businessID = 1;
 		ownerID = -1;
-		name = "Dale\'s Plumbing Services";
-		phone_number = "(123) 123-4566";
+		name = "Bob\'s Plumbing Services";
+		phone_number = "(123) 456-7891";
 		startHour = -1;
 		endHour = -1;
-		description = "This is Dale’s plumbing services ad description.  I offer better plumbing than Bob.  I have a 5-star rated service on Sprout and 44 reviews.  Contact me at the phone number.";
+		description = "This is Bob’s plumbing services ad description. I offer the best plumbing in town. I have a 4-star rated service on Sprout and 24 reviews. service on Sprout and 24 reviews. Contact me at the listed phone number of at my address. Although I am already done with my description, I am going to keep writing. you will see how it will not go past the second line even if I keep writing. Look!. I\'ll start to count to 15. One, two, three, four, five six, seven, eight, nine, ten, eleven, twelve, thirteen, fourteen, fifteen!";
 		cost = -1;
-		average_rating = 5;
-		address = "1235 Fake Street";
+		average_rating = 4;
+		address = "1234 Fake Street";
 		business_type = "store";
 
 		business = new Business(businessID, ownerID, name, phone_number, startHour, endHour, description, cost,
 				average_rating, address, business_type);
-		business.setNumReviews(44);
+		business.setNumReviews(24);
 		results.add(business);
+
 
 		businessID = 3;
 		ownerID = -1;
