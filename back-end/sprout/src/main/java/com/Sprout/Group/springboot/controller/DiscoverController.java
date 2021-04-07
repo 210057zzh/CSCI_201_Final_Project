@@ -2,29 +2,17 @@ package com.Sprout.Group.springboot.controller;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
-import com.google.api.client.http.javanet.NetHttpTransport;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Connection;
-import java.io.IOException;
-import java.security.GeneralSecurityException;
-import java.util.Collections;
-import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 import static utils.Constants.dbAddress;
-import static utils.Constants.googleClientId;
 import static utils.Constants.origins;
 import static utils.Constants.discoverPageBusinessLimit;
 import java.util.ArrayList;
@@ -42,10 +30,7 @@ public class DiscoverController {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		String SQLQuery;
-		
 		System.out.println("category:" +category);
-		
 		
 		
 		try {
