@@ -2,9 +2,13 @@ import GoogleLoginReact from 'react-google-login';
 import axios from 'axios';
 
 
-function GoogleLogin() {
-    const REST_API_CALL = 'http://localhost:8080/api/googlelogin'
 
+function GoogleLogin(props) {
+  const REST_API_CALL = 'http://localhost:8080/api/googlelogin'
+    function toggleLoginStatusOn() {
+        if (props.toggleLoginStatusOn)
+            props.toggleLoginStatusOn();
+    }
     const refreshTokenSetup = (res) => {
         // Timing to renew access token
         let refreshTiming = (res.tokenObj.expires_in || 3600 - 5 * 60) * 1000;
@@ -25,8 +29,8 @@ function GoogleLogin() {
     };
 
     const onSuccess = (res) => {
+       toggleLoginStatusOn();
         var id_token = res.getAuthResponse().id_token;
-        
         // Post to the backend to check if the user currently exists or if they need to set up their account
         axios.post(REST_API_CALL, id_token).then(resp=> {
             if(resp.data===true){ // The user already exists and has successfully logged in
