@@ -39,10 +39,9 @@ public class HomePageController {
 		
 		try {
 			conn = DriverManager.getConnection(dbAddress);
-			//TODO may have to edit this statement. I am assuming email is the username
-			ps = conn.prepareStatement("SELECT * FROM Business WHERE name=? OR business_type=? OR address=? or phone_number=?");
+			ps = conn.prepareStatement("SELECT * FROM Business WHERE name LIKE ? OR business_type LIKE ? OR address LIKE ? or phone_number LIKE ?");
 			for(int i =1; i<5;i++) {
-				ps.setString(i, search);
+				ps.setString(i, "%"+search+"%");
 			}
 			
 			rs = ps.executeQuery();
