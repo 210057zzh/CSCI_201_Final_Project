@@ -1,0 +1,8 @@
+package utils;
+
+public final class Constants {
+
+	//TODO replace "SproutDatabase" in the following to whatever the schema will be named and update the username and password
+	public static final String dbAddress = "jdbc:mysql://localhost/SproutDatabase?user=root&password=root";
+	
+}
