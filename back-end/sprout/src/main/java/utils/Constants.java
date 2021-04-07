@@ -7,6 +7,5 @@ public final class Constants {
 	
 	public static final String googleClientId = "467227431315-qfa0plniiro21687j2ifupq82cd7j6op.apps.googleusercontent.com";
 	
-	
 	public static final String origins = "http://localhost:3000";
 }

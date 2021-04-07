@@ -72,7 +72,7 @@ public class LoginController {
 			}
 			return false;
 		}catch(SQLException sqle){
-			
+			//TODO handle
 			System.out.println(sqle.getMessage());
 		}finally {
 			try {
