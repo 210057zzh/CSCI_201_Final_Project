@@ -31,9 +31,10 @@ function GoogleLogin(props) {
     const onSuccess = (res) => {
         toggleLoginStatusOn();
         var id_token = res.getAuthResponse().id_token;
+        console.log(id_token);
         // Post to the backend to check if the user currently exists or if they need to set up their account
         axios.post(REST_API_CALL, id_token).then(resp => {
-            if (resp.data === true) { // The user already exists and has successfully logged in
+            if (resp.data.registered === true) { // The user already exists and has successfully logged in
                 console.log('Login Success: currentUser:', res.profileObj);
                 alert(
                     `Logged in successfully welcome ${res.profileObj.name} 😍. \n See console for full profile object.`
