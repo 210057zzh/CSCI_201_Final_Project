@@ -2,12 +2,15 @@ import Navbar from './Navbar';
 import SearchBar from './SearchBar';
 import Login from './UserAuth/LoginPopup';
 import '../css/Home.css';
-import { useState } from 'react';
+import { Component, useState } from 'react';
 import DiscoverSnippet from './DiscoverSnippet'
 import axios from 'axios';
+import { useEffect } from 'react';
 
 function Discover(props) {
     const [showLogin, setShowLogin] = useState(false);
+    const REST_API_CALL = 'http://localhost:8080/api/discover' 
+    const [data, setData] = useState([]);
 
     function toggleLoginOn() {
         setShowLogin(true);
@@ -24,38 +27,15 @@ function Discover(props) {
             props.toggleLoginStatusOff();
     }
 
-    function getData() {
-        return (
-            [
-                {
-                    businessName: "Bob's Plumbing Services",
-                    rating: 4,
-                    reviewCount: 24,
-                    phoneNumber: '(123) 456-7891',
-                    address: '1234 Fake Street',
-                    description: "This is Bob’s plumbing services ad description. I offer the best plumbing in town. I have a 4-star rated service on Sprout and 24 reviews. service on Sprout and 24 reviews. Contact me at the listed phone number of at my address. Although I am already done with my description, I am going to keep writing. you will see how it will not go past the second line even if I keep writing. Look!. I'll start to count to 15. One, two, three, four, five six, seven, eight, nine, ten, eleven, twelve, thirteen, fourteen, fifteen!"
-                },
-                {
-                    businessName: "Dale's Plumbing Services",
-                    rating: 5,
-                    reviewCount: 44,
-                    phoneNumber: '(123) 123-4566',
-                    address: '5678 Fake Street',
-                    description: "This is Dale’s plumbing services ad description.  I offer better phlumbing than Bob.  I have a 5-star rated service on Sprout and 44 reviews.  Contact me at the phone number"
-                },
-                {
-                    businessName: "Jim's Plumbing Services",
-                    rating: 1,
-                    reviewCount: 36,
-                    phoneNumber: '(123) 456-8234',
-                    address: '9876 Fake Street',
-                    description: "This is Jim’s plumbing services ad description.  I offer the worst plumbing in town.  I have a 1-star rated service on Sprout and 24 reviews.  Contact me at the phone number."
-                }
-            ]
-
-
-        )
-    }
+    useEffect(async() =>{
+        var category="";
+        const result = await axios.get(REST_API_CALL, {
+            params: {
+                category: category
+            }
+        });
+        setData(result.data)
+    }, [])
 
     return (
         <div className='discover'>
@@ -72,8 +52,9 @@ function Discover(props) {
                 <SearchBar />
                 <div style={{ paddingTop: "2vh" }}></div>
                 {
-                    getData().map(business =>
-                        <DiscoverSnippet businessName={business.businessName} rating={business.rating} reviewCount={business.reviewCount} phoneNumber={business.phoneNumber} address={business.address} description={business.description} />
+                    //TODO make it so all of the info is actually displaying (just naming differences between this and db and # of reviews needs to be added to db)
+                    data.map(business =>
+                        <DiscoverSnippet businessName={business.name} rating={business.average_rating} reviewCount={business.numReviews} phoneNumber={business.phone_number} address={business.address} description={business.description} />
                     )
                 }
             </div>
