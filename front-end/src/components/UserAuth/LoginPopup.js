@@ -1,6 +1,8 @@
 import '../../css/Home.css';
 import { useState } from 'react';
 import GoogleLogin from './GoogleLogin';
+import axios from 'axios';
+
 
 
 /*
@@ -9,6 +11,7 @@ import GoogleLogin from './GoogleLogin';
     -regex for email/pass
 */
 function Login(props) {
+    const REST_API_CALL = 'http://localhost:8080/api/login'
     const [email, setEmail] = useState();
     const [pass, setPass] = useState();
 
@@ -31,6 +34,17 @@ function Login(props) {
     function submit() {
         console.log('email: ' + email);
         console.log('pass: ' + pass);
+        axios.post(REST_API_CALL, [email, pass]).then(resp => {
+            if (resp.data.successful === true) { // The user already exists and has successfully logged in
+                console.log('Login Success: currentUser:', resp.data);
+                alert(
+                    `Logged in successfully welcome ${email} 😍. \n See console for full profile object.`
+                );
+            } else { // The user does not already exist or some other error occured. Refer to error message to determine next steps
+                console.log(resp.data.error);
+            }
+        });
+
     }
     return (
         <div className='login-popup'>
