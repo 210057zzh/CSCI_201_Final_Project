@@ -2,6 +2,7 @@ import '../../css/Home.css';
 import { useState } from 'react';
 import GoogleLogin from './GoogleLogin';
 import axios from 'axios';
+import onClickOutside from 'react-onclickoutside'
 
 
 
@@ -10,10 +11,14 @@ import axios from 'axios';
     -Google sign-in api implementation
     -regex for email/pass
 */
+const clickOutsideConfig = {
+    handleClickOutside: () => Login.handleClickOutside
+};
 function Login(props) {
     const REST_API_CALL = 'http://localhost:8080/api/login'
     const [email, setEmail] = useState();
     const [pass, setPass] = useState();
+    Login.handleClickOutside = () => props.toggleLoginOff();
 
     function updateEmail(e) {
         setEmail(e.target.value)
@@ -51,15 +56,13 @@ function Login(props) {
             <div style={{ fontWeight: 'bold', fontSize: '36px', marginTop: '1em' }}>Sign in to Sprout</div>
             <div style={{ marginTop: '4em' }}><GoogleLogin LoggedinStatus={props.LoggedinStatus} toggleLoginStatusOn={toggleLoginStatusOn} toggleLoginStatusOff={toggleLoginStatusOff} /></div>
             <hr style={{ width: '70%', marginTop: '4em' }}></hr>
-            <div className='login-form'>
-                <input type='text' placeholder='Email...' onChange={updateEmail}></input>
-                <input type='password' placeholder='Password...' onChange={updatePass}></input>
-                <div className='login-btn' onClick={submit}>
-                    <p>Log in</p>
-                </div>
-            </div>
+            <form className='login-form'>
+                <input type='text' placeholder='Email...' onChange={updateEmail} required />
+                <input type='password' placeholder='Password...' onChange={updatePass} required />
+                <input type="submit" className='login-btn' onClick="submit" value="Log in" align="center" />
+            </form>
         </div>
     );
 }
 
-export default Login;
+export default onClickOutside(Login, clickOutsideConfig);
