@@ -9,7 +9,7 @@ import { useEffect } from 'react';
 
 function Discover(props) {
     const [showLogin, setShowLogin] = useState(false);
-    const REST_API_CALL = 'http://localhost:8080/api/discover' 
+    const REST_API_CALL = 'http://localhost:8080/api/discover'
     const [data, setData] = useState([]);
 
     function toggleLoginOn() {
@@ -27,8 +27,8 @@ function Discover(props) {
             props.toggleLoginStatusOff();
     }
 
-    useEffect(async() =>{
-        var category="";
+    useEffect(async () => {
+        var category = "";
         const result = await axios.get(REST_API_CALL, {
             params: {
                 category: category
@@ -39,7 +39,7 @@ function Discover(props) {
 
     return (
         <div className='discover'>
-            {showLogin ? <Login LoginStatus={props.LoginStatus} toggleLoginStatusOn={toggleLoginStatusOn} toggleLoginStatusOff={toggleLoginStatusOff} LoginbyGoogle={props.LoginbyGoogle} setLoginbyGoogle={props.setLoginbyGoogle} /> : null}
+            {showLogin ? <Login LoginStatus={props.LoginStatus} toggleLoginStatusOn={toggleLoginStatusOn} toggleLoginStatusOff={toggleLoginStatusOff} LoginbyGoogle={props.LoginbyGoogle} setLoginbyGoogle={props.setLoginbyGoogle} toggleLoginOff={toggleLoginOff} /> : null}
             <Navbar toggleLoginOn={toggleLoginOn}
                 toggleLoginOff={toggleLoginOff}
                 className={showLogin ? 'darkened' : ''}
@@ -47,7 +47,7 @@ function Discover(props) {
                 LoginStatus={props.LoginStatus}
                 toggleLoginStatusOn={toggleLoginStatusOn}
                 toggleLoginStatusOff={toggleLoginStatusOff} />
-            <div className={showLogin ? 'darkened home-search' : 'home-search'} onClick={toggleLoginOff}>
+            <div className={showLogin ? 'darkened home-search' : 'home-search'} >
                 <div style={{ paddingTop: "1px" }}></div>
                 <SearchBar />
                 <div style={{ paddingTop: "2vh" }}></div>
@@ -58,7 +58,7 @@ function Discover(props) {
                     )
                 }
             </div>
-            <div className={showLogin ? 'darkened lower' : 'lower'} onClick={toggleLoginOff}>
+            <div className={showLogin ? 'darkened lower' : 'lower'} >
             </div>
         </div>
 
