@@ -1,4 +1,4 @@
-import {useContext} from 'react';
+import { useContext } from 'react';
 import GoogleLoginReact from 'react-google-login';
 import axios from 'axios';
 import { authContext } from '../contexts/authContext';
@@ -6,11 +6,11 @@ import { authContext } from '../contexts/authContext';
 
 
 function GoogleLogin(props) {
-    const {authState, setAuthState} = useContext(authContext)
+    const { authState, setAuthState } = useContext(authContext)
     const REST_API_CALL = 'http://localhost:8080/api/googlelogin'
 
     function toggleLoginStatusOn() {
-        setAuthState(prevState => {return {...prevState, loggedIn: true}});
+        setAuthState(prevState => { return { ...prevState, showLogin: false, loggedIn: true } });
     }
     const refreshTokenSetup = (res) => {
         // Timing to renew access token
@@ -35,6 +35,7 @@ function GoogleLogin(props) {
         console.log('success');
         var id_token = res.getAuthResponse().id_token;
         console.log(id_token);
+        toggleLoginStatusOn();
         // Post to the backend to check if the user currently exists or if they need to set up their account
         axios.post(REST_API_CALL, id_token).then(resp => {
             if (resp.data.registered === true) { // The user already exists and has successfully logged in
@@ -47,7 +48,7 @@ function GoogleLogin(props) {
                 console.log('User must be redirected to signup page')
             }
         });
-        refreshTokenSetup();
+        refreshTokenSetup(res);
     };
 
     const clientid = "467227431315-qfa0plniiro21687j2ifupq82cd7j6op.apps.googleusercontent.com";
