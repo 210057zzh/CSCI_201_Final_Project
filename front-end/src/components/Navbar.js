@@ -6,19 +6,19 @@ import '../css/Navbar.css';
 
 function Navbar(props) {
     // *Need to set toggleLogin* as a required prop later.
-    const {authState, dispatch} = useContext(authContext);
+    const {authState, setAuthState} = useContext(authContext);
 
     function toggleLoginScreen() {
         if(authState.showLogin) {
-            dispatch({type: 'showLogin', payload: false})
+            setAuthState(prevState => {return {...prevState, showLogin: false}});
         } else {
-            dispatch({type: 'showLogin', payload: true})
+            setAuthState(prevState => {return {...prevState, showLogin: true}});
         }
         
     }
 
     function logout() {
-        dispatch({type: 'loggedIn', payload: false})
+        setAuthState(prevState => {return {...prevState, loggedIn: false}});
     }
     if (authState.loggedIn === false) {
         return (

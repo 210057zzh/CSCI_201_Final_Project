@@ -6,11 +6,11 @@ import { authContext } from '../contexts/authContext';
 
 
 function GoogleLogin(props) {
-    const {authState, dispatch} = useContext(authContext)
+    const {authState, setAuthState} = useContext(authContext)
     const REST_API_CALL = 'http://localhost:8080/api/googlelogin'
 
     function toggleLoginStatusOn() {
-        dispatch({type: 'loggedIn', payload: true});
+        setAuthState(prevState => {return {...prevState, loggedIn: true}});
     }
     const refreshTokenSetup = (res) => {
         // Timing to renew access token
@@ -43,7 +43,6 @@ function GoogleLogin(props) {
                 alert(
                     `Logged in successfully welcome ${res.profileObj.name} 😍. \n See console for full profile object.`
                 );
-                dispatch({type: 'loggedIn', payload: true})
             } else { // The user does not already exist and needs to be redirected to the signup page
                 console.log('User must be redirected to signup page')
             }

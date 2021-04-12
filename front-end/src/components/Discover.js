@@ -9,7 +9,7 @@ import { useContext, useEffect } from 'react';
 import { authContext } from './contexts/authContext';
 
 function Discover(props) {
-    const {authState, dispatch} = useContext(authContext);
+    const {authState, setAuthState} = useContext(authContext);
     const REST_API_CALL = 'http://localhost:8080/api/discover'
     const [data, setData] = useState([]);
 

@@ -16,13 +16,13 @@ const clickOutsideConfig = {
     handleClickOutside: () => Login.handleClickOutside
 };
 function Login(props) {
-    const {authState, dispatch} = useContext(authContext);
+    const {authState, setAuthState} = useContext(authContext);
     const [email, setEmail] = useState();
     const [pass, setPass] = useState();
     const REST_API_CALL = 'http://localhost:8080/api/login'
 
     Login.handleClickOutside = (e) => {
-        dispatch({type: 'showLogin', payload: false})
+        setAuthState(prevState => {return {...prevState, showLogin: false}});
     };
 
     function updateEmail(e) {
@@ -48,8 +48,7 @@ function Login(props) {
         // }).catch(err => {
         //     console.log(err.message);
         // });
-        dispatch({type: 'showLogin', payload: false});
-        dispatch({type: 'loggedIn', payload: true})
+        setAuthState(prevState => {return {...prevState, showLogin: false, loggedIn: true}});
     }
     return (
         <div className='login-popup'>
