@@ -17,7 +17,7 @@ public class Utils {
 		ArrayList<Business> results = new ArrayList<>();
 
 		while (rs.next()) {
-			int businessID = rs.getInt("businessID");
+			/*int businessID = rs.getInt("businessID");
 			int ownerID = rs.getInt("ownerID");
 			String name = rs.getString("name");
 			String phone_number = rs.getString("phone_number");
@@ -32,16 +32,37 @@ public class Utils {
 			Business business = new Business(businessID, ownerID, name, phone_number, startHour, endHour, description,
 					cost, average_rating, address, business_type);
 			results.add(business);
-
+*/
+			results.add(queryBusiness(rs));
 		}
 
 		// Sets number of reviews each business has
-		for (Business b : results) {
+		/*for (Business b : results) {
 			b.setNumReviews(calculateReviews(b.getBusinessId()));
 		}
-
+*/
 		return results;
 
+	}
+	public static Business queryBusiness(ResultSet rs) throws SQLException {
+		while(rs.next()) {	
+			int businessID = rs.getInt("businessID");
+			int ownerID = rs.getInt("ownerID");
+			String name = rs.getString("name");
+			String phone_number = rs.getString("phone_number");
+			int startHour = rs.getInt("startHour");
+			int endHour = rs.getInt("endHour");
+			String description = rs.getString("description");
+			int cost = rs.getInt("cost");
+			int average_rating = rs.getInt("average_rating");
+			String address = rs.getString("address");
+			String business_type = rs.getString("business_type");
+			Business business = new Business(businessID, ownerID, name, phone_number, startHour, endHour, description,
+					cost, average_rating, address, business_type);
+			business.setNumReviews(calculateReviews(business.getBusinessId()));
+			return business;
+		}
+		return new Business();
 	}
 
 	public static int calculateReviews(int businessId) {
