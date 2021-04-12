@@ -1,47 +1,42 @@
 import { NavLink, withRouter } from 'react-router-dom';
+import {useContext} from 'react';
+import {authContext} from './contexts/authContext';
 
 import '../css/Navbar.css';
 
 function Navbar(props) {
     // *Need to set toggleLogin* as a required prop later.
+    const {authState, dispatch} = useContext(authContext);
 
-    function showLoginScreen() {
-        if (props.toggleLoginOn) {
-            props.toggleLoginOn();
+    function toggleLoginScreen() {
+        if(authState.showLogin) {
+            dispatch({type: 'showLogin', payload: false})
+        } else {
+            dispatch({type: 'showLogin', payload: true})
         }
-    }
-    function hideLoginScreen() {
-        if (props.toggleLoginOff) {
-            props.toggleLoginOff();
-        }
-    }
-    function toggleLoginStatusOff() {
-        if (props.toggleLoginStatusOff)
-            props.toggleLoginStatusOff();
+        
     }
 
     function logout() {
-        toggleLoginStatusOff();
+        dispatch({type: 'loggedIn', payload: false})
     }
-
-    if (props.LoginStatus === false) {
+    if (authState.loggedIn === false) {
         return (
-            <div className={'navbar ' + props.className}>
-                <div className='navbar-left' onClick={hideLoginScreen}>
+            <div className={'navbar '}>
+                <div className='navbar-left'>
                     <NavLink className='navlink' exact to='/'>Home</NavLink>
                     <NavLink className='navlink' exact to='/discover'>Discover</NavLink>
                 </div>
                 <div className='navbar-right' style={{ whiteSpace: 'noWrap' }}>
-                    <div className='navlink' style={{ display: "inline-block" }} onClick={props.showLogin ? hideLoginScreen : showLoginScreen}>Log in</div>
+                    <div className='navlink' style={{ display: "inline-block" }} onClick={toggleLoginScreen}>Log in</div>
                     <div className='navlink' style={{ display: "inline-block" }} >Sign up</div>
                 </div>
             </div>
         )
     }
-    else if (props.LoginStatus === true) {
-        hideLoginScreen();
+    else if (authState.loggedIn === true) {
         return (
-            <div className={'navbar ' + props.className}>
+            <div className={'navbar '}>
                 <div className='navbar-left'>
                     <NavLink className='navlink' exact to='/'>Home</NavLink>
                     <NavLink className='navlink' exact to='/discover'>Discover</NavLink>

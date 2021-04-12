@@ -2,30 +2,16 @@ import Navbar from './Navbar';
 import SearchBar from './SearchBar';
 import Login from './UserAuth/LoginPopup';
 import '../css/Home.css';
-import { Component, useState } from 'react';
+import { useState } from 'react';
 import DiscoverSnippet from './DiscoverSnippet'
 import axios from 'axios';
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
+import { authContext } from './contexts/authContext';
 
 function Discover(props) {
-    const [showLogin, setShowLogin] = useState(false);
+    const {authState, dispatch} = useContext(authContext);
     const REST_API_CALL = 'http://localhost:8080/api/discover'
     const [data, setData] = useState([]);
-
-    function toggleLoginOn() {
-        setShowLogin(true);
-    }
-    function toggleLoginOff(e) {
-        setShowLogin(false);
-    }
-    function toggleLoginStatusOn() {
-        if (props.toggleLoginStatusOn)
-            props.toggleLoginStatusOn();
-    }
-    function toggleLoginStatusOff() {
-        if (props.toggleLoginStatusOff)
-            props.toggleLoginStatusOff();
-    }
 
     useEffect(async () => {
         var category = "";
@@ -39,15 +25,10 @@ function Discover(props) {
 
     return (
         <div className='discover'>
-            {showLogin ? <Login LoginStatus={props.LoginStatus} toggleLoginStatusOn={toggleLoginStatusOn} toggleLoginStatusOff={toggleLoginStatusOff} LoginbyGoogle={props.LoginbyGoogle} setLoginbyGoogle={props.setLoginbyGoogle} toggleLoginOff={toggleLoginOff} /> : null}
-            <Navbar toggleLoginOn={toggleLoginOn}
-                toggleLoginOff={toggleLoginOff}
-                className={showLogin ? 'darkened' : ''}
-                showLogin={showLogin}
-                LoginStatus={props.LoginStatus}
-                toggleLoginStatusOn={toggleLoginStatusOn}
-                toggleLoginStatusOff={toggleLoginStatusOff} />
-            <div className={showLogin ? 'darkened home-search' : 'home-search'} >
+            {authState.showLogin ? <Login/> : null}
+            {authState.showLogin ? <div className='darkened' ></div> : null}
+            <Navbar/>
+            <div className='home-search'>
                 <div style={{ paddingTop: "1px" }}></div>
                 <SearchBar />
                 <div style={{ paddingTop: "2vh" }}></div>
@@ -57,8 +38,6 @@ function Discover(props) {
                         <DiscoverSnippet businessName={business.name} rating={business.average_rating} reviewCount={business.numReviews} phoneNumber={business.phone_number} address={business.address} description={business.description} />
                     )
                 }
-            </div>
-            <div className={showLogin ? 'darkened lower' : 'lower'} >
             </div>
         </div>
 

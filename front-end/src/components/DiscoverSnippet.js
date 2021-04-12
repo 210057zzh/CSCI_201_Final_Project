@@ -6,7 +6,7 @@ function DiscoverSnippet(props) {
     return (
         <div className='discoverSnippet'>
             {/*<img src={picture} width='150px' className='picture' />*/}
-            <div class='leftContent'>
+            <div className='leftContent'>
                 <div>
                     <p className='title'>{props.businessName}</p>
                     <div style={{display: 'flex'}}>

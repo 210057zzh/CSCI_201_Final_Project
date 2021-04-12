@@ -33,7 +33,11 @@
 }
 
 .darkened {
+    position: fixed;
     background: rgba(0,0,0,0.4);
+    z-index: 1;
+    min-height: 100vh;
+    min-width: 100vw;
 }
 
 .login-form {
