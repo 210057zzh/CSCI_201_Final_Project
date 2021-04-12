@@ -1,4 +1,5 @@
 package models;
+import java.util.ArrayList;
 
 public class Business {
 	int businessId;
@@ -13,7 +14,24 @@ public class Business {
 	String address;
 	String business_type;
 	int numReviews;
-
+	ArrayList<Review> reviews;
+	
+	
+	public Business(int businessId, int ownerId, String name, String phone_number, int startHour, int endHour,
+			String description, int cost, int average_rating, String address, String business_type, ArrayList<Review> reviews) {
+		this.businessId = businessId;
+		this.ownerId = ownerId;
+		this.name = name;
+		this.phone_number = phone_number;
+		this.startHour = startHour;
+		this.endHour = endHour;
+		this.description = description;
+		this.cost = cost;
+		this.average_rating = average_rating;
+		this.address = address;
+		this.business_type = business_type;
+		this.reviews = reviews;
+	}
 	public Business(int businessId, int ownerId, String name, String phone_number, int startHour, int endHour,
 			String description, int cost, int average_rating, String address, String business_type) {
 		this.businessId = businessId;
@@ -27,6 +45,21 @@ public class Business {
 		this.average_rating = average_rating;
 		this.address = address;
 		this.business_type = business_type;
+		this.reviews = new ArrayList<>();
+	}
+	public Business() {
+		this.businessId = -1;
+		this.ownerId = -1;
+		this.name = "";
+		this.phone_number = "";
+		this.startHour = -1;
+		this.endHour = -1;
+		this.description = "";
+		this.cost = -1;
+		this.average_rating = -1;
+		this.address = "";
+		this.business_type = "";
+		this.reviews = new ArrayList<>();
 	}
 
 	public int getBusinessId() {
