@@ -48,6 +48,7 @@ function Login(props) {
         // }).catch(err => {
         //     console.log(err.message);
         // });
+        dispatch({type: 'showLogin', payload: false});
         dispatch({type: 'loggedIn', payload: true})
     }
     return (

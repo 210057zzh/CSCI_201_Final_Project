@@ -2,7 +2,7 @@ import React, {useState, useReducer} from 'react';
 
 const initialState = {
     showLogin: false,
-    loggedIn: true,
+    loggedIn: false,
     userName: '',
     /**
      *  Can add any more 'global variables' related to user login/signup here
