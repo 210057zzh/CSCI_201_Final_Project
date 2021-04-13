@@ -13,8 +13,5 @@ public class YelpResponse {
 	public String getFirstBusinessId() {
 		return this.businesses[0].getId();
 	}
-	
-	
-	
-}
 
+}

@@ -12,6 +12,5 @@ public class YelpBusiness {
 	public String toString() {
 		return "Business [id=" + id + "]";
 	}
-	
-	
+
 }
