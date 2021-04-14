@@ -10,5 +10,7 @@ public final class Constants {
 	public static final String origins = "http://localhost:3000";
 
 	public static final int discoverPageBusinessLimit = 10;
+	
+	public static final String token = "AWa2KOgdOLKusCqTDvw1t6-aPbcXV2k6PIdGXBnwMUrWjt7F5rSoT3-83lcy9CA2GwUtv9wFtpqHzigKHG1nmLE4ZzX2y9FmZ0XSUM8svXMyFIvro418lJAoVBF2YHYx";
 
 }
