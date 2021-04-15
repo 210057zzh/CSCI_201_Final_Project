@@ -1,6 +1,8 @@
 package utils;
 
 import static utils.Constants.dbAddress;
+import java.text.SimpleDateFormat;  
+import java.util.Date;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -172,5 +174,10 @@ public class Utils {
 
 		return results;
 	}
+	public static String getCurrentDate() {       
+		SimpleDateFormat formatter = new SimpleDateFormat("YYYY-MM-DD");  
+	    Date date = new Date();
+	    return formatter.format(date);
+	} 
 
 }
