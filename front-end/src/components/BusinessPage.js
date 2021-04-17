@@ -39,6 +39,7 @@ function outputBusinessPage() {
 
 function BusinessPage(props) {
     const { authState } = useContext(authContext);
+    const businessName = props.match.params.businessName; //Grabs businessName from the URL, use this name to fetch business details from database.
 
     return (
         <div className='home'>

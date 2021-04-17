@@ -3,6 +3,7 @@
     border-radius: 5px;
     margin: 2vh 5vw;
     overflow: auto;
+    padding: 20px;
 }
 
 .picture {
@@ -44,4 +45,8 @@
     color: rgba(0, 0, 0, 0.6);
     font-size: 18px;
     white-space: nowrap;
+}
+
+.discoverLink {
+    text-decoration: none;
 }

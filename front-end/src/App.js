@@ -13,15 +13,9 @@ function App() {
       <AuthContextProvider>
         <BrowserRouter>
           <Switch>
-            {/* <Route exact path='/'
-              render={(props) => <Home {...props} LoginStatus={LoginStatus} toggleLoginStatusOn={toggleLoginStatusOn} toggleLoginStatusOff={toggleLoginStatusOff} />}
-            ></Route> */}
             <Route exact path='/' component={Home}></Route>
-            {/* <Route exact path='/Discover'
-              render={(props) => <Discover {...props} LoginStatus={LoginStatus} toggleLoginStatusOn={toggleLoginStatusOn} toggleLoginStatusOff={toggleLoginStatusOff} />}
-            ></Route> */}
             <Route exact path ='/Discover' component={Discover}></Route>
-            <Route exact path ='/BusinessPage' component={BusinessPage}></Route>
+            <Route exact path ='/BusinessPage/:businessName' component={BusinessPage}></Route>
           </Switch>
         </BrowserRouter>
       </AuthContextProvider>

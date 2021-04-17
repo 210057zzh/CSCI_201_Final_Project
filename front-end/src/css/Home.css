@@ -53,7 +53,9 @@
     width: 75%;
     margin-left: 12.5%;
     font-size: 24px;
-    padding: 5px 15px;
+    padding: 0px;
+    padding-left: 5px;
+    box-sizing: border-box;
 
 }
 
@@ -76,4 +78,17 @@
 
 .login-btn:hover {
     cursor: pointer;
+}
+
+.error {
+    background-color: #f2665c;
+    width: 75%;
+    margin: auto; 
+    margin-top: 1.5em;
+    height: 32px;
+    border-radius: 10px;
+}
+
+.error div {
+    line-height: 32px;
 }
