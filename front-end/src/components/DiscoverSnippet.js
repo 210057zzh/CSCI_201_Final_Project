@@ -16,7 +16,7 @@ function DiscoverSnippet(props) {
                 </div>
                 <p style={{ margin: '1vh 1em 0px', textAlign: 'right' }} className='other' >{props.phoneNumber}<br />{props.address}</p>
             </div>
-            <p className='description leftContent' >{props.description}</p>
+            <p className='description' >{props.description}</p>
         </div>
     )
 

@@ -5,9 +5,10 @@ import EmptyStar from '../css/RatingStars/0.svg';
 function getStars(value) {
     const stars = [];
     const [whole, part] = parseFloat(value).toString().split(".");
-    for(let i=0; i < whole; i++) stars.push(100);
-    if(part) stars.push(50);
-    for(let i=whole; i < (part ? 4 : 5); i++) stars.push(0);
+    for (let i = 0; i < whole; i++) stars.push(100);
+    if (part)
+        stars.push(50);
+    for (let i = whole; i < (part ? 4 : 5); i++) stars.push(0);
 
     return stars;
 }
@@ -23,18 +24,19 @@ function parseStar(value) {
     }
 }
 
-function StarRating({ value }) {
+function StarRating({ value, widthValue }) {
     return (
-        <div style={{display: 'flex', flexWrap: 'nowrap'}}>
+        <div style={{ display: 'flex', flexWrap: 'nowrap' }}>
             {getStars(value).map((value) => (
-                <div style={{width: '40px', marginRight: '5px', float: 'left', content: `URL(${parseStar(value)})`}}/>
+                <div style={{ width: widthValue, marginRight: '5px', float: 'left', content: `URL(${parseStar(value)})` }} />
             ))}
         </div>
     )
 }
 
 StarRating.defaultProps = {
-    value: 0
-  };
+    value: 0,
+    widthValue: '40px'
+};
 
 export default StarRating;

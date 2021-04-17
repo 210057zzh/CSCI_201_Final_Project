@@ -28,8 +28,9 @@ function SearchBar() {
 
     return (
         <div className='search-bar'>
-            <form onSubmit={submitSearch}>
-                <input type='text' placeholder='search...' onChange={handleChange} id="temporary"></input>
+            <form onSubmit={submitSearch} style={{display: 'inline'}}>
+                <input type='text' className='field' placeholder='search...' onChange={handleChange} id="temporary"></input>
+                <input type='button' className='searchButton' value='filter' onClick={submitSearch}></input>
             </form>
         </div>
     )
