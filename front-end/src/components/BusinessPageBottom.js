@@ -41,11 +41,11 @@ function BusinessPageBottom({ description, otherInfo, phone, website, email, add
                     <input className='button' type='button' value='Review'></input>
                     <input className='button' type='button' value='Favorite'></input>
                 </div>
-                <hr className='line' style={{ width: '80em', marginTop: '1.5em' }} />
+                <hr className='line' style={{ width: '80em', marginTop: '1.5em' }} /><br/><br/>
 
-                <div style={{ display: 'inline-block' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <div style={{ float: 'left', width: '75%' }}>
-                        <div style={{ textAlign: 'left' }}>
+                        <div style={{ textAlign: 'left'}}>
 
                             <p className='subText' style={{ marginTop: '0.2em' }}>Business Description</p>
                             <p style={{ width: '95%' }}>{parseText(description)}</p>
@@ -76,8 +76,8 @@ function BusinessPageBottom({ description, otherInfo, phone, website, email, add
 
                 <div>
 
-                    <hr className='line' style={{ width: '95%' }} />
-                    <p className='subText' style={{ textAlign: 'left' }}>Reviews</p>
+                    <hr className='line' style={{ width: '95%' }} /><br/>
+                    <p className='subText' style={{ textAlign: 'left', marginTop: '20px' }}>Reviews</p>
                     {
                         getReviews().map(review =>
                             <div>
