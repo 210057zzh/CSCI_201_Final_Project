@@ -41,43 +41,43 @@ function BusinessPageBottom({ description, otherInfo, phone, website, email, add
                     <input className='button' type='button' value='Review'></input>
                     <input className='button' type='button' value='Favorite'></input>
                 </div>
-                <hr className='line' style={{ float: 'left', width: '80%', marginTop: '1.5em' }} /><br />
-                <table>
-                    <tr>
-                        <td style={{ width: '85em' }}>
-                            <div style={{ textAlign: 'left' }}>
+                <hr className='line' style={{ width: '80em', marginTop: '1.5em' }} />
 
-                                <p className='subText' style={{ marginTop: '0.2em' }}>Business Description</p>
-                                <p style={{ width: '95%' }}>{parseText(description)}</p>
-                                <br />
-                                <p className='subText'>Other Information</p>
-                                <p>{parseText(otherInfo)}</p>
-                            </div>
-                        </td>
+                <div style={{ display: 'inline-block' }}>
+                    <div style={{ float: 'left', width: '75%' }}>
+                        <div style={{ textAlign: 'left' }}>
 
-                        <td style={{ verticalAlign: 'top', marginLeft: '10px' }}>
+                            <p className='subText' style={{ marginTop: '0.2em' }}>Business Description</p>
+                            <p style={{ width: '95%' }}>{parseText(description)}</p>
+                            <br />
+                            <p className='subText'>Other Information</p>
+                            <p>{parseText(otherInfo)}</p>
+                        </div>
+                    </div>
 
-                            <div style={{ margin: '1em 1em 0 0', padding: '0 1em 0 1em', border: 'solid', borderRadius: '10px', borderWidth: '1px' }}>
-                                <p className='subText'>Contact</p>
+                    <div style={{ float: 'right', display: 'justify-content', verticalAlign: 'top', marginLeft: '10px' }}>
+
+                        <div style={{ margin: '1em 1em 0 0', padding: '0 1em 0 1em', border: 'solid', borderRadius: '10px', borderWidth: '1px' }}>
+                            <p className='subText'>Contact</p>
+                            <hr className='contactLine' />
+                            <div className='contactBlue' style={{ textAlign: 'left' }}>
+
+                                <p>{phone}</p>
                                 <hr className='contactLine' />
-                                <div className='contactBlue' style={{ textAlign: 'left' }}>
-
-                                    <p>{phone}</p>
-                                    <hr className='contactLine' />
-                                    <p>{website}</p>
-                                    <hr className='contactLine' />
-                                    <p>{email}</p>
-                                    <hr className='contactLine' />
-                                    <p style={{ color: 'black' }}>{address}</p>
-                                </div>
+                                <p>{website}</p>
+                                <hr className='contactLine' />
+                                <p>{email}</p>
+                                <hr className='contactLine' />
+                                <p style={{ color: 'black' }}>{address}</p>
                             </div>
-                        </td>
-                    </tr>
-                </table>
+                        </div>
+                    </div>
+                </div>
 
-                <hr className='line' style={{ float: 'left', width: '95%', marginTop: '1.5em' }} /><br />
-                <p className='subText' style={{ textAlign: 'left' }}>Reviews</p>
                 <div>
+
+                    <hr className='line' style={{ width: '95%' }} />
+                    <p className='subText' style={{ textAlign: 'left' }}>Reviews</p>
                     {
                         getReviews().map(review =>
                             <div>

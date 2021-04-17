@@ -75,6 +75,8 @@
     color: black;
     background-color: black;
     height: 1.5px;
+    margin-top: 1.5em;
+    float: left;
 }
 
 .contactBlue {
