@@ -7,9 +7,10 @@ import DiscoverSnippet from './DiscoverSnippet'
 import axios from 'axios';
 import { useContext, useEffect } from 'react';
 import { authContext } from './contexts/authContext';
+import Signup from './UserAuth/SignupPopup'
 
 function Discover(props) {
-    const {authState, setAuthState} = useContext(authContext);
+    const { authState, setAuthState } = useContext(authContext);
     const REST_API_CALL = 'http://localhost:8080/api/discover'
     const [data, setData] = useState([]);
 
@@ -25,9 +26,10 @@ function Discover(props) {
 
     return (
         <div className='discover'>
-            {authState.showLogin ? <Login/> : null}
-            {authState.showLogin ? <div className='darkened' ></div> : null}
-            <Navbar/>
+            {authState.showLogin ? <Login /> : null}
+            {authState.showSignup ? <Signup /> : null}
+            {(authState.showLogin || authState.showSignup) ? <div className='darkened'></div> : null}
+            <Navbar />
             <div className='home-search'>
                 <div style={{ paddingTop: "1px" }}></div>
                 <SearchBar />
