@@ -64,7 +64,7 @@ function Signup(props) {
         <div className='Signup-popup'>
             <div style={{ fontWeight: 'bold', fontSize: '36px', marginTop: '1em' }}>Sign up to Sprout</div>
             <div style={{ marginTop: '4em' }}><GoogleLogin LoggedinStatus={authState.loggedIn}
-                buttonText="Sign up with Google" /> </div>
+                buttonText="Sign up with Google" signUporLogin={'Signup'} /> </div>
             <hr style={{ width: '70%', marginTop: '4em' }}></hr>
             <form className='Signup-form'>
                 <input type='text' placeholder='Email...' onChange={updateEmail} required />

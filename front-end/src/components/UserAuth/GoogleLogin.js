@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import GoogleLoginReact from 'react-google-login';
 import axios from 'axios';
 import { authContext } from '../contexts/authContext';
@@ -7,7 +7,15 @@ import { authContext } from '../contexts/authContext';
 
 function GoogleLogin(props) {
     const { authState, setAuthState } = useContext(authContext)
-    const REST_API_CALL = 'http://localhost:8080/api/googlelogin'
+    const REST_API_CALL_Login = 'http://localhost:8080/api/googlelogin'
+    const REST_API_CALL_Signup = 'http://localhost:8080/api/googlesignin'
+    var signUporLogin = null; // 'signup' or 'Login'
+    const clientid = "467227431315-qfa0plniiro21687j2ifupq82cd7j6op.apps.googleusercontent.com";
+
+
+    useEffect(() => {
+        signUporLogin = props.signUporLogin;
+    });
 
     function toggleLoginStatusOn() {
         setAuthState(prevState => { return { ...prevState, showLogin: false, loggedIn: true } });
@@ -20,7 +28,8 @@ function GoogleLogin(props) {
             const newAuthRes = await res.reloadAuthResponse();
             refreshTiming = (newAuthRes.expires_in || 3600 - 5 * 60) * 1000;
             console.log('newAuthRes:', newAuthRes);
-            // saveUserToken(newAuthRes.access_token);  <-- save new token
+            // saveUserToken(newAuthRes.access_token);  
+            setAuthState(prevState => { return { ...prevState, googleToken: newAuthRes.access_token } }); //< --save new token
             localStorage.setItem('authToken', newAuthRes.id_token);
 
             // Setup the other timer after the first one
@@ -35,24 +44,42 @@ function GoogleLogin(props) {
         console.log('success');
         var id_token = res.getAuthResponse().id_token;
         console.log(id_token);
-        setAuthState(prevState => { return { ...prevState, googleToken: id_token } });
         // Post to the backend to check if the user currently exists or if they need to set up their account
-        axios.post(REST_API_CALL, id_token).then(resp => {
-            if (resp.data.registered === true) { // The user already exists and has successfully logged in
-                console.log('Login Success: currentUser:', res.profileObj);
-                toggleLoginStatusOn();
-                alert(
-                    `Logged in successfully welcome ${res.profileObj.name} 😍. \n See console for full profile object.`
-                );
-            } else { // The user does not already exist and needs to be redirected to the signup page
-                console.log('User must be redirected to signup page')
-                setAuthState(prevState => { return { ...prevState, signUpredirect: true, showLogin: false, showSignup: true } });
-            }
-        });
-        refreshTokenSetup(res);
+        if (signUporLogin === 'Login') {
+            axios.post(REST_API_CALL_Login, id_token).then(resp => {
+                if (resp.data.registered === true) { // The user already exists and has successfully logged in
+                    console.log('Login Success: currentUser:', res.profileObj);
+                    toggleLoginStatusOn();
+                    alert(
+                        `Logged in successfully welcome ${res.profileObj.name} 😍. \n See console for full profile object.`
+                    );
+                    setAuthState(prevState => { return { ...prevState, googleToken: id_token } });
+                    refreshTokenSetup(res);
+                } else { // The user does not already exist and needs to be redirected to the signup page
+                    console.log('User must be redirected to signup page')
+                    setAuthState(prevState => { return { ...prevState, signUpredirect: true, showLogin: false, showSignup: true } });
+                }
+            })
+        }
+        else if (signUporLogin === 'Signup') {
+            axios.post(REST_API_CALL_Signup, id_token).then(resp => {
+                if (resp.data.registered === false) { // The user does not exist and has successfully signed up
+                    console.log('Signup Success: currentUser:', res.profileObj);
+                    toggleLoginStatusOn();
+                    alert(
+                        `Signup successfully welcome ${res.profileObj.name} 😍. \n See console for full profile object.`
+                    );
+                    setAuthState(prevState => { return { ...prevState, googleToken: id_token } });
+                    refreshTokenSetup(res);
+                } else { // The user already exist and needs to be redirected to the login page
+                    console.log('User must be redirected to login page')
+                    setAuthState(prevState => { return { ...prevState, Loginredirect: true, showLogin: true, showSignup: false } });
+                }
+            })
+        }
+
     };
 
-    const clientid = "467227431315-qfa0plniiro21687j2ifupq82cd7j6op.apps.googleusercontent.com";
 
     const onFailure = (res) => {
         console.log(authState.loggedIn)

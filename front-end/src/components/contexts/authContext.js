@@ -6,7 +6,8 @@ const initialState = {
     userName: '',
     showSignup: false,
     googleToken: '',
-    signUpredirect: false
+    signUpredirect: false,
+    Loginredirect: false
     /**
      *  Can add any more 'global variables' related to user login/signup here
      */

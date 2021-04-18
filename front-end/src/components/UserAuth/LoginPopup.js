@@ -1,5 +1,5 @@
 import '../../css/Home.css';
-import { useState , useContext, useEffect} from 'react';
+import { useState, useContext, useEffect } from 'react';
 import GoogleLogin from './GoogleLogin';
 import axios from 'axios';
 import onClickOutside from 'react-onclickoutside'
@@ -17,14 +17,21 @@ const clickOutsideConfig = {
     handleClickOutside: () => Login.handleClickOutside
 };
 function Login(props) {
-    const {authState, setAuthState} = useContext(authContext);
+    const { authState, setAuthState } = useContext(authContext);
     const [email, setEmail] = useState();
     const [pass, setPass] = useState();
     const [err, setErr] = useState();
     const REST_API_CALL = 'http://localhost:8080/api/login'
 
+    useEffect(() => {
+        if (authState.LoginUpredirect === true) {
+            setErr('Your google account is registered, please log in with google');
+            setAuthState(prevState => { return { ...prevState, LoginUpredirect: false } });
+        }
+    });
+
     Login.handleClickOutside = (e) => {
-        setAuthState(prevState => {return {...prevState, showLogin: false}});
+        setAuthState(prevState => { return { ...prevState, showLogin: false } });
     };
 
     function updateEmail(e) {
@@ -37,11 +44,11 @@ function Login(props) {
 
     function submit(e) {
         e.preventDefault();
-        axios.post(REST_API_CALL, [email, pass]).then(async(resp) => {
+        axios.post(REST_API_CALL, [email, pass]).then(async (resp) => {
             console.log(resp);
             if (resp.data.successful === true) { // The user already exists and has successfully logged in
                 console.log('Login Success: currentUser:', resp.data);
-                setAuthState(prevState => {return {...prevState, showLogin: false, loggedIn: true}});
+                setAuthState(prevState => { return { ...prevState, showLogin: false, loggedIn: true } });
             } else { // The user does not already exist or some other error occured. Refer to error message to determine next steps
                 console.log('error: ' + resp.data.error);
                 setErr(resp.data.error);
@@ -54,13 +61,13 @@ function Login(props) {
     return (
         <div className='login-popup'>
             <div style={{ fontWeight: 'bold', fontSize: '36px', marginTop: '1em' }}>Sign in to Sprout</div>
-            <div style={{ marginTop: '4em' }}><GoogleLogin LoggedinStatus={authState.loggedIn} buttonText={"Login to Sprout with Google"} /></div>
+            <div style={{ marginTop: '4em' }}><GoogleLogin LoggedinStatus={authState.loggedIn} buttonText={"Login to Sprout with Google"} signUporLogin={'Login'} /></div>
             <hr style={{ width: '70%', marginTop: '4em' }}></hr>
             <form className='login-form'>
                 <input type='text' placeholder='Email...' onChange={updateEmail} required />
                 <input type='password' placeholder='Password...' onChange={updatePass} required />
                 {err ? <Error errorMsg={err}></Error> : null}
-                <input type="submit" className='login-btn' onClick= {submit} align="center" />
+                <input type="submit" className='login-btn' onClick={submit} align="center" />
             </form>
         </div>
     );
