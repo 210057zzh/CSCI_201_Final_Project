@@ -35,7 +35,7 @@ function parseText(text) {
 function BusinessPageBottom({ description, otherInfo, phone, website, email, address }) {
 
     return (
-        <div className='bottomBackground' style={{ padding: '0 2vh 2vh 2vh', marginTop: '0' }}>
+        <div className='bottomBackground' style={{ padding: '0 2vh 2vh 2vh', marginTop: '0', overflowX: 'hidden'  }}>
             <div style={{ marginLeft: '1em' }}>
                 <div style={{ textAlign: 'left' }}>
                     <input className='button' type='button' value='Review'></input>

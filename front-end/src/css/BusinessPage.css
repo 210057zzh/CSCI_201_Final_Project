@@ -118,3 +118,139 @@
 .pageSection a:hover:not(.active) {
     background-color: #ddd;
 }
+
+.pencil {
+    width: 40px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+.fieldBackground {
+    background-color: white;
+    padding: 0px;
+    margin-top: 8px;
+    border-radius: 10px 10px 10px 10px;
+    overflow: auto;
+    display: inline-block;
+}
+
+.businessInput {
+    color: black;
+    font-size: 38px;
+    font-weight: bold;
+    margin: 0 0 0 0;
+    white-space: nowrap;
+    padding: 8px;
+}
+
+.timeInput {
+    color: black;
+    font-size: 32px;
+    padding: 15px 11px 7px 11px;
+    border: none;
+    font-weight: bold;
+    float: left;
+    cursor: pointer;
+}
+
+.timeInput:focus {
+    outline: none;
+}
+
+.timeInput:hover {
+    background-color: #ccc;
+}
+
+.fieldEditText {
+    color: black;
+    font-weight: 700;
+    font-size: 32px;
+    margin: 0em 0 0 0;
+    padding: 8px;
+    margin-top: 0;
+    float: left;
+}
+
+.categorySelect {
+    color: black;
+    font-size: 32px;
+    background-color: white;
+    padding: 11px 8px 8px 8px;
+    float: left;
+    border: none
+}
+
+.categorySelect:focus {
+    outline: none;
+}
+
+.editCost {
+    color: rgb(122, 122, 122);
+    font-weight: 700;
+    font-size: 40px;
+    margin: 0.1em 0 0 0;
+    white-space: nowrap;
+    float: left;
+    padding-bottom: 4px;
+    direction: rtl;
+    cursor: pointer;
+}
+
+
+.editCost > span {
+   display: inline-block;
+   position: relative;
+   width: 1.1em;
+}
+
+.editCost > span:hover {
+    color: black;
+}
+
+.editCost > span:hover ~ span:before {
+    content: "$";
+    color: black;
+    position: absolute;
+}
+
+.textUpdate {
+    width: 95%;
+    height: 8em;
+    font-size: 16px;
+}
+
+.contactBlue > div > input {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.contactInput {
+    width: 70%;
+    color: #3575F1;
+    padding: 2px;
+    margin-top: 3px;
+}
+
+.importButton {
+    background: white;
+    background: url('../css/img/yelpLogo.png');
+    background-size: 70px;
+    background-repeat: no-repeat;
+    background-position-x: 90%;
+    background-position-y: 30%;
+    border-radius: 20px;
+    font-size: 22px;
+    color: black;
+    font-weight: bold;
+    border: solid 1px;
+    transition-duration: 0.3s;
+    cursor: pointer;
+    padding: 0.7em 4.2em 0.7em 1.4em;
+    margin: 1em 1.5em 0 0;
+    float: right;
+}
+
+.importButton:hover {
+    background-color: rgb(219, 219, 219);
+}
+
