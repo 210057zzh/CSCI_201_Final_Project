@@ -54,7 +54,7 @@ function Login(props) {
     return (
         <div className='login-popup'>
             <div style={{ fontWeight: 'bold', fontSize: '36px', marginTop: '1em' }}>Sign in to Sprout</div>
-            <div style={{ marginTop: '4em' }}><GoogleLogin LoggedinStatus={authState.loggedIn} /></div>
+            <div style={{ marginTop: '4em' }}><GoogleLogin LoggedinStatus={authState.loggedIn} buttonText={"Login to Sprout with Google"} /></div>
             <hr style={{ width: '70%', marginTop: '4em' }}></hr>
             <form className='login-form'>
                 <input type='text' placeholder='Email...' onChange={updateEmail} required />

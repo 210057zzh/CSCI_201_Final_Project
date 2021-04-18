@@ -35,7 +35,7 @@ function GoogleLogin(props) {
         console.log('success');
         var id_token = res.getAuthResponse().id_token;
         console.log(id_token);
-        toggleLoginStatusOn();
+        setAuthState(prevState => { return { ...prevState, googleToken: id_token } });
         // Post to the backend to check if the user currently exists or if they need to set up their account
         axios.post(REST_API_CALL, id_token).then(resp => {
             if (resp.data.registered === true) { // The user already exists and has successfully logged in
@@ -46,6 +46,7 @@ function GoogleLogin(props) {
                 );
             } else { // The user does not already exist and needs to be redirected to the signup page
                 console.log('User must be redirected to signup page')
+                setAuthState(prevState => { return { ...prevState, signUpredirect: true, showLogin: false, showSignup: true } });
             }
         });
         refreshTokenSetup(res);
@@ -64,7 +65,7 @@ function GoogleLogin(props) {
     return (
         <GoogleLoginReact
             clientId={clientid}
-            buttonText="Login to Sprout with Google"
+            buttonText={props.buttonText}
             onSuccess={onSuccess}
             onFailure={onFailure}
             cookiePolicy={'single_host_origin'}
