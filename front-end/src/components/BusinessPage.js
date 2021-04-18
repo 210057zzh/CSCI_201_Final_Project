@@ -6,7 +6,7 @@ import { useContext } from 'react';
 import { authContext } from './contexts/authContext'
 import BusinessPageHeader from './BusinessPageHeader'
 import BusinessPageBottom from './BusinessPageBottom.js'
-
+import Signup from './UserAuth/SignupPopup';
 
 function getBusinessInfo() {
     return (
@@ -40,11 +40,13 @@ function outputBusinessPage() {
 
 function BusinessPage(props) {
     const { authState } = useContext(authContext);
+    const businessName = props.match.params.businessName; //Grabs businessName from the URL, use this name to fetch business details from database.
 
     return (
         <div className='home'>
             {authState.showLogin ? <Login /> : null}
-            {authState.showLogin ? <div className='darkened'></div> : null}
+            {authState.showSignup ? <Signup /> : null}
+            {(authState.showLogin || authState.showSignup) ? <div className='darkened'></div> : null}
             <Navbar />
             {outputBusinessPage()}
         </div>

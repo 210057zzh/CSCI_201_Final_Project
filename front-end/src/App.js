@@ -5,6 +5,8 @@ import Discover from './components/Discover';
 import AuthContextProvider from './components/contexts/authContext'
 import BusinessPage from './components/BusinessPage'
 import BusinessPageEdit from './components/BusinessPageEdit'
+import Dashboard from './components/Dashboard'
+
 
 function App() {
 
@@ -13,16 +15,12 @@ function App() {
       <AuthContextProvider>
         <BrowserRouter>
           <Switch>
-            {/* <Route exact path='/'
-              render={(props) => <Home {...props} LoginStatus={LoginStatus} toggleLoginStatusOn={toggleLoginStatusOn} toggleLoginStatusOff={toggleLoginStatusOff} />}
-            ></Route> */}
             <Route exact path='/' component={Home}></Route>
-            {/* <Route exact path='/Discover'
-              render={(props) => <Discover {...props} LoginStatus={LoginStatus} toggleLoginStatusOn={toggleLoginStatusOn} toggleLoginStatusOff={toggleLoginStatusOff} />}
-            ></Route> */}
             <Route exact path ='/Discover' component={Discover}></Route>
             <Route exact path ='/BusinessPage' component={BusinessPage}></Route>
             <Route exact path ='/BusinessPageEdit' component={BusinessPageEdit}></Route>
+            <Route exact path ='/BusinessPage/:businessName' component={BusinessPage}></Route>
+            <Route exacth path ='/dashboard' component ={Dashboard}></Route>
           </Switch>
         </BrowserRouter>
       </AuthContextProvider>
