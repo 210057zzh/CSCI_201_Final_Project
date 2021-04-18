@@ -12,7 +12,8 @@ function getBusinessInfo() {
     return (
         {
             name: "Bob's Plumbing Service",
-            hours: '8:00am-5:00pm',
+            startingTime: '08:00',
+            endingTime: '17:00',
             category: 'Plumbing',
             rating: 4,
             reviewCount: 24,
@@ -31,7 +32,7 @@ function outputBusinessPage() {
     let business = getBusinessInfo();
     return (
         <div>
-            <BusinessPageHeader name={business.name} hours={business.hours} category={business.category} rating={business.rating} reviewCount={business.reviewCount} priceLevel={business.priceLevel} />
+            <BusinessPageHeader name={business.name} startingTime={business.startingTime} endingTime={business.endingTime} category={business.category} rating={business.rating} reviewCount={business.reviewCount} priceLevel={business.priceLevel} />
             <BusinessPageBottom  description={business.description} otherInfo={business.otherInfo} phone={business.phone} website={business.website} email={business.email} address={business.address}/>
         </div>)
 
