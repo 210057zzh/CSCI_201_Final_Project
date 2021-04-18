@@ -4,7 +4,7 @@ import Home from './components/Home';
 import Discover from './components/Discover';
 import AuthContextProvider from './components/contexts/authContext'
 import BusinessPage from './components/BusinessPage'
-
+import BusinessPageEdit from './components/BusinessPageEdit'
 
 function App() {
 
@@ -22,6 +22,7 @@ function App() {
             ></Route> */}
             <Route exact path ='/Discover' component={Discover}></Route>
             <Route exact path ='/BusinessPage' component={BusinessPage}></Route>
+            <Route exact path ='/BusinessPageEdit' component={BusinessPageEdit}></Route>
           </Switch>
         </BrowserRouter>
       </AuthContextProvider>
