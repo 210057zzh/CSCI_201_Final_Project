@@ -44,7 +44,7 @@ import java.time.LocalDateTime;
 @RequestMapping("/api")
 public class SignupController {
 	
-	//TODO send back userId and username for this class and login
+	//TODO send back userId and username for and login
 	
 	private final JdbcTemplate jdbcTemplate;
 
@@ -68,7 +68,8 @@ public class SignupController {
 		boolean success = addUser(credentials[0], credentials[1], false);
 		
 		if(success) {
-			return "{\"successful\": true}";
+			int userId = getUserId(credentials[0], credentials[1]);
+			return "{\"successful\": true, \"userId\": "+userId+", \"username\":\""+credentials[0]+"\"}";//TODO Lint
 		}else {
 			return "{\"successful\": false, \"error\": \"Unspecified\"}";
 		}		
@@ -104,7 +105,8 @@ public class SignupController {
 			boolean success = addUser(email, userId, true);
 			
 			if(success) {
-				return "{\"successful\": true}";
+				int id = getUserId(email, userId);
+				return "{\"successful\": true, \"userId\": "+id+", \"username\":\""+email+"\"}";//TODO Lint
 			}else {
 				return "{\"successful\": false, \"error\": \"Unspecified\"}";
 			}	
@@ -144,6 +146,19 @@ public class SignupController {
 		}else {
 			return false;
 		}	
+	}
+	
+	//Returns a the userId or -1
+	public int getUserId(String username, String password) {
+		var users =  this.jdbcTemplate.queryForList("SELECT userID FROM Users WHERE username=\""+username+"\" AND password=\""+password+"\"").stream()
+				.map(m -> m.values().toString())
+				.collect(Collectors.toList());
+		
+		if(users.size()>=1) {
+			return Integer.parseInt(users.get(0));//TODO check 
+		}else {//failed
+			return -1;
+		}
 	}
 
 }
