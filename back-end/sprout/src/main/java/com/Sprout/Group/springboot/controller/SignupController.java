@@ -45,10 +45,7 @@ import java.time.LocalDateTime;
 @CrossOrigin(origins = origins)
 @RestController
 @RequestMapping("/api")
-public class SignupController {
-	
-	//TODO send back userId and username for and login
-	
+public class SignupController {	
 	private final JdbcTemplate jdbcTemplate;
 
 	public SignupController(JdbcTemplate jdbcTemplate) {
