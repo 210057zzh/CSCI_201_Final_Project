@@ -23,13 +23,21 @@
 
 .login-popup {
     position: fixed;
-    width: 80vw;
-    height: 75vh;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
     background-color: white;
     z-index: 2;
-    left: 10vw;
-    top: 12.5vh;
-    border-radius: 10px;
+    border-radius: 20px;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
 }
 
 .darkened {
@@ -41,7 +49,8 @@
 }
 
 .login-form {
-    margin-top: 3em;
+    margin-top: 1em;
+    margin-bottom:4em;
 }
 
 .login-form input {
@@ -95,7 +104,7 @@
 
 .Signup-popup {
     position: fixed;
-    top: 40%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 50%;

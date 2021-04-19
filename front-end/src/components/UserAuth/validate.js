@@ -28,6 +28,15 @@ export const validateSignUpForm = payload => {
         errors.pwconfirm = "Password confirmation doesn't match.";
     }
 
+    if (
+        !payload ||
+        typeof payload.pwconfirm !== "string" ||
+        payload.pwconfirm.trim().length === 0
+    ) {
+        isFormValid = false;
+        errors.pwconfirm = "Please provide your Password confirmation.";
+    }
+
     if (!isFormValid) {
         message = "Check the form for errors.";
     }
@@ -46,20 +55,20 @@ export const validateLoginForm = payload => {
 
     if (
         !payload ||
-        typeof payload.username !== "string" ||
-        payload.username.trim().length === 0
-    ) {
-        isFormValid = false;
-        errors.username = "Please provide your user name.";
-    }
-
-    if (
-        !payload ||
         typeof payload.password !== "string" ||
         payload.password.trim().length === 0
     ) {
         isFormValid = false;
         errors.password = "Please provide your password.";
+    }
+
+    if (
+        !payload ||
+        typeof payload.email !== "string" ||
+        payload.email.trim().length === 0
+    ) {
+        isFormValid = false;
+        errors.email = "Please provide your email.";
     }
 
     if (!isFormValid) {

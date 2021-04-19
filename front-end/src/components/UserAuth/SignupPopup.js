@@ -9,11 +9,7 @@ import { validateSignUpForm } from './validate';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
-/*
- Needs: 
-    -Google sign-in api implementation
-    -regex for email/pass
-*/
+
 const clickOutsideConfig = {
     handleClickOutside: () => Signup.handleClickOutside
 };
@@ -63,25 +59,28 @@ function Signup(props) {
         setEmailerr(result.errors.email);
         setPwerr(result.errors.password);
         setpwce(result.errors.pwconfirm);
+        console.log(result);
         e.preventDefault();
-        axios.post(REST_API_CALL, [email, pass]).then(async (resp) => {
-            console.log(resp);
-            if (resp.data.successful === true) { // The user already exists and has successfully logged in
-                console.log('Signup Success: currentUser:', resp.data);
-                setAuthState(prevState => { return { ...prevState, showSignup: false, loggedIn: true } });
-            } else { // The user does not already exist or some other error occured. Refer to error message to determine next steps
-                console.log('error: ' + resp.data.error);
-                setErr(resp.data.error);
-            }
-        }).catch(err => {
-            console.log(err.message);
-            setErr(err.message);
-        });
+        if (result.success === true) {
+            axios.post(REST_API_CALL, [email, pass]).then(async (resp) => {
+                console.log(resp);
+                if (resp.data.successful === true) { // The user already exists and has successfully logged in
+                    console.log('Signup Success: currentUser:', resp.data);
+                    setAuthState(prevState => { return { ...prevState, showSignup: false, loggedIn: true } });
+                } else { // The user does not already exist or some other error occured. Refer to error message to determine next steps
+                    console.log('error: ' + resp.data.error);
+                    setErr(resp.data.error);
+                }
+            }).catch(err => {
+                console.log(err.message);
+                setErr(err.message);
+            });
+        }
     }
     return (
         <div className='Signup-popup'>
-            <div style={{ fontWeight: 'bold', fontSize: '30px', marginTop: '1em' }}>Sign up to Sprout</div>
-            <div style={{ marginTop: '1em' }}><GoogleLogin LoggedinStatus={authState.loggedIn}
+            <div style={{ fontWeight: 'bold', fontSize: '30px', marginTop: '1em', }}>Sign up to Sprout</div>
+            <div style={{ marginTop: '3em' }}><GoogleLogin LoggedinStatus={authState.loggedIn}
                 buttonText="Sign up with Google" signUporLogin={'Signup'} /> </div>
             <hr style={{ width: '30%', marginTop: '3em' }}></hr>
             <form className='Signup-form' onSubmit={submit}>
@@ -93,8 +92,7 @@ function Signup(props) {
                     label="email"
                     onChange={updateEmail}
                     error={emailerr}
-                    helperText={emailerr ? emailerr : null}
-                    required={true}
+                    helperText={emailerr ? emailerr : 'your email here'}
                 />
                 <br></br>
                 <TextField
@@ -107,7 +105,6 @@ function Signup(props) {
                     label="password"
                     error={pwerr}
                     helperText={pwerr ? pwerr : 'at least 8 characters'}
-                    required={true}
                 />
                 <br></br>
                 <TextField
@@ -121,11 +118,10 @@ function Signup(props) {
                     label="confirm password"
                     error={pwconfirmerr}
                     helperText={pwconfirmerr ? pwconfirmerr : 'enter your password to confirm'}
-                    required={true}
                 />
                 {err ? <Error errorMsg={err}></Error> : null}
                 <br></br>
-                <Button style={{ width: '20%', marginTop: '3em' }} className='Signup-btn' size="small" type="submit" variant="contained" color="">Submit</Button>
+                <Button style={{ width: '20%', marginTop: '3em' }} className='Signup-btn' size="small" type="submit" variant="contained" color="">Sign up</Button>
             </form>
         </div>
     );
