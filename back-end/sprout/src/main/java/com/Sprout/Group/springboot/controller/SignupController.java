@@ -151,11 +151,12 @@ public class SignupController {
 	//Returns a the userId or -1
 	public int getUserId(String username, String password) {
 		var users =  this.jdbcTemplate.queryForList("SELECT userID FROM Users WHERE username=\""+username+"\" AND password=\""+password+"\"").stream()
-				.map(m -> m.values().toString())
 				.collect(Collectors.toList());
 		
+		int userID = (int) users.get(0).get("userID");
+		
 		if(users.size()>=1) {
-			return Integer.parseInt(users.get(0));//TODO check 
+			return userID; 
 		}else {//failed
 			return -1;
 		}
