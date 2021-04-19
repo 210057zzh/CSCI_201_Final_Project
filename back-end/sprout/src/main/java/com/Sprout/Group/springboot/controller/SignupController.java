@@ -44,6 +44,8 @@ import java.time.LocalDateTime;
 @RequestMapping("/api")
 public class SignupController {
 	
+	//TODO send back userId and username for this class and login
+	
 	private final JdbcTemplate jdbcTemplate;
 
 	public SignupController(JdbcTemplate jdbcTemplate) {
