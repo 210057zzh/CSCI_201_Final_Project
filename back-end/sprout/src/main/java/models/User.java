@@ -2,19 +2,25 @@ package models;
 
 public class User {
 	private int userID;
-	private String email;
-	private int idToken;
-	private boolean googleUser;
+	private String username;
 	private String password;
-	
-	
-	public User(int userID, String email, String password, boolean googleUser) {
+	private String idToken;
+	private boolean googleUser;	
+
+
+	public User(int userID, String username, String password, boolean googleUser) {
 		super();
 		this.userID = userID;
-		this.email = email;
-		this.googleUser = googleUser;
+		this.username = username;
 		this.password = password;
+		this.googleUser = googleUser;
 	}
+	
+	public User(int userId) {
+		this.userID=userId;
+	}
+
+
 
 
 	public int getUserID() {
@@ -28,21 +34,21 @@ public class User {
 
 
 	public String getEmail() {
-		return email;
+		return username;
 	}
 
 
 	public void setEmail(String email) {
-		this.email = email;
+		this.username = email;
 	}
 
 
-	public int getIdToken() {
+	public String getIdToken() {
 		return idToken;
 	}
 
 
-	public void setIdToken(int idToken) {
+	public void setIdToken(String idToken) {
 		this.idToken = idToken;
 	}
 
@@ -64,6 +70,15 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+
+
+
+	@Override
+	public String toString() {
+		return "User [userID=" + userID + ", username=" + username + ", password=" + password + ", idToken=" + idToken
+				+ ", googleUser=" + googleUser + "]";
 	}
 	
 	

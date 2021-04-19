@@ -3,7 +3,8 @@ package utils;
 import static utils.Constants.dbAddress;
 import java.text.SimpleDateFormat;  
 import java.util.Date;
-
+import java.util.List;
+import java.util.Map;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -12,6 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import models.Business;
+import models.User;
 
 public class Utils {
 
@@ -179,5 +181,16 @@ public class Utils {
 	    Date date = new Date();
 	    return formatter.format(date);
 	} 
+	
+	public static User queryUser(List<Map<String, Object>> users) {
+		int actual_userID = (int) users.get(0).get("userID");
+		String actual_username = (String) users.get(0).get("username");
+		String actual_password = (String) users.get(0).get("password");
+		boolean isGoogle = (boolean) users.get(0).get("isGoogle");
+		
+		User user = new User(actual_userID, actual_username, actual_password, isGoogle);
+		System.out.println(user);
+		return user;
+	}
 
 }

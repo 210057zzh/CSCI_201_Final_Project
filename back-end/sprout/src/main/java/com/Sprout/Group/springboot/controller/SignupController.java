@@ -4,6 +4,7 @@ import static utils.Constants.dbAddress_nopass;
 import static utils.Constants.googleClientId;
 import static utils.Constants.origins;
 import static utils.Utils.getCurrentDate;
+import static utils.Utils.queryUser;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -36,6 +37,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import models.Business;
+import models.User;
+
 import java.time.format.DateTimeFormatter;  
 import java.time.LocalDateTime; 
 
@@ -68,7 +71,7 @@ public class SignupController {
 		boolean success = addUser(credentials[0], credentials[1], false);
 		
 		if(success) {
-			int userId = getUserId(credentials[0], credentials[1]);
+			int userId = getUserInfo(credentials[0], credentials[1]).getUserID();
 			return "{\"successful\": true, \"userId\": "+userId+", \"username\":\""+credentials[0]+"\"}";//TODO Lint
 		}else {
 			return "{\"successful\": false, \"error\": \"Unspecified\"}";
@@ -105,7 +108,7 @@ public class SignupController {
 			boolean success = addUser(email, userId, true);
 			
 			if(success) {
-				int id = getUserId(email, userId);
+				int id = getUserInfo(email, userId).getUserID();
 				return "{\"successful\": true, \"userId\": "+id+", \"username\":\""+email+"\"}";//TODO Lint
 			}else {
 				return "{\"successful\": false, \"error\": \"Unspecified\"}";
@@ -138,7 +141,7 @@ public class SignupController {
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("username", username);
 		parameters.put("password", password);
-		parameters.put("googleuser", googleuser);
+		parameters.put("isGoogle", googleuser);
 		int return_value = simpleJdbcInsert.execute(parameters);
 		
 		if(return_value>=1) {
@@ -148,17 +151,27 @@ public class SignupController {
 		}	
 	}
 	
-	//Returns a the userId or -1
-	public int getUserId(String username, String password) {
-		var users =  this.jdbcTemplate.queryForList("SELECT userID FROM Users WHERE username=\""+username+"\" AND password=\""+password+"\"").stream()
+	//Returns a User with a real id or an id of -1
+	public User getUserInfo(String username, String password) {
+		var users =  this.jdbcTemplate.queryForList("SELECT * FROM Users WHERE username=\""+username+"\"").stream()
 				.collect(Collectors.toList());
-		
-		int userID = (int) users.get(0).get("userID");
-		
+				
 		if(users.size()>=1) {
-			return userID; 
+			return queryUser(users);
 		}else {//failed
-			return -1;
+			return new User(-1);
+		}
+	}
+	
+	//Returns a User with a real id or an id of -1
+	public User getUserInfo(int userID) {
+		var users =  this.jdbcTemplate.queryForList("SELECT * FROM Users WHERE userID=\""+userID+"\"").stream()
+				.collect(Collectors.toList());
+				
+		if(users.size()>=1) {
+			return queryUser(users);
+		}else {//failed
+			return new User(-1);
 		}
 	}
 
