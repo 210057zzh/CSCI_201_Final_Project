@@ -101,13 +101,19 @@ public class LoginController {
 		
 		//First get the user data associated with the email
 		User user = getUserInfo(username);
-		
+		System.out.println(user);
 		
 		//Now that we have user data, check if user is real
 		if(user ==null) {
 			//Return the unsuccessful defaults
 			return  "{\"successful\": false, \"userId\":-1, \"error\":\"mustSignup\"}";
 		}
+		
+		if(user.getUserID()==-1) {
+			//Return the unsuccessful defaults
+			return  "{\"successful\": false, \"userId\":-1, \"error\":\"mustSignup\"}";
+		}
+		
 		
 		//Check if the user is a google user
 		if(user.isGoogleUser()) {
@@ -123,7 +129,6 @@ public class LoginController {
 		
 		
 		//If the code has made it this far, the user is logged in. return success
-		System.out.println("{\"successful\": true, \"userId\":"+user.getUserID()+"}");
 		return "{\"successful\": true, \"userId\":"+user.getUserID()+", \"username\": \""+user.getUsername()+"\"}";
 	}
 
