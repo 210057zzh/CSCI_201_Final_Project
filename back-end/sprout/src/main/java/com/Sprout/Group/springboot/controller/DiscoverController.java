@@ -12,7 +12,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,72 +30,47 @@ import models.Business;
 @RestController
 @RequestMapping("/api")
 public class DiscoverController {
+	
+	private final JdbcTemplate jdbcTemplate;
+
+	public DiscoverController(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
+	}
 
 	@GetMapping("/discover")
-	public String discoverBusinesses(@RequestParam String category) {
-		ArrayList<Business> results = new ArrayList<>();
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+	public String discoverBusinesses(@RequestParam String category) {	
 		System.out.println("category:" + category);
+		
+		for(int i =0; i<2; i++) {
+			if(category==null || category=="" || i==1) {//Do this if no category was supplied or this is the second time running the loop (i.e. the loop didn't find any results the first time)
+				var businesses =  this.jdbcTemplate.queryForList("SELECT * FROM Businesses ORDER BY average_rating DESC LIMIT 30").stream()
+						.collect(Collectors.toList());
+				
+				if(businesses.size()>0) {
+					Gson gson = new GsonBuilder().create();
 
-		boolean haveResults = false;
+					String resultsString = gson.toJson(businesses);
 
-		while (!haveResults) {
-			try {
-				conn = DriverManager.getConnection(dbAddress);
-
-				// Sets the SQL Query based on whether or not we are provided a category
-				if (category == null || category == "") {
-					ps = conn.prepareStatement("SELECT * FROM Business ORDER BY average_rating DESC LIMIT ?");
-					ps.setInt(1, discoverPageBusinessLimit);
-
-				} else {
-					ps = conn.prepareStatement(
-							"SELECT * FROM Business WHERE business_type = ? ORDER BY average_rating DESC LIMIT ?");
-					ps.setString(1, category);
-					ps.setInt(2, discoverPageBusinessLimit);
+					return resultsString;
 				}
+			}else {
+				var businesses =  this.jdbcTemplate.queryForList("SELECT * FROM Businesses WHERE business_type = \""+category+"\" ORDER BY average_rating DESC LIMIT 30").stream()
+						.collect(Collectors.toList());
+				if(businesses.size()>0) {
+					Gson gson = new GsonBuilder().create();
 
-				rs = ps.executeQuery();
-				results = queryBusinesses(rs);
-			} catch (SQLException sqle) {
-				// TODO handle
-				System.out.println(sqle.getMessage());
-				results = getPlaceholderBusinesses();
-			} finally {
-				try {
-					if (rs != null) {
-						rs.close();
-					}
-					if (ps != null) {
-						ps.close();
-					}
-					if (conn != null) {
-						conn.close();
-					}
-				} catch (SQLException sqle) {
-					// TODO handle
-					System.out.println(sqle.getMessage());
-					results = getPlaceholderBusinesses();
+					String resultsString = gson.toJson(businesses);
+
+					return resultsString;
 				}
 			}
-
-			if (results.size() == 0 && category == "") {
-				results = getPlaceholderBusinesses();
-			}
-
-			if (results.size() == 0) {
-				category = "";
-			}
-
-			haveResults = true;
-
 		}
+
+		//Return the placeholder businesses
 
 		Gson gson = new GsonBuilder().create();
 
-		String resultsString = gson.toJson(results);
+		String resultsString = gson.toJson(getPlaceholderBusinesses());
 
 		return resultsString;
 	}

@@ -1,6 +1,7 @@
 package com.Sprout.Group.springboot.controller;
 
 import static utils.Constants.dbAddress;
+import static utils.Utils.queryUser;
 import static utils.Constants.googleClientId;
 import static utils.Constants.origins;
 
@@ -12,7 +13,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collections;
+import java.util.stream.Collectors;
 
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,14 +37,19 @@ import models.User;
 @RestController
 @RequestMapping("/api")
 public class LoginController {
+	
+	private final JdbcTemplate jdbcTemplate;
+
+	public LoginController(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
+	}
 
 	// Recieves a user token and returns a JSON with the following attrbutes
 	// {registered: boolean, userId: int}
 	// userId will be -1 if registered is false
 	@PostMapping("/googlelogin")
 	public String getLoginInfo(@RequestBody String idTokenString) throws GeneralSecurityException, IOException {
-		boolean registered=false;
-		int token=-1;
+		User token=null;
 		String retString="";
 		
 		GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), new JacksonFactory())
@@ -56,141 +64,96 @@ public class LoginController {
 			String userId = payload.getSubject();
 			String email = payload.getEmail();
 
-			System.out.println(userId);
-			token = searchUser(userId, email);
+			
+			token = getUserInfo(email, userId);
+			System.out.println(token);
 
 		} else {
 			System.out.println("Invalid ID token.");
-			retString = "{\"registered\": false, \"userId\":-1}";
+			retString = "{\"successful\": false, \"userId\":-1}";
 		}
 		
-		if(token!=-1) {
-			retString = "{\"registered\": true, \"userId\":"+token+"}";
+		if(token.getUserID()!=-1) {
+			retString = "{\"successful\": true, \"userId\":"+token.getUserID()+", \"username\": \""+token.getEmail()+"\"}";
 		}else {
-			retString = "{\"registered\": false, \"userId\":-1}";
+			retString = "{\"successful\": false, \"userId\":-1}";
 		}
 				
 		return retString;
 	}
 	
-		//Recieves an username and password and checks if the user is registered and/or provided the right email
-		// {successful: boolean, userId: int, error: String}
-		// userId will be -1 if registered is false
-		// there will be no error is successful is true
-		@PostMapping("/login")
-		public String loginUser(@RequestBody String[] credentials) {
-			Connection conn = null;
-			PreparedStatement ps = null;
-			ResultSet rs = null;
-			User user = null;
-			String username = credentials[0];
-			String password = credentials[1];
-			
-			//If they did not provide a password or username, send back the unsuccessful default with blankfield error
-			if(username.equals("")||password.equals("")) {
-				return "{\"successful\": false, \"userId\":-1, \"error\":\"blankfield\"}";
-			}
-			
-			//First get the user data associated with the email
-			try {
-				conn = DriverManager.getConnection(dbAddress);
-				// TODO may have to edit this statement. I am assuming email is the username
-				
-				ps = conn.prepareStatement("SELECT * FROM User WHERE username=?");
-				ps.setString(1, username);
-				rs = ps.executeQuery();
-				while (rs.next()) {
-					int userID = rs.getInt("userID");
-					String realPassword = rs.getString("password");
-					boolean googleUser = rs.getInt("googleUser")>=1;
-					user = new User(userID, username, realPassword, googleUser);
-				}
-			} catch (SQLException sqle) {
-				//Return the unsuccessful defaults
-				return "{\"successful\": false, \"userId\":-1, \"error\":\"unspecified\"}";
-			} finally {
-				try {
-					if (rs != null) {
-						rs.close();
-					}
-					if (ps != null) {
-						ps.close();
-					}
-					if (conn != null) {
-						conn.close();
-					}
-				} catch (SQLException sqle) {
-					// TODO handle
-					System.out.println(sqle.getMessage());
-				}
-			}
-			
-			//Now that we have user data, check if user is real
-			if(user ==null) {
-				//Return the unsuccessful defaults
-				return  "{\"successful\": false, \"userId\":-1, \"error\":\"mustSignup\"}";
-			}
-			
-			//Check if the user is a google user
-			if(user.isGoogleUser()) {
-				//Return the unsuccessful defaults
-				return "{\"successful\": false, \"userId\":-1, \"error\":\"googleuser\"}";
-			}
-			
-			//Check if the user entered the right password
-			if(!user.getPassword().equals(password)) {
-				//Return the unsuccessful defaults
-				return "{\"successful\": false, \"userId\":-1, \"error\":\"incorrectPassword\"}";
-			}
-			
-			
-			//If the code has made it this far, the user is logged in. return success
-			System.out.println("{\"successful\": true, \"userId\":"+user.getUserID()+"}");
-			return "{\"successful\": true, \"userId\":"+user.getUserID()+"}";
-		}
-
-	//Returns userId or -1 if user does not exist
-	private int searchUser(String idToken, String email) {
+	//Recieves an username and password and checks if the user is registered and/or provided the right email
+	// {successful: boolean, userId: int, error: String}
+	// userId will be -1 if registered is false
+	// there will be no error is successful is true
+	@PostMapping("/login")
+	public String loginUser(@RequestBody String[] credentials) {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
+		String username = credentials[0];
+		String password = credentials[1];
 		
-		Integer userID = -1;
-
-		try {
-			conn = DriverManager.getConnection(dbAddress);
-			// TODO may have to edit this statement. I am assuming email is the username
-			
-			ps = conn.prepareStatement("SELECT userID FROM User WHERE idToken=? AND username=?");
-			ps.setString(1, idToken);
-			ps.setString(2, email);
-			rs = ps.executeQuery();
-			while (rs.next()) {
-				userID = rs.getInt("userID");
-				return userID;
-			}
-			return userID;
-		} catch (SQLException sqle) {
-			// TODO handle
-			System.out.println(sqle.getMessage());
-		} finally {
-			try {
-				if (rs != null) {
-					rs.close();
-				}
-				if (ps != null) {
-					ps.close();
-				}
-				if (conn != null) {
-					conn.close();
-				}
-			} catch (SQLException sqle) {
-				// TODO handle
-				System.out.println(sqle.getMessage());
-			}
+		//If they did not provide a password or username, send back the unsuccessful default with blankfield error
+		if(username.equals("")||password.equals("")) {
+			return "{\"successful\": false, \"userId\":-1, \"error\":\"blankfield\"}";
 		}
+		
+		//First get the user data associated with the email
+		User user = getUserInfo(username);
+		System.out.println(user);
+		
+		//Now that we have user data, check if user is real
+		if(user ==null) {
+			//Return the unsuccessful defaults
+			return  "{\"successful\": false, \"userId\":-1, \"error\":\"mustSignup\"}";
+		}
+		
+		if(user.getUserID()==-1) {
+			//Return the unsuccessful defaults
+			return  "{\"successful\": false, \"userId\":-1, \"error\":\"mustSignup\"}";
+		}
+		
+		
+		//Check if the user is a google user
+		if(user.isGoogleUser()) {
+			//Return the unsuccessful defaults
+			return "{\"successful\": false, \"userId\":-1, \"error\":\"googleuser\"}";
+		}
+		
+		//Check if the user entered the right password
+		if(!user.getPassword().equals(password)) {
+			//Return the unsuccessful defaults
+			return "{\"successful\": false, \"userId\":-1, \"error\":\"incorrectPassword\"}";
+		}
+		
+		
+		//If the code has made it this far, the user is logged in. return success
+		return "{\"successful\": true, \"userId\":"+user.getUserID()+", \"username\": \""+user.getUsername()+"\"}";
+	}
 
-		return userID;
+	//Returns a User with a real id or an id of -1
+	public User getUserInfo(String username) {
+		var users =  this.jdbcTemplate.queryForList("SELECT * FROM Users WHERE username=\""+username+"\"").stream()
+				.collect(Collectors.toList());
+				
+		if(users.size()>=1) {
+			return queryUser(users);
+		}else {//failed
+			return new User(-1);
+		}
+	}
+	
+	//Returns a User with a real id or an id of -1
+	public User getUserInfo(String username, String password) {
+		var users =  this.jdbcTemplate.queryForList("SELECT * FROM Users WHERE username=\""+username+"\" AND password = \""+password+"\"").stream()
+				.collect(Collectors.toList());
+				
+		if(users.size()>=1) {
+			return queryUser(users);
+		}else {//failed
+			return new User(-1);
+		}
 	}
 
 }

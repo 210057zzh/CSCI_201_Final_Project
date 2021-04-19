@@ -10,7 +10,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,55 +28,26 @@ import models.Business;
 @RestController
 @RequestMapping("/api")
 public class HomePageController {
+	
+	private final JdbcTemplate jdbcTemplate;
+
+	public HomePageController(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
+	}
 
 	@GetMapping("/businesses")
 	public String getSearchResponse(@RequestParam String search) {
-
-		// Gets results
-		ArrayList<Business> results = new ArrayList<>();
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			conn = DriverManager.getConnection(dbAddress);
-			ps = conn.prepareStatement(
-					"SELECT * FROM Business WHERE name LIKE ? OR business_type LIKE ? OR address LIKE ? or phone_number LIKE ?");
-			for (int i = 1; i < 5; i++) {
-				ps.setString(i, "%" + search + "%");
-			}
-
-			rs = ps.executeQuery();
-			results = queryBusinesses(rs);
-		} catch (SQLException sqle) {
-			// TODO handle
-			System.out.println(sqle.getMessage());
-		} finally {
-			try {
-				if (rs != null) {
-					rs.close();
-				}
-				if (ps != null) {
-					ps.close();
-				}
-				if (conn != null) {
-					conn.close();
-				}
-			} catch (SQLException sqle) {
-				// TODO handle
-				System.out.println(sqle.getMessage());
-			}
-		}
-
+		var businesses =  this.jdbcTemplate.queryForList("SELECT * FROM Businesses WHERE name LIKE \"%"+search+"%\" OR business_type LIKE \"%"+search+"%\" OR address LIKE \"%"+search+"%\" or phone_number LIKE \"%"+search+"%\"").stream()
+				.collect(Collectors.toList());
+		
 		// Jsonifies and returns results or "NO RESULTS"
-
-		if (results.size() == 0) {
+		if (businesses.size() == 0) {
 			return "NO RESULTS";
 		}
 
 		Gson gson = new GsonBuilder().create();
 
-		String resultsString = gson.toJson(results);
+		String resultsString = gson.toJson(businesses);
 
 		System.out.println(resultsString);
 
