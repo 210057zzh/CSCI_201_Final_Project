@@ -53,6 +53,25 @@ public class InsertIntoController {
 		parameters.put("rating", rating);
 		parameters.put("time", getCurrentDate());
 		int return_value = simpleJdbcInsert.execute(parameters);
+		
+		System.out.println("VALUE RETURNED IS :" + return_value);
+	}
+	@GetMapping("/dashboard")
+	public void InsertBusiness(@RequestParam int userID, @RequestParam String name,@RequestParam String phone_number,@RequestParam int startHour, @RequestParam int endHour, @RequestParam String description, @RequestParam int cost, @RequestParam String address) {
+		String url = dbAddress_nopass;
+		DriverManagerDataSource dataSource = new DriverManagerDataSource(url, "root", "root");
+		SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(dataSource).withTableName("Review");
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("userID", userID);
+		parameters.put("name", name);
+		parameters.put("phone_number", phone_number);
+		parameters.put("startHour", startHour);
+		parameters.put("endHour", endHour);
+		parameters.put("description", description);
+		parameters.put("cost", cost);
+		parameters.put("review_count", 0);
+		parameters.put("address", address);
+		int return_value = simpleJdbcInsert.execute(parameters);
 		System.out.println("VALUE RETURNED IS :" + return_value);
 	}
 }
