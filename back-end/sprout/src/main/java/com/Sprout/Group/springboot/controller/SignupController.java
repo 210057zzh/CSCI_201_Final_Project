@@ -123,7 +123,7 @@ public class SignupController {
 	}
 	
 	public boolean doesUserExist(String[] credentials) {
-		var users =  this.jdbcTemplate.queryForList("SELECT userID FROM Users WHERE username=\""+credentials[0]+"\" AND password=\""+credentials[1]+"\"").stream()
+		var users =  this.jdbcTemplate.queryForList("SELECT userID FROM Users WHERE username=\""+credentials[0]+"\"").stream()
 				.map(m -> m.values().toString())
 				.collect(Collectors.toList());
 		

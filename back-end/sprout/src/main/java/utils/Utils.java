@@ -183,14 +183,18 @@ public class Utils {
 	} 
 	
 	public static User queryUser(List<Map<String, Object>> users) {
-		int actual_userID = (int) users.get(0).get("userID");
-		String actual_username = (String) users.get(0).get("username");
-		String actual_password = (String) users.get(0).get("password");
-		boolean isGoogle = (boolean) users.get(0).get("isGoogle");
-		
-		User user = new User(actual_userID, actual_username, actual_password, isGoogle);
-		System.out.println(user);
-		return user;
+		try {
+			int actual_userID = (int) users.get(0).get("userID");
+			String actual_username = (String) users.get(0).get("username");
+			String actual_password = (String) users.get(0).get("password");
+			boolean isGoogle = (boolean) users.get(0).get("isGoogle");
+			
+			User user = new User(actual_userID, actual_username, actual_password, isGoogle);
+			System.out.println(user);
+			return user;
+		}catch(Exception e) {
+			return new User(-1);
+		}
 	}
 
 }
