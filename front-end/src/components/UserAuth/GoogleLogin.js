@@ -8,7 +8,7 @@ import { authContext } from '../contexts/authContext';
 function GoogleLogin(props) {
     const { authState, setAuthState } = useContext(authContext)
     const REST_API_CALL_Login = 'http://localhost:8080/api/googlelogin'
-    const REST_API_CALL_Signup = 'http://localhost:8080/api/googlesignin'
+    const REST_API_CALL_Signup = 'http://localhost:8080/api/googlesignup'
     var signUporLogin = null; // 'signup' or 'Login'
     const clientid = "467227431315-qfa0plniiro21687j2ifupq82cd7j6op.apps.googleusercontent.com";
 
@@ -63,7 +63,7 @@ function GoogleLogin(props) {
         }
         else if (signUporLogin === 'Signup') {
             axios.post(REST_API_CALL_Signup, id_token).then(resp => {
-                if (resp.data.registered === false) { // The user does not exist and has successfully signed up
+                if (resp.data.successful === true) { // The user has successfully registered with google
                     console.log('Signup Success: currentUser:', res.profileObj);
                     toggleLoginStatusOn();
                     alert(

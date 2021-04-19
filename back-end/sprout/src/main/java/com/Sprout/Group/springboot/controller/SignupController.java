@@ -1,16 +1,17 @@
 package com.Sprout.Group.springboot.controller;
 
 import static utils.Constants.dbAddress_nopass;
+import static utils.Constants.googleClientId;
 import static utils.Constants.origins;
 import static utils.Utils.getCurrentDate;
 
-
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.util.*;
 
@@ -26,6 +27,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -57,21 +63,56 @@ public class SignupController {
 		
 		System.out.println("signing up "+credentials[0]+credentials[1]);
 		
-		String url = dbAddress_nopass;
-		DriverManagerDataSource dataSource = new DriverManagerDataSource(url, "root", "root");
-		SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(dataSource).withTableName("Users");
-		Map<String, Object> parameters = new HashMap<String, Object>();
-		parameters.put("username", credentials[0]);
-		parameters.put("password", credentials[1]);
-		parameters.put("googleuser", false);
-		int return_value = simpleJdbcInsert.execute(parameters);
+		boolean success = addUser(credentials[0], credentials[1], false);
 		
-		if(return_value>=1) {
+		if(success) {
 			return "{\"successful\": true}";
 		}else {
 			return "{\"successful\": false, \"error\": \"Unspecified\"}";
 		}		
 				
+	}
+	
+	@PostMapping("/googlesignup")
+	public String googlesignup(@RequestBody String idTokenString) throws GeneralSecurityException, IOException {
+		System.out.println("google sign up");
+		int token=-1;
+		String retString="";
+		
+		GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), new JacksonFactory())
+				// Specify the CLIENT_ID of the app that accesses the backend:
+				.setAudience(Collections.singletonList(googleClientId)).build();
+
+		GoogleIdToken idToken = verifier.verify(idTokenString);
+		if (idToken != null) {
+			Payload payload = idToken.getPayload();
+
+			// Get profile information from payload
+			String userId = payload.getSubject();
+			String email = payload.getEmail();
+			
+			//Check if they are already registered
+			boolean registered = doesUserExist(new String[] {email, userId});
+			
+			if(registered) {
+				System.out.println("User already exists");
+				return "{\"successful\": false, \"error\": \"User already exists\"}"; 
+			}
+			
+			boolean success = addUser(email, userId, true);
+			
+			if(success) {
+				return "{\"successful\": true}";
+			}else {
+				return "{\"successful\": false, \"error\": \"Unspecified\"}";
+			}	
+			
+
+		} else {
+			System.out.println("Invalid ID token.");
+			return "{\"successful\": false, \"error\": \"Invalid\"}"; 
+		}
+						
 	}
 	
 	public boolean doesUserExist(String[] credentials) {
@@ -84,6 +125,23 @@ public class SignupController {
 		}
 		
 		return false;
+	}
+	
+	public boolean addUser(String username, String password, boolean googleuser) {
+		String url = dbAddress_nopass;
+		DriverManagerDataSource dataSource = new DriverManagerDataSource(url, "root", "root");
+		SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(dataSource).withTableName("Users");
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("username", username);
+		parameters.put("password", password);
+		parameters.put("googleuser", googleuser);
+		int return_value = simpleJdbcInsert.execute(parameters);
+		
+		if(return_value>=1) {
+			return true;
+		}else {
+			return false;
+		}	
 	}
 
 }
