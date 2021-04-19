@@ -70,13 +70,13 @@ public class LoginController {
 
 		} else {
 			System.out.println("Invalid ID token.");
-			retString = "{\"registered\": false, \"userId\":-1}";
+			retString = "{\"successful\": false, \"userId\":-1}";
 		}
 		
 		if(token.getUserID()!=-1) {
-			retString = "{\"registered\": true, \"userId\":"+token+", \"username\": +\""+token.getEmail()+"\"}";
+			retString = "{\"successful\": true, \"userId\":"+token.getUserID()+", \"username\": \""+token.getEmail()+"\"}";
 		}else {
-			retString = "{\"registered\": false, \"userId\":-1}";
+			retString = "{\"successful\": false, \"userId\":-1}";
 		}
 				
 		return retString;
