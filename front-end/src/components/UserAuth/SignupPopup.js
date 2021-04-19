@@ -22,7 +22,7 @@ function Signup(props) {
     const [pass, setPass] = useState();
     const [SecondPass, setSecondPass] = useState();
     const [err, setErr] = useState();
-    const REST_API_CALL = 'http://localhost:8080/api/Signup'
+    const REST_API_CALL = 'http://localhost:8080/api/signup'
 
     useEffect(() => {
         if (authState.signUpredirect === true) {
