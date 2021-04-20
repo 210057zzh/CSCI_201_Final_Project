@@ -51,7 +51,7 @@ public class Utils {
 	public static Business queryBusiness(ResultSet rs) throws SQLException {
 		while(rs.next()) {	
 			int businessID = rs.getInt("businessID");
-			int ownerID = rs.getInt("ownerID");
+			int ownerID = 0; //PLACE HOLDER VALUE UNTIL DB GETS FIXED rs.getInt("ownerID");
 			String name = rs.getString("name");
 			String phone_number = rs.getString("phone_number");
 			int startHour = rs.getInt("startHour");
@@ -79,7 +79,7 @@ public class Utils {
 		try {
 			conn = DriverManager.getConnection(dbAddress);
 
-			ps = conn.prepareStatement("SELECT COUNT(reviewId) from Review where businessID=?");
+			ps = conn.prepareStatement("SELECT COUNT(reviewId) from Reviews where businessID=?");
 			ps.setInt(1, businessId);
 
 			rs2 = ps.executeQuery();
