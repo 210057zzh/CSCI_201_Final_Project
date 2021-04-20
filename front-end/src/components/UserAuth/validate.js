@@ -81,3 +81,101 @@ export const validateLoginForm = payload => {
         errors
     };
 };
+
+export const validateBusinessEdit = payload => {
+    const errors = {};
+    let message = "";
+    let isFormValid = true;
+    if (
+        !payload ||
+        typeof payload.name !== "string" ||
+        payload.name.trim().length === 0
+    ) {
+        isFormValid = false;
+        errors.name = "Please provide your business name.";
+    }
+
+    let tempstart = payload.startingTime.slice(0, 2) + payload.startingTime.slice(3, payload.startingTime.length)
+    let tempend = payload.endingTime.slice(0, 2) + payload.endingTime.slice(3, payload.endingTime.length)
+    if (
+        !payload ||
+        (tempend - tempstart) <= 0
+    ) {
+        isFormValid = false;
+        errors.time = "start time and end time is invalid";
+    }
+
+    if (
+        !payload ||
+        typeof payload.category !== "string" ||
+        payload.category.trim().length === 0
+    ) {
+        isFormValid = false;
+        errors.category = "Please provide your business category.";
+    }
+
+    if (
+        !payload ||
+        typeof payload.description !== "string" ||
+        payload.description.trim().length === 0
+    ) {
+        isFormValid = false;
+        errors.description = "Please provide your business description.";
+    }
+
+    if (
+        !payload ||
+        typeof payload.otherInfo !== "string" ||
+        payload.otherInfo.trim().length === 0
+    ) {
+        isFormValid = false;
+        errors.otherInfo = "Please provide your business otherInfo.";
+    }
+
+    if (
+        !payload ||
+        typeof payload.phone !== "string" ||
+        payload.phone.trim().length !== 14
+    ) {
+        isFormValid = false;
+        errors.phone = "not a valid phone number.";
+    }
+
+    if (
+        !payload ||
+        typeof payload.email !== "string" ||
+        !validator.isEmail(payload.email)
+    ) {
+        isFormValid = false;
+        errors.email = "Please provide a correct email address.";
+    }
+
+    if (
+        !payload ||
+        typeof payload.address !== "string" || payload.address.trim().length === 0
+    ) {
+        isFormValid = false;
+        errors.address = "Please provide a address.";
+    }
+
+    if (
+        !payload ||
+        typeof payload.website !== "string" || !validator.isURL(payload.website)
+    ) {
+        isFormValid = false;
+        errors.website = "Please provide a valid URL.";
+    }
+
+    if (!isFormValid) {
+        message = "Check the form for errors.";
+        console.log(errors);
+    }
+
+    return {
+        success: isFormValid,
+        message,
+        errors
+    };
+
+
+}

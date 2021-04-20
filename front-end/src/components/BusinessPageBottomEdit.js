@@ -1,12 +1,14 @@
 import '../css/BusinessPage.css';
-import { useState } from 'react';
-
+import { useState, useContext, useEffect } from 'react';
+import { authContext } from './contexts/authContext';
 import ReviewSnippet from './ReviewSnippet';
 import Pencil from '../css/img/pencil.png';
 import YelpLogo from '../css/img/pencil.png';
+import { validateBusinessEdit } from './UserAuth/validate';
+import MuiPhoneNumber from "material-ui-phone-number";
+import TextField from '@material-ui/core/TextField';
 
 function getReviews() {
-
     return (
         [
             {
@@ -37,53 +39,104 @@ function parseText(text) {
 }
 
 function BusinessPageBottomEdit({ description, otherInfo, phone, website, email, address }) {
-
-    const [editDescription, setDescription] = useState('');
-    const [editOtherInfo, setOtherInfo] = useState('');
-    const [editPhone, setPhone] = useState('');
-    const [editWebsite, setWebsite] = useState('');
-    const [editEmail, setEmail] = useState('');
-    const [editAddress, setAddress] = useState('');
-
+    const { authState, setAuthState } = useContext(authContext);
+    let value = null;
     function updateDescription(e) {
-        setDescription(e.getTarget.value);
+        setAuthState(prevState => {
+            return {
+                ...prevState,
+                BusinessEdit: {
+                    ...prevState.BusinessEdit,
+                    description: e.target.value
+                }
+            }
+        })
+
     }
 
     function updateOtherInfo(e) {
-        setOtherInfo(e.getTarget.value);
+        setAuthState(prevState => {
+            return {
+                ...prevState,
+                BusinessEdit: {
+                    ...prevState.BusinessEdit,
+                    otherInfo: e.target.value
+                }
+            }
+        });
     }
 
     function updatePhone(e) {
-        setPhone(e.getTarget.value);
+        value = e;
+        setAuthState(prevState => {
+            return {
+                ...prevState,
+                BusinessEdit: {
+                    ...prevState.BusinessEdit,
+                    phone: e
+                }
+            }
+        });
     }
 
     function updateWebsite(e) {
-        setWebsite(e.target.value);
+        setAuthState(prevState => {
+            return {
+                ...prevState,
+                BusinessEdit: {
+                    ...prevState.BusinessEdit,
+                    website: e.target.value
+                }
+            }
+        });
+
     }
 
     function updateEmail(e) {
-        setEmail(e.target.value);
+        setAuthState(prevState => {
+            return {
+                ...prevState,
+                BusinessEdit: {
+                    ...prevState.BusinessEdit,
+                    email: e.target.value
+                }
+            }
+        });
     }
 
     function updateAddress(e) {
-        setAddress(e.target.value);
+        setAuthState(prevState => {
+            return {
+                ...prevState,
+                BusinessEdit: {
+                    ...prevState.BusinessEdit,
+                    address: e.target.value
+                }
+            }
+        });
     }
 
     function importYelp() {
         alert('Updating From Yelp!!');
     }
 
-
-
-
+    function submit(e) {
+        var result = validateBusinessEdit(authState.BusinessEdit);
+        setAuthState(prevState => {
+            return {
+                ...prevState,
+                BusinessEditErrs: result.errors
+            }
+        });
+        console.log(authState);
+    }
 
     return (
         <div className='bottomBackground' style={{ padding: '0 2vh 2vh 2vh', marginTop: '0' }}>
 
             <div style={{ marginLeft: '1em', marginRight: 'auto', overflowX: 'hidden' }}>
                 <div style={{ textAlign: 'left' }}>
-                    <input className='button' type='button' value='Review'></input>
-                    <input className='button' type='button' value='Favorite'></input>
+                    <input className='button' type='button' value='Save' onClick={submit}></input>
                     <input className='importButton' type='button' value='Import From' onClick={importYelp}></input>
                 </div>
                 <hr className='line' style={{ width: '80em', marginTop: '1.5em' }} /><br /><br />
@@ -95,80 +148,74 @@ function BusinessPageBottomEdit({ description, otherInfo, phone, website, email,
                                 <p className='fieldEditText' style={{ paddingLeft: '0px' }}>Business Description</p>
                                 <img src={Pencil} className="pencil"></img><br />
                             </div>
-                            <textarea className='textUpdate' onChange={updateDescription}>{description.replaceAll("\\n", '\r')}</textarea>
-
-
+                            <TextField multiline
+                                variant="outlined"
+                                error={authState.BusinessEditErrs.description}
+                                helperText={authState.BusinessEditErrs.description ? authState.BusinessEditErrs.description : ''}
+                                rows={5}
+                                rowsMax={5} className='textUpdate' onChange={updateDescription}
+                                defaultValue={description.replaceAll("\\n", '\r')} />
                             <br />
                             <div style={{ display: 'inline' }}>
                                 <p className='fieldEditText' style={{ paddingLeft: '0px', marginTop: '8px' }}>Other Information</p>
                                 <img src={Pencil} className="pencil" style={{ marginTop: '8px' }}></img><br />
-
                             </div>
-                            <textarea className='textUpdate' onChange={updateOtherInfo}>{otherInfo.replaceAll("\\n", '\r')}</textarea>
+                            <TextField multiline
+                                variant="outlined"
+                                rows={5}
+                                rowsMax={5} className='textUpdate'
+                                error={authState.BusinessEditErrs.otherInfo}
+                                helperText={authState.BusinessEditErrs.otherInfo ? authState.BusinessEditErrs.otherInfo : ''}
+                                onChange={updateOtherInfo} defaultValue={otherInfo.replaceAll("\\n", '\r')} />
                         </div>
                     </div>
-
                     <div style={{ float: 'right', display: 'justify-content', verticalAlign: 'top', marginLeft: '10px', marginRight: '1em' }}>
-
                         <div style={{ margin: '1em 1em 0 0', padding: '0 1em 0 1em', border: 'solid', borderRadius: '10px', borderWidth: '1px' }}>
-
                             <div style={{ display: 'inline' }}>
                                 <p className='fieldEditText'>Contact</p>
                                 <img src={Pencil} className="pencil" style={{ marginTop: '7px' }}></img><br />
                             </div>
                             <hr className='contactLine' />
                             <div className='contactBlue' style={{ textAlign: 'left' }}>
-                                <div style={{ display: 'inline-block' }}>
-                                    <label for='phone'>Phone: </label>
-                                    <input type='tel' name='phone' className='contactInput' pattern=".([0-9]{3}.) [0-9]{3}-[0-9]{4}" defaultValue={phone} onChange={updatePhone}></input><br />
+                                <div style={{ margin: '1em' }}>
+                                    <MuiPhoneNumber
+                                        disableCountryCode
+                                        value={phone}
+                                        label="phone"
+                                        error={authState.BusinessEditErrs.phone}
+                                        helperText={authState.BusinessEditErrs.phone ? authState.BusinessEditErrs.phone : ''}
+                                        defaultCountry={'us'} onChange={updatePhone} />
                                 </div>
                                 <hr className='contactLine' />
-                                <div style={{ display: 'inline-block' }}>
-                                    <label for='phone'>Website: </label>
-                                    <input type='text' name='website' className='contactInput' pattern="^((https?|ftp|smtp):\/\/)?(www.)?[a-z0-9]+\.[a-z]+(\/[a-zA-Z0-9#]+\/?)*$" defaultValue={website} style={{ width: '65%' }} onChange={updateWebsite}></input><br />
+                                <div style={{ margin: '1em' }}>
+                                    <TextField style={{ width: '100%' }} type='text'
+                                        label="website" name='website' className='contactInput'
+                                        error={authState.BusinessEditErrs.website}
+                                        helperText={authState.BusinessEditErrs.website ? authState.BusinessEditErrs.website : ''}
+                                         defaultValue={website} onChange={updateWebsite} />
                                 </div>
                                 <hr className='contactLine' />
-                                <div style={{ display: 'inline-block' }}>
-                                    <label for='phone'>Email: </label>
-                                    <input type='email' name='email' className='contactInput' defaultValue={email} onChange={updateEmail}></input><br />
+                                <div style={{ margin: '1em' }}>
+                                    <TextField style={{ width: '100%' }} type='text'
+                                        error={authState.BusinessEditErrs.email}
+                                        helperText={authState.BusinessEditErrs.email ? authState.BusinessEditErrs.email : ''}
+                                        label="email" className='contactInput' defaultValue={email} onChange={updateEmail} />
                                 </div>
                                 <hr className='contactLine' />
-                                <div style={{ display: 'inline-block' }}>
-                                    <label for='phone' style={{ color: 'black' }}>Address: </label>
-                                    <input type='text' name='address' className='contactInput' defaultValue={address} style={{ color: 'black', width: '65%' }} onChange={updateAddress}></input><br />
+                                <div style={{ margin: '1em' }}>
+                                    <TextField style={{ width: '100%' }}
+                                        type='text' label="address" name='address'
+                                        error={authState.BusinessEditErrs.address}
+                                        helperText={authState.BusinessEditErrs.address ? authState.BusinessEditErrs.address : ''}
+                                        className='contactInput' defaultValue={address} onChange={updateAddress} />
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <div>
-
-                    <hr className='line' style={{ width: '95%' }} /><br />
-                    <p className='subText' style={{ textAlign: 'left', marginTop: '20px' }}>Reviews</p>
-                    {
-                        getReviews().map(review =>
-                            <div>
-                                <ReviewSnippet username={review.username} rating={review.rating} reviewCount={review.reviewCount} reviewMessage={review.reviewMessage} />
-                                <hr className='reviewLine' /><br />
-                            </div>
-                        )
-
-                    }
-                </div>
-
-                <div className="pageSection">
-                    <a href="#" className="active">1</a>
-                    <a href="#">2</a>
-                    <a href="#">3</a>
-                    <a href="#">4</a>
-                </div>
             </div>
         </div>
-
-
     )
-
 }
 
 

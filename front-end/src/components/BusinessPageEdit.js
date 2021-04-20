@@ -1,20 +1,19 @@
 import Navbar from './Navbar';
-import SearchBar from './SearchBar';
 import Login from './UserAuth/LoginPopup';
 import '../css/Home.css';
-import { useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { authContext } from './contexts/authContext'
 import BusinessPageHeaderEdit from './BusinessPageHeaderEdit'
 import BusinessPageBottomEdit from './BusinessPageBottomEdit'
 import Signup from './UserAuth/SignupPopup'
-
+import { Redirect } from "react-router-dom";
 
 function getBusinessInfo() {
     return (
         {
             name: "Bob's Plumbing Service",
             startingTime: '08:00',
-            endingTime: '17:00',
+            endingTime: '07:00',
             category: 'Plumbing',
             rating: 4,
             reviewCount: 24,
@@ -29,26 +28,42 @@ function getBusinessInfo() {
     )
 }
 
-function outputBusinessPage() {
-    let business = getBusinessInfo();
+function outputBusinessPage(business) {
+
     return (
         <div>
             <BusinessPageHeaderEdit name={business.name} startingTime={business.startingTime} endingTime={business.endingTime} givenCategory={business.category} rating={business.rating} reviewCount={business.reviewCount} priceLevel={business.priceLevel} />
             <BusinessPageBottomEdit description={business.description} otherInfo={business.otherInfo} phone={business.phone} website={business.website} email={business.email} address={business.address} />
         </div>)
-
 }
 
+let business = getBusinessInfo();
 function BusinessPageEdit(props) {
-    const { authState } = useContext(authContext);
-
+    const { authState, setAuthState } = useContext(authContext);
+    useEffect(() => {
+        if (authState.editing === false) {
+            setAuthState(prevState => {
+                return {
+                    ...prevState, editing: true, BusinessEdit: business
+                }
+            });
+        }
+    });
+    // if (authState.BusinessEditRedirect === true) {
+    //     setAuthState(prevState => {
+    //         return {
+    //             ...prevState, editing: false, BusinessEdit: {}
+    //         }
+    //     });
+    //     return <Redirect to={"/"} />
+    // }
     return (
         <div className='home'>
             {authState.showLogin ? <Login /> : null}
             {authState.showSignup ? <Signup /> : null}
             {(authState.showLogin || authState.showSignup) ? <div className='darkened'></div> : null}
             <Navbar />
-            {outputBusinessPage()}
+            {outputBusinessPage(business)}
         </div>
     )
 }

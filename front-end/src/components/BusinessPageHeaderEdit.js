@@ -1,35 +1,79 @@
 import '../css/BusinessPage.css';
-import { useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import StarRating from './StarRating.js';
 import Pencil from '../css/img/pencil.png';
+import { authContext } from './contexts/authContext';
 
 
 function BusinessPageHeaderEdit({ name, startingTime, endingTime, givenCategory, rating, reviewCount, priceLevel }) {
-
+    const { authState, setAuthState } = useContext(authContext);
     const [editName, setName] = useState('');
     const [startTime, setStartTime] = useState('');
     const [endTime, setEndTime] = useState('');
     const [category, setCategory] = useState('');
     const [editPrice, setPriceLevel] = useState('');
 
+
     function updateName(e) {
-        setName(e.target.value)
+        setAuthState(prevState => {
+            return {
+                ...prevState,
+                BusinessEdit: {
+                    ...prevState.BusinessEdit,          
+                    name: e.target.value
+                }
+            }
+        });
     }
 
     function updateStartTime(e) {
-        setStartTime(e.target.value)
+        setAuthState(prevState => {
+            return {
+                ...prevState,
+                BusinessEdit: {
+                    ...prevState.BusinessEdit,           
+                    startingTime: e.target.value
+                }
+            }
+        });
     }
 
     function updateEndTime(e) {
-        setEndTime(e.target.value)
+        setAuthState(prevState => {
+            return {
+                ...prevState,
+                BusinessEdit: {
+                    ...prevState.BusinessEdit,           
+                    endingTime: e.target.value
+                }
+            }
+        });
     }
 
     function updateCategory(e) {
-        setCategory(e.target.value);
+        setAuthState(prevState => {
+            return {
+                ...prevState,
+                BusinessEdit: {
+                    ...prevState.BusinessEdit,           
+                    category: e.target.value
+                }
+            }
+        });
     }
 
     function handlePriceUpdate(e) {
         setPriceLevel(e.target.id);
+        let y = e.target.id;
+        setAuthState(prevState => {
+            return {
+                ...prevState,
+                BusinessEdit: {
+                    ...prevState.BusinessEdit,           
+                    priceLevel: y
+                }
+            }
+        });
         for (let x = 1; x <= e.target.id; x++) {
             document.getElementById(x).style.color = 'black';
         }
@@ -101,7 +145,6 @@ function BusinessPageHeaderEdit({ name, startingTime, endingTime, givenCategory,
                                 <option value="Restaurant" />
                                 <option value="Other" />
                             </datalist>
-
                         </div>
                         <img src={Pencil} className="pencil"></img>
                     </div>

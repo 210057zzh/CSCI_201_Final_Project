@@ -7,7 +7,12 @@ const initialState = {
     showSignup: false,
     googleToken: '',
     signUpredirect: false,
-    Loginredirect: false
+    Loginredirect: false,
+    BusinessEdit: {
+    },
+    editing: false,
+    BusinessEditErrs: {
+    }
     /**
      *  Can add any more 'global variables' related to user login/signup here
      */
