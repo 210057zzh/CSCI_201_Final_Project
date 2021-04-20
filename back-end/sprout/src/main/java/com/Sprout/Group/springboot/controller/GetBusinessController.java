@@ -48,7 +48,7 @@ public class GetBusinessController {
 
 				// Sets the SQL Query based on whether or not we are provided a category
 				ps = conn.prepareStatement(
-						"SELECT * FROM Business WHERE name = ?");
+						"SELECT * FROM Businesses WHERE name = ?");
 				ps.setString(1, name);
 				rs = ps.executeQuery();
 				results = queryBusiness(rs);
