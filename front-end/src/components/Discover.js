@@ -37,7 +37,7 @@ function Discover(props) {
                 {
                     //TODO make it so all of the info is actually displaying (just naming differences between this and db and # of reviews needs to be added to db)
                     data.map(business =>
-                        <DiscoverSnippet businessName={business.name} rating={business.average_rating} reviewCount={business.numReviews} phoneNumber={business.phone_number} address={business.address} description={business.description} />
+                        <DiscoverSnippet businessID = {business.businessID} businessName={business.name} rating={business.average_rating} reviewCount={business.numReviews} phoneNumber={business.phone_number} address={business.address} description={business.description} />
                     )
                 }
             </div>
