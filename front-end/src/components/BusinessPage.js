@@ -14,7 +14,7 @@ function BusinessPage(props) {
 
     useEffect(() => {
         const businessName = props.match.params.businessName;
-        axios.get('http://localhost:8080/api/business?name=' + businessName).then(res => {
+        axios.get('http://localhost:8080/api/businessInfo?businessID=' + businessName).then(res => {
             console.log(res);
             setBusiness ({
                 name: res.data.name,
