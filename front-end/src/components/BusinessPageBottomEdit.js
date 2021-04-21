@@ -39,8 +39,10 @@ function parseText(text) {
 
 }
 
-function BusinessPageBottomEdit({ description, otherInfo, phone, website, email, address }) {
+function BusinessPageBottomEdit({ description, otherInfo, phone, website, email, address, setEdit }) {
+
     const { authState, setAuthState } = useContext(authContext);
+    console.log(authState)
     const history = useHistory();
     const routeChange = () => {
         let path = `/`;
@@ -135,21 +137,19 @@ function BusinessPageBottomEdit({ description, otherInfo, phone, website, email,
             }
         });
         if (result.success === true) {
-            setAuthState(prevState => {
-                return {
-                    ...prevState,
-                    editReady: true
-                }
-            });
+            setEdit(null);
         }
     }
 
-    useEffect(() => {
-        if (authState.editReady) {
-            console.log(authState)
-            routeChange();
-        }
-    }, [authState.editReady])
+    function back(e) {
+        setEdit(null);
+        setAuthState(prevState => {
+            return {
+                ...prevState,
+                BusinessEditErrs: {}
+            }
+        });
+    }
 
     return (
         <div className='bottomBackground' style={{ padding: '0 2vh 2vh 2vh', marginTop: '0' }}>
@@ -157,6 +157,7 @@ function BusinessPageBottomEdit({ description, otherInfo, phone, website, email,
             <div style={{ marginLeft: '1em', marginRight: 'auto', overflowX: 'hidden' }}>
                 <div style={{ textAlign: 'left' }}>
                     <input className='button' type='button' value='Save' onClick={submit}></input>
+                    <input className='button' type='button' value='Back' onClick={back}></input>
                     <input className='importButton' type='button' value='Import From' onClick={importYelp}></input>
                 </div>
                 <hr className='line' style={{ width: '80em', marginTop: '1.5em' }} /><br /><br />
