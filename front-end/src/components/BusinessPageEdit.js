@@ -44,19 +44,11 @@ function BusinessPageEdit(props) {
         if (authState.editing === false) {
             setAuthState(prevState => {
                 return {
-                    ...prevState, editing: true, BusinessEdit: business
+                    ...prevState, editing: true, BusinessEdit: business, editReady: false
                 }
             });
         }
     });
-    // if (authState.BusinessEditRedirect === true) {
-    //     setAuthState(prevState => {
-    //         return {
-    //             ...prevState, editing: false, BusinessEdit: {}
-    //         }
-    //     });
-    //     return <Redirect to={"/"} />
-    // }
     return (
         <div className='home'>
             {authState.showLogin ? <Login /> : null}

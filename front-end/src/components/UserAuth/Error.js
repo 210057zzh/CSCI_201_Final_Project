@@ -1,7 +1,7 @@
 function Error(props) {
     return(
         <div className='error'>
-            <div>Error logging in: {props.errorMsg}</div>
+            <div>{props.errorMsg}</div>
         </div>
     );
 }

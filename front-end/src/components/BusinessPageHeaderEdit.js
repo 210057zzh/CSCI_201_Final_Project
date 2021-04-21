@@ -3,23 +3,19 @@ import { useState, useContext, useEffect } from 'react';
 import StarRating from './StarRating.js';
 import Pencil from '../css/img/pencil.png';
 import { authContext } from './contexts/authContext';
+import TextField from '@material-ui/core/TextField';
+import Error from './UserAuth/Error';
 
 
 function BusinessPageHeaderEdit({ name, startingTime, endingTime, givenCategory, rating, reviewCount, priceLevel }) {
     const { authState, setAuthState } = useContext(authContext);
-    const [editName, setName] = useState('');
-    const [startTime, setStartTime] = useState('');
-    const [endTime, setEndTime] = useState('');
-    const [category, setCategory] = useState('');
     const [editPrice, setPriceLevel] = useState('');
-
-
     function updateName(e) {
         setAuthState(prevState => {
             return {
                 ...prevState,
                 BusinessEdit: {
-                    ...prevState.BusinessEdit,          
+                    ...prevState.BusinessEdit,
                     name: e.target.value
                 }
             }
@@ -31,7 +27,7 @@ function BusinessPageHeaderEdit({ name, startingTime, endingTime, givenCategory,
             return {
                 ...prevState,
                 BusinessEdit: {
-                    ...prevState.BusinessEdit,           
+                    ...prevState.BusinessEdit,
                     startingTime: e.target.value
                 }
             }
@@ -43,7 +39,7 @@ function BusinessPageHeaderEdit({ name, startingTime, endingTime, givenCategory,
             return {
                 ...prevState,
                 BusinessEdit: {
-                    ...prevState.BusinessEdit,           
+                    ...prevState.BusinessEdit,
                     endingTime: e.target.value
                 }
             }
@@ -55,7 +51,7 @@ function BusinessPageHeaderEdit({ name, startingTime, endingTime, givenCategory,
             return {
                 ...prevState,
                 BusinessEdit: {
-                    ...prevState.BusinessEdit,           
+                    ...prevState.BusinessEdit,
                     category: e.target.value
                 }
             }
@@ -69,7 +65,7 @@ function BusinessPageHeaderEdit({ name, startingTime, endingTime, givenCategory,
             return {
                 ...prevState,
                 BusinessEdit: {
-                    ...prevState.BusinessEdit,           
+                    ...prevState.BusinessEdit,
                     priceLevel: y
                 }
             }
@@ -105,6 +101,15 @@ function BusinessPageHeaderEdit({ name, startingTime, endingTime, givenCategory,
         }
     }
 
+    var cleft = -12;
+    var ctop = -25;
+    var ctrans = 'translate(' + cleft + '%, ' + ctop + '%)';
+    var css = {
+        transform: ctrans,
+        marginTop: 0,
+        width: '70%',
+    }
+
 
     return (
         <div className='background' style={{ padding: '2vh 2vh 2vh 2vh', marginBottom: 0 }} onLoad={initialPriceLevel}>
@@ -115,17 +120,26 @@ function BusinessPageHeaderEdit({ name, startingTime, endingTime, givenCategory,
                             <input className='businessInput' type='text' defaultValue={name} onChange={updateName}></input>
                         </div>
                         <img src={Pencil} className="pencil"></img><br />
+                        <div style={css}>
+                            {authState.BusinessEditErrs.name ? <Error errorMsg={authState.BusinessEditErrs.name}></Error> : null}
+                        </div>
                     </div>
-
                     <div style={{ display: 'inline' }}>
                         <div className='fieldBackground'>
                             <p className='fieldEditText'>Open</p>
-                            <input type='time' defaultValue={startingTime} className='timeInput' onChange={updateStartTime}></input>
+                            <input type='time'
+                                variant="outlined"
+                                defaultValue={startingTime}
+                                className='timeInput'
+                                onChange={updateStartTime} />
                             <p className='fieldEditText' >to</p>
                             <input type='time' defaultValue={endingTime} className='timeInput' onChange={updateEndTime}></input>
                         </div>
                         <img src={Pencil} className="pencil"></img>
-                    </div><br />
+                        <div style={css}>
+                            {authState.BusinessEditErrs.time ? <Error errorMsg={authState.BusinessEditErrs.time}></Error> : null}
+                        </div>
+                    </div>
 
                     <div style={{ display: 'inline' }}>
                         <div className='fieldBackground'>
@@ -147,6 +161,9 @@ function BusinessPageHeaderEdit({ name, startingTime, endingTime, givenCategory,
                             </datalist>
                         </div>
                         <img src={Pencil} className="pencil"></img>
+                        <div style={css}>
+                            {authState.BusinessEditErrs.category ? <Error errorMsg={authState.BusinessEditErrs.category}></Error> : null}
+                        </div>
                     </div>
 
                 </div>

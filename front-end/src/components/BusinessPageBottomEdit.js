@@ -7,6 +7,7 @@ import YelpLogo from '../css/img/pencil.png';
 import { validateBusinessEdit } from './UserAuth/validate';
 import MuiPhoneNumber from "material-ui-phone-number";
 import TextField from '@material-ui/core/TextField';
+import { useHistory } from "react-router-dom";
 
 function getReviews() {
     return (
@@ -40,6 +41,11 @@ function parseText(text) {
 
 function BusinessPageBottomEdit({ description, otherInfo, phone, website, email, address }) {
     const { authState, setAuthState } = useContext(authContext);
+    const history = useHistory();
+    const routeChange = () => {
+        let path = `/`;
+        history.push(path);
+    }
     let value = null;
     function updateDescription(e) {
         setAuthState(prevState => {
@@ -125,11 +131,25 @@ function BusinessPageBottomEdit({ description, otherInfo, phone, website, email,
         setAuthState(prevState => {
             return {
                 ...prevState,
-                BusinessEditErrs: result.errors
+                BusinessEditErrs: result.errors,
             }
         });
-        console.log(authState);
+        if (result.success === true) {
+            setAuthState(prevState => {
+                return {
+                    ...prevState,
+                    editReady: true
+                }
+            });
+        }
     }
+
+    useEffect(() => {
+        if (authState.editReady) {
+            console.log(authState)
+            routeChange();
+        }
+    }, [authState.editReady])
 
     return (
         <div className='bottomBackground' style={{ padding: '0 2vh 2vh 2vh', marginTop: '0' }}>
@@ -192,7 +212,7 @@ function BusinessPageBottomEdit({ description, otherInfo, phone, website, email,
                                         label="website" name='website' className='contactInput'
                                         error={authState.BusinessEditErrs.website}
                                         helperText={authState.BusinessEditErrs.website ? authState.BusinessEditErrs.website : ''}
-                                         defaultValue={website} onChange={updateWebsite} />
+                                        defaultValue={website} onChange={updateWebsite} />
                                 </div>
                                 <hr className='contactLine' />
                                 <div style={{ margin: '1em' }}>

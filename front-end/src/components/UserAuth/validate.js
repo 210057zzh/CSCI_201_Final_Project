@@ -168,7 +168,6 @@ export const validateBusinessEdit = payload => {
 
     if (!isFormValid) {
         message = "Check the form for errors.";
-        console.log(errors);
     }
 
     return {
