@@ -23,7 +23,7 @@
 	    <dependency>
 	        <groupId>com.google.http-client</groupId>
 	        <artifactId>google-http-client</artifactId>
-	        <version>1.36.0</version>
+	        <version>1.38.0</version>
 	    </dependency>
 	   </dependencies>
 	</dependencyManagement>
@@ -34,7 +34,6 @@
             <artifactId>spring-cloud-gcp-starter-sql-mysql</artifactId>
             <version>RELEASE</version>
         </dependency>
-
 		<dependency>
 		    <groupId>com.google.http-client</groupId>
 		    <artifactId>google-http-client-jackson</artifactId>
