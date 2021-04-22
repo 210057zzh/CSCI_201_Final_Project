@@ -5,7 +5,8 @@ import { NavLink, withRouter } from 'react-router-dom'
 function DiscoverSnippet(props) {
 
     return (
-        <NavLink className='discoverLink' to={'../businesspage/' + props.businessName}>
+        <NavLink className='discoverLink' to={'../businesspage/' + props.businessID}>
+            
             <div className='discoverSnippet'>
                 {/*<img src={picture} width='150px' className='picture' />*/}
                 <div style={{display: 'flex', justifyContent: 'space-between'}}>

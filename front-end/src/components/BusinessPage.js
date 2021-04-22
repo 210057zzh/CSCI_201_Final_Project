@@ -13,20 +13,19 @@ function BusinessPage(props) {
     const [business, setBusiness] = useState();
 
     useEffect(() => {
-        const businessName = props.match.params.businessName;
-        axios.get('http://localhost:8080/api/businessInfo?businessID=' + businessName).then(res => {
-            console.log(res);
+        const businessID = props.match.params.businessID;
+        axios.get('http://localhost:8080/api/businessInfo?businessID=' + businessID).then(res => {
             setBusiness ({
-                name: res.data.name,
-                rating: res.data.average_rating,
-                startingTime: res.data.startHour,
-                endingTime: res.data.endHour,
-                category: res.data.business_type,
-                reviewCount: res.data.numReviews,
-                priceLevel: res.data.cost,
-                description: res.data.description,
-                address: res.data.address,
-                phone: res.data.phone_number,
+                name: res.data[0].name,
+                rating: res.data[0].average_rating,
+                startingTime: res.data[0].startHour,
+                endingTime: res.data[0].endHour,
+                category: res.data[0].business_type,
+                reviewCount: res.data[0].numReviews,
+                priceLevel: res.data[0].cost,
+                description: res.data[0].description,
+                address: res.data[0].address,
+                phone: res.data[0].phone_number,
                 otherInfo: 'still need from backend',
                 website: 'still need from backend',
                 email: 'still need from backend'

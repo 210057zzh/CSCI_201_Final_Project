@@ -19,7 +19,7 @@ function App() {
             <Route exact path ='/Discover' component={Discover}></Route>
             <Route exact path ='/BusinessPage' component={BusinessPage}></Route>
             <Route exact path ='/BusinessPageEdit' component={BusinessPageEdit}></Route>
-            <Route exact path ='/BusinessPage/:businessName' component={BusinessPage}></Route>
+            <Route exact path ='/BusinessPage/:businessID' component={BusinessPage}></Route>
             <Route exacth path ='/dashboard' component ={Dashboard}></Route>
           </Switch>
         </BrowserRouter>
