@@ -8,6 +8,7 @@ import { validateBusinessEdit } from './UserAuth/validate';
 import MuiPhoneNumber from "material-ui-phone-number";
 import TextField from '@material-ui/core/TextField';
 import { useHistory } from "react-router-dom";
+import axios from 'axios';
 
 function getReviews() {
     return (
@@ -40,6 +41,9 @@ function parseText(text) {
 }
 
 function BusinessPageBottomEdit({ description, otherInfo, phone, website, email, address, setEdit }) {
+
+    const REST_API_CALL_SUBMIT = 'http://localhost:8080/api/updateBusiness'
+    const REST_API_CALL_YELPFILL = 'http://localhost:8080/api/yelpfill'
 
     const { authState, setAuthState } = useContext(authContext);
     console.log(authState)
@@ -125,8 +129,18 @@ function BusinessPageBottomEdit({ description, otherInfo, phone, website, email,
     }
 
     function importYelp() {
-        alert('Updating From Yelp!!');
+        //Do checks that name and address are not empty
+        runImportFunction();
+        
     }
+
+    async function runImportFunction() {
+
+    
+        
+    }
+
+
 
     function submit(e) {
         var result = validateBusinessEdit(authState.BusinessEdit);
@@ -138,7 +152,16 @@ function BusinessPageBottomEdit({ description, otherInfo, phone, website, email,
         });
         if (result.success === true) {
             setEdit(null);
+            submitData();
         }
+    }
+
+    async function submitData() {
+        //Set Business Id in Payload
+        let payload = authState.BusinessEdit;
+        let res = await axios.post(REST_API_CALL_SUBMIT, payload)
+        let data = res.data;
+        console.log(data.success);
     }
 
     function back(e) {

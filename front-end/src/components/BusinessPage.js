@@ -17,6 +17,7 @@ function BusinessPage(props) {
         axios.get('http://localhost:8080/api/business?name=' + businessName).then(res => {
             console.log(res);
             setBusiness ({
+                businessID: res.data[0].businessId,
                 name: res.data.name,
                 rating: res.data.average_rating,
                 startingTime: res.data.startHour,
