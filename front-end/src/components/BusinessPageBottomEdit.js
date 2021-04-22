@@ -43,11 +43,6 @@ function BusinessPageBottomEdit({ description, otherInfo, phone, website, email,
 
     const { authState, setAuthState } = useContext(authContext);
     console.log(authState)
-    const history = useHistory();
-    const routeChange = () => {
-        let path = `/`;
-        history.push(path);
-    }
     let value = null;
     function updateDescription(e) {
         setAuthState(prevState => {

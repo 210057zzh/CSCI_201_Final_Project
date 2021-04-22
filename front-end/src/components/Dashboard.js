@@ -65,7 +65,7 @@ function Dashboard(props) {
     const [showEdit, setEdit] = useState();
     const [businessArray, setbusinessArray] = useState([]);
     const [divArray, setdivArray] = useState([]);
-
+    
     const emptyBusiness = {
         name: "",
         rating: 0,
