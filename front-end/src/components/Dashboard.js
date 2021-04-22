@@ -96,7 +96,7 @@ function Dashboard(props) {
         //         window.location.replace('./')
         //     }
         setbusinessArray(getOwnedBusinesses());
-    }, [])
+    }, [showEdit])
 
     useEffect(() => {
         setdivArray(businessArray.map(business => {
