@@ -42,7 +42,7 @@ public class InsertIntoController {
 	public InsertIntoController(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
 	}
-	@GetMapping("/IntertInto")
+	@GetMapping("/addReview")
 	public void InsertBusiness(@RequestParam int userID, @RequestParam int businessID,@RequestParam String message,@RequestParam int rating) {
 		String url = dbAddress_nopass;
 		DriverManagerDataSource dataSource = new DriverManagerDataSource(url, "root", "root");
@@ -56,15 +56,19 @@ public class InsertIntoController {
 		
 		System.out.println("VALUE RETURNED IS :" + return_value);
 	}
-	@GetMapping("/dashboard")
-	public void InsertBusiness(@RequestParam int userID, @RequestParam String name,@RequestParam String phone_number,@RequestParam int startHour, @RequestParam int endHour, @RequestParam String description, @RequestParam int cost, @RequestParam String address) {
+	@GetMapping("/addBusiness")
+	public void InsertBusiness(@RequestParam int userID, @RequestParam String business_type, @RequestParam String name, @RequestParam String otherInfo, @RequestParam String email, @RequestParam String website, @RequestParam String phone_number,@RequestParam int startHour, @RequestParam int endHour, @RequestParam String description, @RequestParam int cost, @RequestParam String address) {
 		String url = dbAddress_nopass;
 		DriverManagerDataSource dataSource = new DriverManagerDataSource(url, "root", "root");
-		SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(dataSource).withTableName("Review");
+		SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(dataSource).withTableName("Businesses");
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("userID", userID);
+		parameters.put("business_type", business_type);
 		parameters.put("name", name);
+		parameters.put("otherInfo", otherInfo);
 		parameters.put("phone_number", phone_number);
+		parameters.put("email", email);
+		parameters.put("website", website);
 		parameters.put("startHour", startHour);
 		parameters.put("endHour", endHour);
 		parameters.put("description", description);

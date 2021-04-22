@@ -26,9 +26,9 @@ function BusinessPage(props) {
                 description: res.data[0].description,
                 address: res.data[0].address,
                 phone: res.data[0].phone_number,
-                otherInfo: 'still need from backend',
-                website: 'still need from backend',
-                email: 'still need from backend'
+                otherInfo: res.data[0].otherInfo,
+                website: res.data[0].website,
+                email: res.data[0].email
             })
         })
     }, [])
