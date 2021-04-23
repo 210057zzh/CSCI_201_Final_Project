@@ -47,7 +47,7 @@ function BusinessPageBottomEdit({ description, otherInfo, phone, website, email,
                     uploadReady: true
                 }
             })
-        });
+        })
     }
 
     function updateDescription(e) {
