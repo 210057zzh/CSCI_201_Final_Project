@@ -25,7 +25,10 @@ function Dashboard(props) {
                 userID: authState.user.userId
             }
         }).then(resp => {
-            setbusinessArray(resp.data);
+            if (typeof resp.data === "string") {
+                setbusinessArray([]);
+            }
+            else { setbusinessArray(resp.data); }
         });
         console.log(result);
         return result;
@@ -87,7 +90,7 @@ function Dashboard(props) {
 
     useEffect(() => {
         console.log(businessArray)
-        if (businessArray.length >= 0) {
+        if (businessArray.length > 0) {
             setdivArray(businessArray.map(business => {
                 return (
                     <div class='business-card'>

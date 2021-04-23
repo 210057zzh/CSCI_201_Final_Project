@@ -169,7 +169,6 @@ function BusinessPageBottomEdit({ description, otherInfo, phone, website, email,
         });
         if (result.success === true) {
             if (authState.newBusiness === true) {
-                console.log(authState.BusinessEdit);
                 addBusiness(authState.BusinessEdit);
             }
             else {
