@@ -78,7 +78,6 @@ function Dashboard(props) {
         if (!authState.loggedIn) {
             window.location.replace('./')
         }
-        console.log("here");
         getOwnedBusinesses();
         setAuthState(prevState => {
             return {

@@ -27,10 +27,11 @@ function Login(props) {
     const [emailerr, setEmailerr] = useState();
     const [pwerr, setPwerr] = useState();
 
+
     useEffect(() => {
-        if (authState.LoginUpredirect === true) {
+        if (authState.Loginredirect === true) {
             setErr('Your google account is registered, please log in with google');
-            setAuthState(prevState => { return { ...prevState, LoginUpredirect: false } });
+            setAuthState(prevState => { return { ...prevState, Loginredirect: false } });
         }
     });
 

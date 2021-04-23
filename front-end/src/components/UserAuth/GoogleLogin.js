@@ -64,7 +64,7 @@ function GoogleLogin(props) {
         else if (signUporLogin === 'Signup') {
             axios.post(REST_API_CALL_Signup, id_token).then(resp => {
                 if (resp.data.successful === true) { // The user has successfully registered with google
-                    console.log('Signup Success: currentUser:', res.profileObj);
+                    console.log('Signup Success: currentUser:', res);
                     toggleLoginStatusOn();
                     alert(
                         `Signup successfully welcome ${res.profileObj.name} 😍. \n See console for full profile object.`
