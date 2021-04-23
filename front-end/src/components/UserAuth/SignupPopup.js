@@ -66,7 +66,7 @@ function Signup(props) {
                 console.log(resp);
                 if (resp.data.successful === true) { // The user already exists and has successfully logged in
                     console.log('Signup Success: currentUser:', resp.data);
-                    setAuthState(prevState => { return { ...prevState, showSignup: false, loggedIn: true, user: resp.data } });
+                    setAuthState(prevState => { return { ...prevState, showSignup: false, loggedIn: true } });
                 } else { // The user does not already exist or some other error occured. Refer to error message to determine next steps
                     console.log('error: ' + resp.data.error);
                     setErr(resp.data.error);
