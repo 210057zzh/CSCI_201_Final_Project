@@ -19,7 +19,7 @@ function Signup(props) {
     const [pass, setPass] = useState();
     const [pwconfirm, setpwconfirm] = useState();
     const [err, setErr] = useState();
-    const REST_API_CALL = 'http://localhost:8080/api/Signup'
+    const REST_API_CALL = 'http://localhost:8080/api/signup'
     const [emailerr, setEmailerr] = useState();
     const [pwerr, setPwerr] = useState();
     const [pwconfirmerr, setpwce] = useState();
