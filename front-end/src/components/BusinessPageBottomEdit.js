@@ -21,11 +21,12 @@ function parseText(text) {
 function BusinessPageBottomEdit({ description, otherInfo, phone, website, email, address, setEdit }) {
 
     const { authState, setAuthState } = useContext(authContext);
-    const REST_API_CALL = 'http://localhost:8080/api/addBusiness'
+    const REST_API_CALL_ADD = 'http://localhost:8080/api/addBusiness'
+    const REST_API_CALL_UPDATE = 'http://localhost:8080/api/updateBusiness'
     let value = null;
 
     async function addBusiness(business) {
-        const result = await axios.get(REST_API_CALL, {
+        const result = await axios.get(REST_API_CALL_ADD, {
             params: {
                 userID: authState.user.userId,
                 business_type: business.category,
@@ -49,6 +50,35 @@ function BusinessPageBottomEdit({ description, otherInfo, phone, website, email,
             })
         })
     }
+
+    async function updateBusiness(business) {
+        const result = await axios.get(REST_API_CALL_UPDATE, {
+            params: {
+                userID: authState.user.userId,
+                category: business.category,
+                name: business.name,
+                otherInfo: business.otherInfo,
+                email: business.email,
+                website: business.website,
+                phone_number: business.phone,
+                startHour: business.startingTime,
+                endHour: business.endingTime,
+                description: business.description,
+                cost: business.priceLevel,
+                address: business.address,
+                businessID: business.businessID
+            }
+        }).then(resp => {
+            setAuthState(prevState => {
+                return {
+                    ...prevState,
+                    uploadReady: true
+                }
+            })
+        })
+    }
+
+
 
     function updateDescription(e) {
         setAuthState(prevState => {
@@ -141,6 +171,9 @@ function BusinessPageBottomEdit({ description, otherInfo, phone, website, email,
             if (authState.newBusiness === true) {
                 console.log(authState.BusinessEdit);
                 addBusiness(authState.BusinessEdit);
+            }
+            else {
+                updateBusiness(authState.BusinessEdit);
             }
             setEdit(null);
         }

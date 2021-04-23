@@ -48,6 +48,12 @@ function Dashboard(props) {
     }
 
     function openEditView(business) {
+        console.log(business);
+        business.startingTime = business.startHour;
+        business.endingTime = business.endHour;
+        business.category = business.business_type;
+        business.phone = business.phone_number;
+        business.priceLevel = business.cost
         if (business == emptyBusiness) {
             setAuthState(prevState => {
                 return {

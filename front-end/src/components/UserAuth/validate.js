@@ -94,9 +94,13 @@ export const validateBusinessEdit = payload => {
         isFormValid = false;
         errors.name = "Please provide your business name.";
     }
+    let tempstart = null;
+    let tempend = null;
+    if (payload.startingTime) { tempstart = payload.startingTime.slice(0, 2) + payload.startingTime.slice(3, payload.startingTime.length) }
+    else { tempstart = payload.startHour.slice(0, 2) + payload.startHour.slice(3, payload.startHour.length) }
+    if (payload.endingTime) { tempend = payload.endingTime.slice(0, 2) + payload.endingTime.slice(3, payload.endingTime.length) }
+    else { tempend = payload.endHour.slice(0, 2) + payload.endHour.slice(3, payload.endHour.length) }
 
-    let tempstart = payload.startingTime.slice(0, 2) + payload.startingTime.slice(3, payload.startingTime.length)
-    let tempend = payload.endingTime.slice(0, 2) + payload.endingTime.slice(3, payload.endingTime.length)
     if (
         !payload ||
         (tempend - tempstart) <= 0
@@ -105,13 +109,15 @@ export const validateBusinessEdit = payload => {
         errors.time = "start time and end time is invalid";
     }
 
-    if (
-        !payload ||
-        typeof payload.category !== "string" ||
-        payload.category.trim().length === 0
-    ) {
-        isFormValid = false;
-        errors.category = "Please provide your business category.";
+    if (payload.category) {
+        if (
+            !payload ||
+            typeof payload.category !== "string" ||
+            payload.category.trim().length === 0
+        ) {
+            isFormValid = false;
+            errors.category = "Please provide your business category.";
+        }
     }
 
     if (
@@ -132,13 +138,15 @@ export const validateBusinessEdit = payload => {
         errors.otherInfo = "Please provide your business otherInfo.";
     }
 
-    if (
-        !payload ||
-        typeof payload.phone !== "string" ||
-        payload.phone.trim().length !== 14
-    ) {
-        isFormValid = false;
-        errors.phone = "not a valid phone number.";
+    if (payload.phone) {
+        if (
+            !payload ||
+            typeof payload.phone !== "string" ||
+            payload.phone.trim().length !== 14
+        ) {
+            isFormValid = false;
+            errors.phone = "not a valid phone number.";
+        }
     }
 
     if (
