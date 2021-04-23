@@ -42,8 +42,8 @@ public class UpdateBusinessController {
 	@GetMapping("/updateBusiness")
 	public String GetBusiness(@RequestParam int businessID, @RequestParam String name, @RequestParam String startHour, @RequestParam String endHour, @RequestParam String category, @RequestParam int cost, @RequestParam String description, @RequestParam String otherInfo, @RequestParam String phone_number, @RequestParam String website, @RequestParam String email, @RequestParam String address) {
 		try {
-			String updateQuery = "update Businesses set name=? startHour=?, endHour=?, business_type=?, cost=?, description=?, otherInfo=?, phone_number=?, website=?, email=?, address=? where businessID=?";
-			jdbcTemplate.update(name, updateQuery, startHour, endHour, category, cost, description, otherInfo, phone_number,website, email, address, businessID);
+			String updateQuery = "update Businesses set name=?, startHour=?, endHour=?, business_type=?, cost=?, description=?, otherInfo=?, phone_number=?, website=?, email=?, address=? where businessID=?";
+			jdbcTemplate.update( updateQuery, name, startHour, endHour, category, cost, description, otherInfo, phone_number,website, email, address, businessID);
 			//TODO this might work. might have to use preparedstatementfactorys
 			return "{\"success\":true}";
 		}catch(Exception e) {
