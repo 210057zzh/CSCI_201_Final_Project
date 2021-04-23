@@ -57,7 +57,7 @@ public class InsertIntoController {
 		System.out.println("VALUE RETURNED IS :" + return_value);
 	}
 	@GetMapping("/addBusiness")
-	public void InsertBusiness(@RequestParam int userID, @RequestParam String business_type, @RequestParam String name, @RequestParam String otherInfo, @RequestParam String email, @RequestParam String website, @RequestParam String phone_number,@RequestParam int startHour, @RequestParam int endHour, @RequestParam String description, @RequestParam int cost, @RequestParam String address) {
+	public void InsertBusiness(@RequestParam int userID, @RequestParam String business_type, @RequestParam String name, @RequestParam String otherInfo, @RequestParam String email, @RequestParam String website, @RequestParam String phone_number,@RequestParam String startHour, @RequestParam String endHour, @RequestParam String description, @RequestParam int cost, @RequestParam String address) {
 		String url = dbAddress_nopass;
 		DriverManagerDataSource dataSource = new DriverManagerDataSource(url, "root", "root");
 		SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(dataSource).withTableName("Businesses");

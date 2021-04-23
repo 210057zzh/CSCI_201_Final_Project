@@ -12,6 +12,8 @@ const initialState = {
     },
     BusinessEditErrs: {
     },
+    newBusiness: false,
+    uploadReady: false
     /**
      *  Can add any more 'global variables' related to user login/signup here
      */

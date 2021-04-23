@@ -15,17 +15,19 @@ import axios from 'axios';
 function Dashboard(props) {
     const REST_API_CALL = 'http://localhost:8080/api/myBusinesses'
     const { authState, setAuthState } = useContext(authContext);
-    const [ownedBusinesses, setOwnedBusinesses] = useState();
     const [showEdit, setEdit] = useState();
     const [businessArray, setbusinessArray] = useState([]);
     const [divArray, setdivArray] = useState([]);
 
-    async function getOwnedBusinesses() {
-        var result = await axios.get(REST_API_CALL, {
+    function getOwnedBusinesses() {
+        var result = axios.get(REST_API_CALL, {
             params: {
-                userID: authState.user.userID
+                userID: authState.user.userId
             }
+        }).then(resp => {
+            setbusinessArray(resp.data);
         });
+        console.log(result);
         return result;
     }
 
@@ -46,23 +48,39 @@ function Dashboard(props) {
     }
 
     function openEditView(business) {
-        setAuthState(prevState => {
-            return {
-                ...prevState, BusinessEdit: business
-            }
-        });
+        if (business == emptyBusiness) {
+            setAuthState(prevState => {
+                return {
+                    ...prevState, BusinessEdit: business, newBusiness: true
+                }
+            });
+        }
+        else {
+            setAuthState(prevState => {
+                return {
+                    ...prevState, BusinessEdit: business, newBusiness: false
+                }
+            });
+        }
         setEdit(business);
     }
 
     useEffect(() => {
-        //     if(!authState.loggedIn) {
-        //         window.location.replace('./')
-        //     }
-        setbusinessArray(getOwnedBusinesses());
-        console.log(businessArray);
-    }, [showEdit])
+        if (!authState.loggedIn) {
+            window.location.replace('./')
+        }
+        console.log("here");
+        getOwnedBusinesses();
+        setAuthState(prevState => {
+            return {
+                ...prevState,
+                uploadReady: false
+            }
+        })
+    }, [showEdit, authState.uploadReady])
 
     useEffect(() => {
+        console.log(businessArray)
         if (businessArray.length >= 0) {
             setdivArray(businessArray.map(business => {
                 return (

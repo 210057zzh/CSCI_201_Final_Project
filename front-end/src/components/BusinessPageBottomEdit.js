@@ -1,32 +1,12 @@
 import '../css/BusinessPage.css';
 import { useState, useContext, useEffect } from 'react';
 import { authContext } from './contexts/authContext';
-import ReviewSnippet from './ReviewSnippet';
 import Pencil from '../css/img/pencil.png';
 import YelpLogo from '../css/img/pencil.png';
 import { validateBusinessEdit } from './UserAuth/validate';
 import MuiPhoneNumber from "material-ui-phone-number";
 import TextField from '@material-ui/core/TextField';
-import { useHistory } from "react-router-dom";
-
-function getReviews() {
-    return (
-        [
-            {
-                username: "Mary Jane",
-                rating: 4,
-                reviewCount: 4,
-                reviewMessage: "Absolutely stellar service!  I would recommend Bob to anyone who needs to fix their plumbing issues.  Only drawback is the price... but a fine job is guaranteed!"
-            },
-            {
-                username: "Mary Jane",
-                rating: 4,
-                reviewCount: 4,
-                reviewMessage: "Absolutely stellar service!  I would recommend Bob to anyone who needs to fix their plumbing issues.  Only drawback is the price... but a fine job is guaranteed!"
-            }
-        ]
-    )
-}
+import axios from 'axios';
 
 function parseText(text) {
     let myString = text.split('\\n').map(function (item, idx) {
@@ -36,14 +16,40 @@ function parseText(text) {
         </span>
     })
     return myString;
-
 }
 
 function BusinessPageBottomEdit({ description, otherInfo, phone, website, email, address, setEdit }) {
 
     const { authState, setAuthState } = useContext(authContext);
-    console.log(authState)
+    const REST_API_CALL = 'http://localhost:8080/api/addBusiness'
     let value = null;
+
+    async function addBusiness(business) {
+        const result = await axios.get(REST_API_CALL, {
+            params: {
+                userID: authState.user.userId,
+                business_type: business.category,
+                name: business.name,
+                otherInfo: business.otherInfo,
+                email: business.email,
+                website: business.website,
+                phone_number: business.phone,
+                startHour: business.startingTime,
+                endHour: business.endingTime,
+                description: business.description,
+                cost: business.priceLevel,
+                address: business.address
+            }
+        }).then(resp => {
+            setAuthState(prevState => {
+                return {
+                    ...prevState,
+                    uploadReady: true
+                }
+            })
+        });
+    }
+
     function updateDescription(e) {
         setAuthState(prevState => {
             return {
@@ -132,6 +138,10 @@ function BusinessPageBottomEdit({ description, otherInfo, phone, website, email,
             }
         });
         if (result.success === true) {
+            if (authState.newBusiness === true) {
+                console.log(authState.BusinessEdit);
+                addBusiness(authState.BusinessEdit);
+            }
             setEdit(null);
         }
     }
