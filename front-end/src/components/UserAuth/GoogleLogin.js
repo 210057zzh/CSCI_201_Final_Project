@@ -48,12 +48,12 @@ function GoogleLogin(props) {
         if (signUporLogin === 'Login') {
             axios.post(REST_API_CALL_Login, id_token).then(resp => {
                 if (resp.data.successful === true) { // The user already exists and has successfully logged in
-                    console.log('Login Success: currentUser:', res.profileObj);
+                    console.log('Login Success: currentUser:', resp);
                     toggleLoginStatusOn();
                     alert(
                         `Logged in successfully welcome ${res.profileObj.name} 😍. \n See console for full profile object.`
                     );
-                    setAuthState(prevState => { return { ...prevState, googleToken: id_token } });
+                    setAuthState(prevState => { return { ...prevState, googleToken: id_token, user: resp.data, showLogin: false } });
                     refreshTokenSetup(res);
                 } else { // The user does not already exist and needs to be redirected to the signup page
                     console.log('User must be redirected to signup page')
@@ -64,12 +64,12 @@ function GoogleLogin(props) {
         else if (signUporLogin === 'Signup') {
             axios.post(REST_API_CALL_Signup, id_token).then(resp => {
                 if (resp.data.successful === true) { // The user has successfully registered with google
-                    console.log('Signup Success: currentUser:', res);
+                    console.log('Signup Success: currentUser:', resp);
                     toggleLoginStatusOn();
                     alert(
                         `Signup successfully welcome ${res.profileObj.name} 😍. \n See console for full profile object.`
                     );
-                    setAuthState(prevState => { return { ...prevState, googleToken: id_token } });
+                    setAuthState(prevState => { return { ...prevState, googleToken: id_token, user: resp.data, showSignup: false } });
                     refreshTokenSetup(res);
                 } else { // The user already exist and needs to be redirected to the login page
                     console.log('User must be redirected to login page')
