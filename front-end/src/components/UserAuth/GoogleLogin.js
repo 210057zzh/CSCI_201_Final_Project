@@ -50,9 +50,6 @@ function GoogleLogin(props) {
                 if (resp.data.successful === true) { // The user already exists and has successfully logged in
                     console.log('Login Success: currentUser:', resp);
                     toggleLoginStatusOn();
-                    alert(
-                        `Logged in successfully welcome ${res.profileObj.name} 😍. \n See console for full profile object.`
-                    );
                     setAuthState(prevState => { return { ...prevState, googleToken: id_token, user: resp.data, showLogin: false } });
                     refreshTokenSetup(res);
                 } else { // The user does not already exist and needs to be redirected to the signup page
@@ -66,9 +63,6 @@ function GoogleLogin(props) {
                 if (resp.data.successful === true) { // The user has successfully registered with google
                     console.log('Signup Success: currentUser:', resp);
                     toggleLoginStatusOn();
-                    alert(
-                        `Signup successfully welcome ${res.profileObj.name} 😍. \n See console for full profile object.`
-                    );
                     setAuthState(prevState => { return { ...prevState, googleToken: id_token, user: resp.data, showSignup: false } });
                     refreshTokenSetup(res);
                 } else { // The user already exist and needs to be redirected to the login page
@@ -84,9 +78,6 @@ function GoogleLogin(props) {
     const onFailure = (res) => {
         console.log(authState.loggedIn)
         console.log('Login failed: res:', res);
-        alert(
-            `Failed to login. 😢 `
-        );
     };
 
     return (
