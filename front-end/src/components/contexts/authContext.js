@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 const initialState = {
     showLogin: false,
     loggedIn: false,
-    userName: '',
+    user: {},
     showSignup: false,
     googleToken: '',
     signUpredirect: false,
