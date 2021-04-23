@@ -8,7 +8,6 @@ import axios from 'axios';
 import { useContext, useEffect } from 'react';
 import { authContext } from './contexts/authContext';
 import Signup from './UserAuth/SignupPopup'
-import Error from './UserAuth/Error';
 
 function Discover(props) {
     const { authState, setAuthState } = useContext(authContext);
