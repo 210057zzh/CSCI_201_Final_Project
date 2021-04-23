@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 const initialState = {
     showLogin: false,
     loggedIn: false,
-    userName: '',
+    user: {},
     showSignup: false,
     googleToken: '',
     signUpredirect: false,
@@ -12,6 +12,8 @@ const initialState = {
     },
     BusinessEditErrs: {
     },
+    newBusiness: false,
+    uploadReady: false
     /**
      *  Can add any more 'global variables' related to user login/signup here
      */

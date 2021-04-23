@@ -26,7 +26,7 @@ function Navbar(props) {
     }
 
     function logout() {
-        setAuthState(prevState => { return { ...prevState, loggedIn: false } });
+        setAuthState(prevState => { return { ...prevState, loggedIn: false, user: {} } });
         window.location.replace('./')
     }
     if (authState.loggedIn === false) {

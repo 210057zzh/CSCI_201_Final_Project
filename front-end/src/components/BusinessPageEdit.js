@@ -10,8 +10,8 @@ import Signup from './UserAuth/SignupPopup'
 function outputBusinessPage(business, setEdit) {
     return (
         <div>
-            <BusinessPageHeaderEdit name={business.name} startingTime={business.startingTime} endingTime={business.endingTime} givenCategory={business.category} rating={business.rating} reviewCount={business.reviewCount} priceLevel={business.priceLevel} />
-            <BusinessPageBottomEdit setEdit={setEdit} description={business.description} otherInfo={business.otherInfo} phone={business.phone} website={business.website} email={business.email} address={business.address} />
+            <BusinessPageHeaderEdit name={business.name} startingTime={business.startHour} endingTime={business.endHour} givenCategory={business.business_type} rating={business.rating} reviewCount={business.reviewCount} priceLevel={business.cost} />
+            <BusinessPageBottomEdit setEdit={setEdit} description={business.description} otherInfo={business.otherInfo} phone={business.phone_number} website={business.website} email={business.email} address={business.address} />
         </div>)
 }
 
