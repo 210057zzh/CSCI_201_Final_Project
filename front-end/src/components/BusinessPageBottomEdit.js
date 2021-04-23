@@ -238,6 +238,7 @@ function BusinessPageBottomEdit({ description, otherInfo, phone, website, email,
                             <div className='contactBlue' style={{ textAlign: 'left' }}>
                                 <div style={{ margin: '1em' }}>
                                     <MuiPhoneNumber
+                                        onlyCountries={["us"]}
                                         disableCountryCode
                                         value={phone}
                                         label="phone"
