@@ -55,10 +55,7 @@ function BusinessPageBottom({ currBusinessID, description, otherInfo, phone, web
         setPage(e.target.value);
 
         var pageNum = e.target.value;
-        axios.post(REST_API_GET_REVIEWS, {
-            'businessID': currBusinessID,
-            'page': currPage
-          })
+        axios.get(REST_API_GET_REVIEWS+"?businessID="+currBusinessID+"&page="+currPage)
           .then(function (response) {
             console.log(response);
           }).catch(function() {
