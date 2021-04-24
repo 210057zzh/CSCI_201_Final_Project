@@ -54,8 +54,24 @@ public class InsertIntoController {
 		parameters.put("message", message);
 		parameters.put("rating", rating);
 		//parameters.put("time", getCurrentDate());
-		//TODO for some reason it just crashes if you try and insert the time
+		
 		int return_value = simpleJdbcInsert.execute(parameters);
+		
+		//recalculate average rating for this business with new review
+		var reviews =  this.jdbcTemplate.queryForList("SELECT * FROM Reviews where businessID="+businessID+" ORDER BY time").stream()
+				.collect(Collectors.toList());
+		
+		int totalReviews = reviews.size();
+		int totalRating = 0;
+		
+		for(Map<String, Object> review: reviews) {
+			totalRating+=(int) review.get("rating");
+		}
+		
+		int newAverageRating = totalRating/totalReviews;
+		
+		String updateQuery = "update Businesses set average_rating=? where businessID=?";
+		jdbcTemplate.update(updateQuery, newAverageRating, businessID);
 		
 		System.out.println("VALUE RETURNED IS :" + return_value);
 	}
