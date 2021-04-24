@@ -85,7 +85,7 @@ function Dashboard(props) {
                 uploadReady: false
             }
         })
-    }, [showEdit, authState.uploadReady])
+    }, [showEdit, authState.uploadReady, authState.loggedIn])
 
     useEffect(() => {
         console.log(businessArray)

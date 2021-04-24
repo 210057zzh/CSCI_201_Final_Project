@@ -13,7 +13,8 @@ const initialState = {
     BusinessEditErrs: {
     },
     newBusiness: false,
-    uploadReady: false
+    uploadReady: false,
+    showReview: false
     /**
      *  Can add any more 'global variables' related to user login/signup here
      */

@@ -1,6 +1,8 @@
 import '../css/BusinessPage.css';
 
 import ReviewSnippet from './ReviewSnippet';
+import { useState, useContext, useEffect } from 'react';
+import { authContext } from './contexts/authContext'
 
 function getReviews() {
     return (
@@ -33,16 +35,25 @@ function parseText(text) {
 }
 
 function BusinessPageBottom({ description, otherInfo, phone, website, email, address }) {
-
+    const { authState, setAuthState } = useContext(authContext);
+    function toggleReview() {
+        setAuthState(prevState => {
+            return {
+                ...prevState,
+                showReview: !(authState.showReview)
+            }
+        });
+    }
     return (
         <div className='bottomBackground' style={{ padding: '0 2vh 2vh 2vh', marginTop: '0', overflowX: 'hidden' }}>
             <div style={{ marginLeft: '1em' }}>
-                <div style={{ textAlign: 'left' }}>
-                    <input className='button' type='button' value='Review'></input>
-                    <input className='button' type='button' value='Favorite'></input>
-                </div>
+                {(authState.loggedIn === true) ?
+                    <div style={{ textAlign: 'left' }}>
+                        <input className='button' type='button' value='Review' onClick={toggleReview}></input>
+                        <input className='button' type='button' value='Favorite'></input>
+                    </div>
+                    : null}
                 <hr className='line' style={{ width: '80em', marginTop: '1.5em' }} /><br /><br />
-
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <div style={{ float: 'left', width: '75%' }}>
                         <div style={{ textAlign: 'left' }}>
@@ -75,7 +86,6 @@ function BusinessPageBottom({ description, otherInfo, phone, website, email, add
                 </div>
 
                 <div>
-
                     <hr className='line' style={{ width: '95%' }} /><br />
                     <p className='subText' style={{ textAlign: 'left', marginTop: '20px' }}>Reviews</p>
                     {
@@ -88,7 +98,6 @@ function BusinessPageBottom({ description, otherInfo, phone, website, email, add
 
                     }
                 </div>
-
                 <div className="pageSection">
                     <a href="#" className="active">1</a>
                     <a href="#">2</a>
