@@ -1,12 +1,15 @@
 import { NavLink, withRouter } from 'react-router-dom';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { authContext } from './contexts/authContext';
+import { useMediaQuery } from 'react-responsive'
 
 import '../css/Navbar.css';
 
 function Navbar(props) {
+    const isDesktopOrLaptop = useMediaQuery({query: '(min-width: 1224px)'});
     // *Need to set toggleLogin* as a required prop later.
     const { authState, setAuthState } = useContext(authContext);
+    const [isNavbarOpen, toggleNavBar] = useState({value: false});
 
     function toggleLoginScreen() {
         if (authState.showLogin) {
@@ -28,8 +31,20 @@ function Navbar(props) {
     function logout() {
         setAuthState(prevState => { return { ...prevState, loggedIn: false, user: {} } });
     }
+
+    toggleNavBar => (0) {
+        if(isNavbarOpen == true) {
+            //close it
+            document.getElementById("sideNav").style.width = "250px";
+        } else {
+            //open it
+            document.getElementById("sideNav").style.width = "0px";
+        }
+
+    }
     if (authState.loggedIn === false) {
         return (
+            <div> { isDesktopOrLaptop ?
             <div className={'navbar '}>
                 <div className='navbar-left'>
                     <NavLink className='navlink' exact to='/'>Home</NavLink>
@@ -39,11 +54,26 @@ function Navbar(props) {
                     <div className='navlink' style={{ display: "inline-block" }} onClick={toggleLoginScreen}>Log in</div>
                     <div className='navlink' style={{ display: "inline-block" }} onClick={toggleSignupScreen}>Sign up</div>
                 </div>
+            </div> : 
+                        <div>
+                            <span style={{fontSize:'30px', cursor:'pointer', float: 'left', marginLeft: '10px', marginTop:'10px', color: 'white'}} onClick={toggleNavBar}>&#9776;</span>
+                            <div style={{textAlign: 'left'}} id='sideNav'>
+                            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                                <NavLink className='navlink' style={{display: 'block'}} exact to='/'>Home</NavLink>
+                                <NavLink className='navlink' style={{display: 'block'}} exact to='/discover'>Discover</NavLink>
+                                <div className='navlink' style={{display: 'block'}} onClick={toggleLoginScreen}>Log in</div>
+                                <div className='navlink' style={{display: 'block'}} onClick={toggleSignupScreen}>Sign up</div>
+                            </div>
+                    </div>
+            
+            }
             </div>
         )
     }
     else if (authState.loggedIn === true) {
         return (
+            <div>
+                { isDesktopOrLaptop &&
             <div className={'navbar '}>
                 <div className='navbar-left'>
                     <NavLink className='navlink' exact to='/'>Home</NavLink>
@@ -54,6 +84,7 @@ function Navbar(props) {
                     <div className='navlink' style={{ display: "inline-block" }} onClick={logout}>Log out</div>
                 </div>
 
+            </div>}
             </div>
         )
     }

@@ -12,13 +12,11 @@
     justify-content: space-between;
 }
 
-.navbar-right {
-
-}
+.navbar-right {}
 
 .navlink {
     text-decoration: none;
-    color: rgba(255,255,255,0.80);
+    color: rgba(255, 255, 255, 0.80);
     margin: 1em 2em;
     font-size: 24px;
     font-weight: bold;
@@ -34,5 +32,18 @@
 }
 
 .darkened {
-    background: rgba(0,0,0,0.4);
+    background: rgba(0, 0, 0, 0.4);
+}
+
+#sideNav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
 }
