@@ -29,22 +29,39 @@ public class YelpAPIController {
 	// address
 	// Else returns -1
 	@GetMapping("/yelpfill")
-	public String discoverBusinesses(@RequestParam String[] businessInfo) {
-		return yelpFill(businessInfo);
+	public String discoverBusinesses(@RequestParam String name, @RequestParam String address) {
+		System.out.println(name+" "+address);
+		String retString = yelpFill(name, address);
+		if(retString.equals("-1")) {
+			return "{\"error\":true}";
+		}else {
+			return retString;
+		}
 	}
 
-	private static String yelpFill(String[] businessInfo) {
+	private static String yelpFill(String name, String address) {
 		// Formats params for url
 		// TODO may have to do more replaces than just spaces
-		for (int i = 0; i < businessInfo.length; i++) {
-			businessInfo[i] = businessInfo[i].replace(" ", "%20");
-		}
-
-		final String name = businessInfo[0];
-		final String address1 = businessInfo[1];
-		final String city = businessInfo[2];
-		final String state = businessInfo[3];
-		final String country = businessInfo[4];
+		address=address.replace(", ",",");
+        address=address.replace(" ", "%20");
+        name = name.replace(" ", "%20");
+        
+        String address1;
+        String city;
+        String state;
+        String country;
+        
+        try {
+	        address1 = address.substring(0, address.indexOf(","));
+	        address=address.substring(address.indexOf(",")+1);
+	        city = address.substring(0, address.indexOf(","));
+	        address=address.substring(address.indexOf(",")+1);
+	        state = address;
+	        country="US";
+        }catch(Exception e) {
+        	e.printStackTrace();
+        	return "-1";
+        }
 
 		// Get the business id
 		String id = "";
