@@ -52,10 +52,11 @@ function BusinessPageBottom({ currBusinessID, description, otherInfo, phone, web
 
     function updateReviews(e) {
 
-        setPage(e.target.value);
+        setPage(e.target.title);
 
-        var pageNum = e.target.value;
-        axios.get(REST_API_GET_REVIEWS+"?businessID="+currBusinessID+"&page="+currPage)
+
+        var pageNum = e.target.title;
+        axios.get(REST_API_GET_REVIEWS+"?businessID="+currBusinessID+"&page="+pageNum)
           .then(function (response) {
             console.log(response);
           }).catch(function() {
@@ -119,10 +120,10 @@ function BusinessPageBottom({ currBusinessID, description, otherInfo, phone, web
                     }
                 </div>
                 <div className="pageSection">
-                    <a href="#" className="active" value="1" onClick={updateReviews}>1</a>
-                    <a href="#" value="2" onClick={updateReviews}>2</a>
-                    <a href="#" value="3" onClick={updateReviews}>3</a>
-                    <a href="#" value="4" onClick={updateReviews}>4</a>
+                    <a href="#" className="active" title="1" onClick={updateReviews}>1</a>
+                    <a href="#" title="2" onClick={updateReviews}>2</a>
+                    <a href="#" title="3" onClick={updateReviews}>3</a>
+                    <a href="#" title="4" onClick={updateReviews}>4</a>
                 </div>
             </div>
         </div>
