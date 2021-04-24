@@ -1,5 +1,5 @@
 import '../css/BusinessPage.css';
-
+import axios from 'axios';
 import ReviewSnippet from './ReviewSnippet';
 import { useState, useContext, useEffect } from 'react';
 import { authContext } from './contexts/authContext'
@@ -34,16 +34,39 @@ function parseText(text) {
 
 }
 
-function BusinessPageBottom({ description, otherInfo, phone, website, email, address }) {
+function BusinessPageBottom({ currBusinessID, description, otherInfo, phone, website, email, address }) {
     const { authState, setAuthState } = useContext(authContext);
+    const [currPage, setPage] = useState('');
+    const REST_API_GET_REVIEWS = 'http://localhost:8080/api/getReviews';
+
+
     function toggleReview() {
         setAuthState(prevState => {
             return {
                 ...prevState,
-                showReview: !(authState.showReview)
+                showReview: !(authState.showReview),
+                businessID: currBusinessID
             }
         });
     }
+
+    function updateReviews(e) {
+
+        setPage(e.target.value);
+
+        var pageNum = e.target.value;
+        axios.post(REST_API_GET_REVIEWS, {
+            'businessID': currBusinessID,
+            'page': currPage
+          })
+          .then(function (response) {
+            console.log(response);
+          }).catch(function() {
+            console.log('error');
+        })
+        //Update reviews now
+    }
+
     return (
         <div className='bottomBackground' style={{ padding: '0 2vh 2vh 2vh', marginTop: '0', overflowX: 'hidden' }}>
             <div style={{ marginLeft: '1em' }}>
@@ -99,10 +122,10 @@ function BusinessPageBottom({ description, otherInfo, phone, website, email, add
                     }
                 </div>
                 <div className="pageSection">
-                    <a href="#" className="active">1</a>
-                    <a href="#">2</a>
-                    <a href="#">3</a>
-                    <a href="#">4</a>
+                    <a href="#" className="active" value="1" onClick={updateReviews}>1</a>
+                    <a href="#" value="2" onClick={updateReviews}>2</a>
+                    <a href="#" value="3" onClick={updateReviews}>3</a>
+                    <a href="#" value="4" onClick={updateReviews}>4</a>
                 </div>
             </div>
         </div>
