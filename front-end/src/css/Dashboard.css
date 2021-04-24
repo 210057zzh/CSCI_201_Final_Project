@@ -33,6 +33,7 @@
 .business-name {
     font-weight: bold;
     font-size: 24px;
+    margin-bottom: 0.3em;
 }
 
 .star-rating {
@@ -61,6 +62,10 @@
     margin-top: 35%;
 }
 
+.business-card.add {
+    cursor: pointer;
+}
+
 .plus{
     font-weight: bold;
     font-size: 48px;
@@ -68,4 +73,11 @@
 
 .edit-button:hover {
     color: black; 
+    cursor: pointer;
+}
+
+.stars {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }

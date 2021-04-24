@@ -145,7 +145,7 @@ export const validateBusinessEdit = payload => {
             payload.phone.trim().length !== 14
         ) {
             isFormValid = false;
-            errors.phone = "not a valid phone number.";
+            errors.phone = "Not a valid phone number.";
         }
     }
 

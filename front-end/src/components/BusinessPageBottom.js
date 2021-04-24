@@ -1,7 +1,7 @@
 import '../css/BusinessPage.css';
 import axios from 'axios';
 import ReviewSnippet from './ReviewSnippet';
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext } from 'react';
 import { authContext } from './contexts/authContext'
 
 function getReviews() {
