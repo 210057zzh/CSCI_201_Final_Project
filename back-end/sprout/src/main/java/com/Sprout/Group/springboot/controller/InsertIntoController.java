@@ -49,9 +49,11 @@ public class InsertIntoController {
 		SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(dataSource).withTableName("Review");
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("businessID", businessID);
+		parameters.put("userID", userID);
 		parameters.put("message", message);
 		parameters.put("rating", rating);
 		parameters.put("time", getCurrentDate());
+		//TODO recacalculate average rating for this business with new review
 		int return_value = simpleJdbcInsert.execute(parameters);
 		
 		System.out.println("VALUE RETURNED IS :" + return_value);
