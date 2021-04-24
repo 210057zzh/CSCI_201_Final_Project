@@ -43,7 +43,7 @@ function BusinessPage(props) {
             <Navbar />
             {business ? <div>
                 <BusinessPageHeader name={business.name} startingTime={business.startingTime} endingTime={business.endingTime} category={business.category} rating={business.rating} reviewCount={business.reviewCount} priceLevel={business.priceLevel} />
-                <BusinessPageBottom description={business.description} otherInfo={business.otherInfo} phone={business.phone} website={business.website} email={business.email} address={business.address} />
+                <BusinessPageBottom currBusinessID={props.match.params.businessID} description={business.description} otherInfo={business.otherInfo} phone={business.phone} website={business.website} email={business.email} address={business.address} />
             </div> : null}
         </div>
     )
