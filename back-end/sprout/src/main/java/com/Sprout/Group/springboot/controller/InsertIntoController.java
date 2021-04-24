@@ -70,7 +70,7 @@ public class InsertIntoController {
 		int newAverageRating = totalRating/totalReviews;
 		
 		String updateQuery = "update Businesses set average_rating=? where businessID=?";
-		jdbcTemplate.update( updateQuery, newAverageRating, businessID);
+		jdbcTemplate.update(updateQuery, newAverageRating, businessID);
 		
 		System.out.println("VALUE RETURNED IS :" + return_value);
 	}
