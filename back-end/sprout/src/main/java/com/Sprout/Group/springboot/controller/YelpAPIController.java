@@ -31,7 +31,12 @@ public class YelpAPIController {
 	@GetMapping("/yelpfill")
 	public String discoverBusinesses(@RequestParam String name, @RequestParam String address) {
 		System.out.println(name+" "+address);
-		return yelpFill(name, address);
+		String retString = yelpFill(name, address);
+		if(retString.equals("-1")) {
+			return "{\"error\":true}";
+		}else {
+			return retString;
+		}
 	}
 
 	private static String yelpFill(String name, String address) {
