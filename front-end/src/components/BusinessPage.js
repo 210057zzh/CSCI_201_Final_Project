@@ -40,7 +40,7 @@ function BusinessPage(props) {
             {authState.showSignup ? <Signup /> : null}
             {authState.showReview ? <Review /> : null}
             {(authState.showLogin || authState.showSignup || authState.showReview) ? <div className='darkened'></div> : null}
-            <Navbar />
+            <Navbar /><br/>
             {business ? <div>
                 <BusinessPageHeader name={business.name} startingTime={business.startingTime} endingTime={business.endingTime} category={business.category} rating={business.rating} reviewCount={business.reviewCount} priceLevel={business.priceLevel} />
                 <BusinessPageBottom description={business.description} otherInfo={business.otherInfo} phone={business.phone} website={business.website} email={business.email} address={business.address} />

@@ -8,6 +8,7 @@ import Error from './Error';
 import { validateSignUpForm } from './validate';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import { useMediaQuery } from 'react-responsive'
 
 
 const clickOutsideConfig = {
@@ -23,6 +24,9 @@ function Signup(props) {
     const [emailerr, setEmailerr] = useState();
     const [pwerr, setPwerr] = useState();
     const [pwconfirmerr, setpwce] = useState();
+    const isDesktopOrLaptop = useMediaQuery({ minWidth: 1224 });
+    const isVerySmall = useMediaQuery({ minWidth: 900 });
+    
 
     useEffect(() => {
         if (authState.signUpredirect === true) {
@@ -121,7 +125,10 @@ function Signup(props) {
                 />
                 {err ? <Error errorMsg={err}></Error> : null}
                 <br></br>
-                <Button style={{ width: '20%', marginTop: '3em' }} className='Signup-btn' size="small" type="submit" variant="contained" color="">Sign up</Button>
+                <Button style={{ width: (isDesktopOrLaptop ? '20%' : '40%'), marginTop: '3em', height: (isDesktopOrLaptop ? 'auto' : '4em') }} className='Signup-btn' size="small" type="submit" variant="contained" color="">Sign up</Button>
+                {
+                    !isVerySmall && <Button style={{ width: (isDesktopOrLaptop ? '20%' : '40%'), marginTop: '3em', height: (isDesktopOrLaptop ? 'auto' : '4em'), marginLeft: '20px' }} className='Signup-btn' size="small" onClick={Signup.handleClickOutside} variant="contained" color="">Cancel</Button>
+                }
             </form>
         </div>
     );

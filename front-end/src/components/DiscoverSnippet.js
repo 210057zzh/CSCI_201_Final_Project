@@ -9,12 +9,12 @@ function DiscoverSnippet(props) {
             
             <div className='discoverSnippet'>
                 {/*<img src={picture} width='150px' className='picture' />*/}
-                <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                    <div style={{float: 'left', marginLeft: '0.5em'}}>
+                <div id="container">
+                    <div className="leftSide">
                         <p className='title'>{props.businessName}</p>
-                        <div style={{ display: 'flex' }}>
+                        <div className="leftData">
                             <StarRating value={props.rating} style={{ float: 'left' }} />
-                            {props.reviewCount > 0 && <p style={{ float: 'right', margin: '8px 8px' }} className='other'>{props.reviewCount} Reviews</p>}
+                            {props.reviewCount > 0 && <p className='MoreInfo other'>{props.reviewCount} Reviews</p>}
                         </div>
                     </div><br/>
                     <p className='other' >{props.phoneNumber}<br />{props.address}</p>

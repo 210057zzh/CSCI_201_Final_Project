@@ -3,6 +3,7 @@
     border-radius: 5px;
     margin: 2vh 5vw;
     overflow: auto;
+    margin-top: 0em;
 }
 
 .leftContent {
@@ -16,6 +17,7 @@
     justify-content: space-between;
     margin-right: 1em;
     float: right;
+    text-align: right;
 }
 
 .businessName {
@@ -52,7 +54,6 @@
 }
 
 .button {
-
     background: linear-gradient(90deg, #0BA360 0%, #3CBA92 100%);
     border-radius: 20px;
     font-size: 22px;
@@ -63,11 +64,10 @@
     cursor: pointer;
     padding: 0.7em 1.4em 0.7em 1.4em;
     margin: 1em 1em 0 0;
-
 }
 
 .button:hover {
-    color: black; 
+    color: black;
 }
 
 .line {
@@ -93,7 +93,7 @@
 .reviewLine {
     border: none;
     height: 1px;
-    color:#9e9e9e;
+    color: #9e9e9e;
     background-color: #9e9e9e;
     width: 20em;
     float: left;
@@ -141,6 +141,12 @@
     margin: 0 0 0 0;
     white-space: nowrap;
     padding: 8px;
+    width: 15em;
+    border: none;
+}
+
+.businessInput:focus {
+    outline: none;
 }
 
 .timeInput {
@@ -162,6 +168,16 @@
 }
 
 .fieldEditText {
+    color: black;
+    font-weight: 700;
+    font-size: 32px;
+    margin: 0em 0 0 0;
+    padding: 8px;
+    margin-top: 0;
+    float: left;
+}
+
+.fieldEditTextHeader {
     color: black;
     font-weight: 700;
     font-size: 32px;
@@ -196,18 +212,17 @@
     cursor: pointer;
 }
 
-
-.editCost > span {
-   display: inline-block;
-   position: relative;
-   width: 1.1em;
+.editCost>span {
+    display: inline-block;
+    position: relative;
+    width: 1.1em;
 }
 
-.editCost > span:hover {
+.editCost>span:hover {
     color: black;
 }
 
-.editCost > span:hover ~ span:before {
+.editCost>span:hover~span:before {
     content: "$";
     color: black;
     position: absolute;
@@ -219,7 +234,7 @@
     font-size: 16px;
 }
 
-.contactBlue > div > input {
+.contactBlue>div>input {
     margin-top: 10px;
     margin-bottom: 10px;
 }
@@ -259,7 +274,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 40%;
+    width: 85vw;
     background-color: white;
     z-index: 2;
     border-radius: 20px;
@@ -284,4 +299,103 @@
     border-radius: 10px;
     padding-top: 20px;
     padding-bottom: 20px;
+}
+
+.categoryTime {
+    float: 'left';
+    white-space: nowrap;
+}
+
+.businessData {
+    display: flex;
+}
+
+.contactSection {
+    float: 'right';
+    align-items: right;
+    vertical-align: 'top';
+    margin-left: '10px';
+}
+
+.businessInfoSection {
+    float: 'left';
+    width: 60vw;
+}
+
+.starEditRating {
+    display: 'inline-flex';
+}
+
+@media only screen and (max-width: 1050px) {
+    .background {
+        margin-top: 3em;
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+    .starEditRating {
+        display: block;
+    }
+    .rightContent {
+        float: left;
+        color: red;
+        margin-left: 1em;
+    }
+}
+
+@media only screen and (max-width: 900px) {
+    .businessName {
+        white-space: normal;
+    }
+    .rightContent {
+        float: left;
+        color: red;
+        margin-left: 1em;
+    }
+    .businessData {
+        display: block;
+    }
+    .contactSection {
+        margin-top: 2em;
+        float: none;
+        display: block;
+        font-size: max(4.1vw, 1em);
+    }
+    .businessInfoSection {
+        float: none;
+        display: block;
+        width: 100%;
+    }
+    .businessInput {
+        width: 63vw;
+    }
+    .timeInput {
+        float: left;
+    }
+    .fieldEditTextHeader {
+        text-align: left;
+        float: left;
+    }
+    .fieldEditText {
+        font-size: max(4.1vw, 1.2em);
+    }
+    .categorySelect {
+        width: 47vw
+    }
+    .importButton {
+        float: none;
+    }
+}
+
+@media only screen and (max-width: 540px) {
+    .categoryTime {
+        white-space: normal;
+    }
+    .subText {
+        font-size: 28px;
+    }
+    .fieldEditTextHeader {
+        text-align: left;
+        float: none;
+    }
 }

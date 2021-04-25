@@ -29,7 +29,7 @@ function SearchBar(props) {
 
     return (
         <div className='search-bar'>
-            <form onSubmit={submitSearch} style={{ display: 'inline' }}>
+            <form onSubmit={submitSearch}>
                 <input type='text' className='field' placeholder='search...' onChange={handleChange} id="temporary"></input>
                 <input type='button' className='searchButton' value='filter' onClick={submitSearch}></input>
             </form>

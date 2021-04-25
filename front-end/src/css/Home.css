@@ -1,14 +1,22 @@
-.home-search{
+.home-search {
     width: 100vw;
     height: 41vh;
+    text-align: center;
 }
+
 .sprout {
     position: relative;
     color: white;
-    font-size: 52px;
+    font-size: max(2vh, 5vw, 3em);
     font-weight: bold;
     padding-top: 10%;
     width: 100%;
+    display: inline;
+}
+
+.logo {
+    margin-left: max(1vw, 1vh, 1em);
+    width: max(3vw, 3vh, 2.1em);
 }
 
 .home {
@@ -42,7 +50,7 @@
 
 .darkened {
     position: fixed;
-    background: rgba(0,0,0,0.4);
+    background: rgba(0, 0, 0, 0.4);
     z-index: 1;
     min-height: 100vh;
     min-width: 100vw;
@@ -50,7 +58,7 @@
 
 .login-form {
     margin-top: 1em;
-    margin-bottom:4em;
+    margin-bottom: 4em;
 }
 
 .login-form input {
@@ -65,7 +73,6 @@
     padding: 0px;
     padding-left: 5px;
     box-sizing: border-box;
-
 }
 
 .login-btn {
@@ -81,7 +88,7 @@
     padding-bottom: 20px;
 }
 
-.login-btn  {
+.login-btn {
     margin: 0;
 }
 
@@ -92,7 +99,7 @@
 .error {
     background-color: #f2665c;
     width: 75%;
-    margin: auto; 
+    margin: auto;
     margin-top: 1.5em;
     height: auto;
     border-radius: 10px;
@@ -123,7 +130,7 @@
 
 .Signup-form {
     margin-top: 1em;
-    margin-bottom:4em;
+    margin-bottom: 4em;
 }
 
 .Signup-form input {
@@ -153,10 +160,26 @@
     padding-bottom: 20px;
 }
 
-.Signup-btn  {
+.Signup-btn {
     margin: 0;
 }
 
 .Signup-btn:hover {
     cursor: pointer;
+}
+
+@media only screen and (max-width: 1224px) {
+    .login-popup {
+        width: 90vw;
+    }
+    .Signup-popup {
+        width: 90vw;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .Signup-popup {
+        width: 90vw;
+        padding: 0px;
+    }
 }

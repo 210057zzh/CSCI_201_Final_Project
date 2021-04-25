@@ -54,8 +54,8 @@ function BusinessPageBottom({ description, otherInfo, phone, website, email, add
                     </div>
                     : null}
                 <hr className='line' style={{ width: '80em', marginTop: '1.5em' }} /><br /><br />
-                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <div style={{ float: 'left', width: '75%' }}>
+                <div className="businessData" style={{justifyContent: 'space-between'}}>
+                    <div className="businessInfoSection">
                         <div style={{ textAlign: 'left' }}>
 
                             <p className='subText' style={{ marginTop: '0.2em' }}>Business Description</p>
@@ -66,7 +66,7 @@ function BusinessPageBottom({ description, otherInfo, phone, website, email, add
                         </div>
                     </div>
 
-                    <div style={{ float: 'right', display: 'justify-content', verticalAlign: 'top', marginLeft: '10px' }}>
+                    <div className="contactSection">
 
                         <div style={{ margin: '1em 1em 0 0', padding: '0 1em 0 1em', border: 'solid', borderRadius: '10px', borderWidth: '1px' }}>
                             <p className='subText'>Contact</p>

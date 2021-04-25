@@ -22,7 +22,7 @@ function BusinessPageEdit(props) {
             {authState.showLogin ? <Login /> : null}
             {authState.showSignup ? <Signup /> : null}
             {(authState.showLogin || authState.showSignup) ? <div className='darkened'></div> : null}
-            <Navbar />
+            <Navbar /><br/>
             {outputBusinessPage(props.business, props.setEdit)}
         </div>
     )

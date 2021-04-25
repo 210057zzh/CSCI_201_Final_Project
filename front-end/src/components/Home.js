@@ -17,9 +17,9 @@ function Home(props) {
             {(authState.showLogin || authState.showSignup) ? <div className='darkened'></div> : null}
             <Navbar />
             <div className={'home-search'}>
-                <div style={{ display: 'inline-flex', paddingTop: '10%' }}>
+                <div style={{ paddingTop: '10%' }}>
                     <div className='sprout'>Sprout</div>
-                    <img src={logo} width='50px' style={{ margin: '0 0 0 20px' }}></img>
+                    <img src={logo} className="logo"></img>
                 </div>
                 <SearchBar />
             </div>

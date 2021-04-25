@@ -8,6 +8,7 @@ import Error from './Error';
 import { validateLoginForm } from './validate';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import { useMediaQuery } from 'react-responsive'
 
 
 /*
@@ -26,6 +27,7 @@ function Login(props) {
     const REST_API_CALL = 'http://localhost:8080/api/login'
     const [emailerr, setEmailerr] = useState();
     const [pwerr, setPwerr] = useState();
+    const isDesktopOrLaptop = useMediaQuery({ minWidth: 1224 });
 
 
     useEffect(() => {
@@ -105,7 +107,8 @@ function Login(props) {
                 <br></br>
                 {err ? <Error errorMsg={err}></Error> : null}
                 <br></br>
-                <Button style={{ width: '20%', marginTop: '3em' }} className='login-btn' size="small" type="submit" variant="contained" >Log in</Button>
+
+                <Button className='abc' style={{ width: (isDesktopOrLaptop ? '20%' : '40%'), marginTop: '3em', height: (isDesktopOrLaptop ? 'auto' : '4em') }} className='login-btn' size="small" type="submit" variant="contained" >Log in</Button>
             </form>
         </div>
     );

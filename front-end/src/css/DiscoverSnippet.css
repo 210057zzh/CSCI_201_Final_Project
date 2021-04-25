@@ -47,3 +47,53 @@
     color: black;
     text-decoration: none;
 }
+
+.leftSide {
+    float: 'left';
+    margin-left: '0.5em';
+}
+
+.floatingElements {
+    display: 'flex';
+    justify-content: 'space-between';
+}
+
+.nameRating {
+    display: flex;
+}
+
+#container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.moreInfo {
+    float: right;
+    margin: '8px 8px';
+}
+
+.leftData {
+    display: flex;
+}
+
+@media only screen and (max-width: 600px) {
+    .title {
+        white-space: normal;
+    }
+    #container {
+        display: block;
+    }
+    .moreInfo {
+        text-align: left;
+        float: left;
+        display: block;
+    }
+    .other {
+        float: none;
+        text-align: left;
+        white-space: normal;
+    }
+    .leftData {
+        display: block;
+    }
+}

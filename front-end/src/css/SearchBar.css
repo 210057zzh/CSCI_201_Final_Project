@@ -1,14 +1,15 @@
 .search-bar {
     margin-top: 2.5em;
     width: 100%;
-    
+    display: 'flex';
+    justify-content: 'center';
 }
 
-.search-bar .field{
+.search-bar .field {
     height: 36px;
     border-radius: 10px 0 0px 10px;
     border: none;
-    width: 40%;
+    width: 30vw;
     font-size: 36px;
     padding: 10px 30px;
 }
@@ -30,4 +31,17 @@
 
 .search-bar .searchButton:hover {
     color: #524e4e;
+}
+
+@media only screen and (max-width: 1224px) {
+    .search-bar .searchButton .field {
+        height: 7vh;
+    }
+    .search-bar .field {
+        font-size: 24px;
+    }
+    .search-bar .searchButton {
+        font-size: 24px;
+        padding: 10px 30px;
+    }
 }

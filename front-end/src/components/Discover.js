@@ -7,13 +7,15 @@ import DiscoverSnippet from './DiscoverSnippet'
 import axios from 'axios';
 import { useContext, useEffect } from 'react';
 import { authContext } from './contexts/authContext';
-import Signup from './UserAuth/SignupPopup'
+import Signup from './UserAuth/SignupPopup';
+import { useMediaQuery } from 'react-responsive';
 
 function Discover(props) {
     const { authState, setAuthState } = useContext(authContext);
     const REST_API_CALL = 'http://localhost:8080/api/discover'
     const [data, setData] = useState([]);
     const [divArray, setDiv] = useState([]);
+    const smallDevice = useMediaQuery({ minWidth: 1050});
 
     useEffect(async () => {
         var category = "";
@@ -44,7 +46,9 @@ function Discover(props) {
             <Navbar />
             <div className='home-search'>
                 <div style={{ paddingTop: "1px" }}></div>
-                <SearchBar setData={setData} />
+                <div style={{marginTop: (smallDevice ? '0em' : '5em')}}>
+                    <SearchBar setData={setData} />
+                </div>
                 <div style={{ paddingTop: "2vh" }}></div>
                 {
                     //TODO make it so all of the info is actually displaying (just naming differences between this and db and # of reviews needs to be added to db)

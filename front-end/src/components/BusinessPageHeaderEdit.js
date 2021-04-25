@@ -5,11 +5,12 @@ import Pencil from '../css/img/pencil.png';
 import { authContext } from './contexts/authContext';
 import TextField from '@material-ui/core/TextField';
 import Error from './UserAuth/Error';
-
+import { useMediaQuery } from 'react-responsive';
 
 function BusinessPageHeaderEdit({ name, startingTime, endingTime, givenCategory, rating, reviewCount, priceLevel }) {
     const { authState, setAuthState } = useContext(authContext);
     const [editPrice, setPriceLevel] = useState('');
+    const isVerySmall = useMediaQuery({ minWidth: 900 });
     function updateName(e) {
         setAuthState(prevState => {
             return {
@@ -119,23 +120,23 @@ function BusinessPageHeaderEdit({ name, startingTime, endingTime, givenCategory,
                         <div className='fieldBackground'>
                             <input className='businessInput' type='text' defaultValue={name} onChange={updateName}></input>
                         </div>
-                        <img src={Pencil} className="pencil"></img><br />
+                        {isVerySmall && <span><img src={Pencil} className="pencil"></img><br /></span>}
                         <div style={css}>
                             {authState.BusinessEditErrs.name ? <Error errorMsg={authState.BusinessEditErrs.name}></Error> : null}
                         </div>
                     </div>
                     <div style={{ display: 'inline' }}>
                         <div className='fieldBackground'>
-                            <p className='fieldEditText'>Open</p>
+                            <p className='fieldEditTextHeader'>Open</p>
                             <input type='time'
                                 variant="outlined"
                                 defaultValue={startingTime}
                                 className='timeInput'
                                 onChange={updateStartTime} />
-                            <p className='fieldEditText' >to</p>
+                            <p className='fieldEditTextHeader' >to</p>
                             <input type='time' defaultValue={endingTime} className='timeInput' onChange={updateEndTime}></input>
                         </div>
-                        <img src={Pencil} className="pencil"></img>
+                        {isVerySmall && <img src={Pencil} className="pencil"></img>}
                         <div style={css}>
                             {authState.BusinessEditErrs.time ? <Error errorMsg={authState.BusinessEditErrs.time}></Error> : null}
                         </div>
@@ -143,7 +144,7 @@ function BusinessPageHeaderEdit({ name, startingTime, endingTime, givenCategory,
 
                     <div style={{ display: 'inline' }}>
                         <div className='fieldBackground'>
-                            <p className='fieldEditText'>Category</p>
+                            <p className='fieldEditTextHeader'>Category</p>
                             <input list='categories' id='category' className='categorySelect' defaultValue={givenCategory} onChange={updateCategory}></input>
                             <datalist id='categories'>
                                 <option value="Art" />
@@ -160,7 +161,7 @@ function BusinessPageHeaderEdit({ name, startingTime, endingTime, givenCategory,
                                 <option value="Other" />
                             </datalist>
                         </div>
-                        <img src={Pencil} className="pencil"></img>
+                        {isVerySmall && <img src={Pencil} className="pencil"></img> }
                         <div style={css}>
                             {authState.BusinessEditErrs.category ? <Error errorMsg={authState.BusinessEditErrs.category}></Error> : null}
                         </div>
@@ -169,11 +170,11 @@ function BusinessPageHeaderEdit({ name, startingTime, endingTime, givenCategory,
                 </div>
             </div>
             <div className="rightContent">
-                <div style={{ display: 'inline-flex' }}>
+                <div className="starEditRating">
                     {<StarRating value={rating} />}
                     {reviewCount > 0 && <p style={{ margin: '8px 8px' }} className='other'>{reviewCount} Reviews</p>}
                 </div><br />
-                <div className='fieldBackground' style={{ display: 'inline-block', float: 'left' }}>
+                <div className='fieldBackground' style={{ display: 'inline-block', float: 'left', paddingRight: '1em' }}>
 
                     <p className='editCost' onMouseOut={color}>
                         <span onClick={handlePriceUpdate} onMouseOver={resetColor} id='5'>$</span>
@@ -183,7 +184,7 @@ function BusinessPageHeaderEdit({ name, startingTime, endingTime, givenCategory,
                         <span onClick={handlePriceUpdate} onMouseOver={resetColor} id='1'>$</span>
                     </p>
                 </div>
-                <img src={Pencil} className="pencil" style={{ float: 'left', marginTop: '20px' }}></img>
+                {isVerySmall && <img src={Pencil} className="pencil" style={{ float: 'left', marginTop: '20px' }}></img>}
             </div>
         </div >
 

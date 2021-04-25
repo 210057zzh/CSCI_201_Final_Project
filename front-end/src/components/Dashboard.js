@@ -111,7 +111,7 @@ function Dashboard(props) {
     if (!showEdit) {
         return (
             <div>
-                <Navbar />
+                <Navbar /><br/>
                 <div className='my-businesses'>
                     <div className='my-businesses-title'>My Businesses</div>
                     <div className='my-businesses-container'>

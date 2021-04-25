@@ -7,6 +7,7 @@ import { validateBusinessEdit } from './UserAuth/validate';
 import MuiPhoneNumber from "material-ui-phone-number";
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
+import { useMediaQuery } from 'react-responsive'
 
 function parseText(text) {
     let myString = text.split('\\n').map(function (item, idx) {
@@ -19,7 +20,7 @@ function parseText(text) {
 }
 
 function BusinessPageBottomEdit({ description, otherInfo, phone, website, email, address, setEdit }) {
-
+    const isSmallDevice = useMediaQuery({ minWidth: 900 });
     const { authState, setAuthState } = useContext(authContext);
     const REST_API_CALL_ADD = 'http://localhost:8080/api/addBusiness'
     const REST_API_CALL_UPDATE = 'http://localhost:8080/api/updateBusiness'
@@ -197,15 +198,15 @@ function BusinessPageBottomEdit({ description, otherInfo, phone, website, email,
             <div style={{ marginLeft: '1em', marginRight: 'auto', overflowX: 'hidden' }}>
                 <div style={{ textAlign: 'left' }}>
                     <input className='button' type='button' value='Save' onClick={submit}></input>
-                    <input className='button' type='button' value='Back' onClick={back}></input>
+                    <input className='button' type='button' value='Back' onClick={back}></input> {!isSmallDevice && <br/>}
                     <input className='importButton' type='button' value='Import From' onClick={importYelp}></input>
                 </div>
                 <hr className='line' style={{ width: '80em', marginTop: '1.5em' }} /><br /><br />
 
-                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <div style={{ float: 'left', width: '75%' }}>
+                <div className="businessData" style={{justifyContent: 'space-between'}}>
+                    <div className="businessInfoSection">
                         <div style={{ textAlign: 'left' }}>
-                            <div style={{ display: 'inline' }}>
+                            <div style={{ display: 'inline', whiteSpace: 'nowrap' }}>
                                 <p className='fieldEditText' style={{ paddingLeft: '0px' }}>Business Description</p>
                                 <img src={Pencil} className="pencil"></img><br />
                             </div>
@@ -217,7 +218,7 @@ function BusinessPageBottomEdit({ description, otherInfo, phone, website, email,
                                 rowsMax={5} className='textUpdate' onChange={updateDescription}
                                 defaultValue={description.replaceAll("\\n", '\r')} />
                             <br />
-                            <div style={{ display: 'inline' }}>
+                            <div style={{ display: 'inline',whiteSpace: 'nowrap' }}>
                                 <p className='fieldEditText' style={{ paddingLeft: '0px', marginTop: '8px' }}>Other Information</p>
                                 <img src={Pencil} className="pencil" style={{ marginTop: '8px' }}></img><br />
                             </div>
@@ -230,11 +231,13 @@ function BusinessPageBottomEdit({ description, otherInfo, phone, website, email,
                                 onChange={updateOtherInfo} defaultValue={otherInfo.replaceAll("\\n", '\r')} />
                         </div>
                     </div>
-                    <div style={{ float: 'right', display: 'justify-content', verticalAlign: 'top', marginLeft: '10px', marginRight: '1em' }}>
+                    <div className="contactSection">
                         <div style={{ margin: '1em 1em 0 0', padding: '0 1em 0 1em', border: 'solid', borderRadius: '10px', borderWidth: '1px' }}>
                             <div style={{ display: 'inline' }}>
-                                <p className='fieldEditText'>Contact</p>
-                                <img src={Pencil} className="pencil" style={{ marginTop: '7px' }}></img><br />
+                                <div style={{textAlign: (isSmallDevice ? 'center' : 'left')}}>
+                                    <p className='fieldEditText'>Contact</p>
+                                    <img src={Pencil} className="pencil" style={{ marginTop: '7px' }} id="magicPencil"></img><br />
+                                </div>
                             </div>
                             <hr className='contactLine' />
                             <div className='contactBlue' style={{ textAlign: 'left' }}>
