@@ -11,17 +11,21 @@ import Signup from './UserAuth/SignupPopup'
 
 function Discover(props) {
     const { authState, setAuthState } = useContext(authContext);
-    const REST_API_CALL = 'http://localhost:8080/api/discover'
+    const REST_API_CALL = 'http://localhost:8080/api/businesses'
     const [data, setData] = useState([]);
     const [divArray, setDiv] = useState([]);
+    const value =
+        (props.location && props.location.default) || "";
 
     useEffect(async () => {
-        var category = "";
+        var category = value;
+        console.log("category");
         const result = await axios.get(REST_API_CALL, {
             params: {
-                category: category
+                search: value
             }
         });
+        console.log(result);
         setData(result.data)
     }, [])
 
@@ -44,10 +48,9 @@ function Discover(props) {
             <Navbar />
             <div className='home-search'>
                 <div style={{ paddingTop: "1px" }}></div>
-                <SearchBar setData={setData} />
+                <SearchBar setData={setData} default={value} />
                 <div style={{ paddingTop: "2vh" }}></div>
                 {
-                    //TODO make it so all of the info is actually displaying (just naming differences between this and db and # of reviews needs to be added to db)
                     divArray
                 }
             </div>
