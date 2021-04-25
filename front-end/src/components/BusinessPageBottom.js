@@ -38,8 +38,6 @@ function BusinessPageBottom({ currBusinessID, description, otherInfo, phone, web
     const { authState, setAuthState } = useContext(authContext);
     const [currPage, setPage] = useState('');
     const REST_API_GET_REVIEWS = 'http://localhost:8080/api/getReviews';
-
-
     function toggleReview() {
         setAuthState(prevState => {
             return {
@@ -51,10 +49,7 @@ function BusinessPageBottom({ currBusinessID, description, otherInfo, phone, web
     }
 
     function updateReviews(e) {
-
         setPage(e.target.title);
-
-
         var pageNum = e.target.title;
         axios.get(REST_API_GET_REVIEWS+"?businessID="+currBusinessID+"&page="+pageNum)
           .then(function (response) {

@@ -10,8 +10,7 @@ import Signup from './UserAuth/SignupPopup';
 import Review from './ReviewPopup';
 
 function BusinessPage(props) {
-    const { authState } = useContext(authContext);
-    const [business, setBusiness] = useState();
+    const { authState, setAuthState } = useContext(authContext); const [business, setBusiness] = useState();
 
     useEffect(() => {
         const businessID = props.match.params.businessID;
@@ -32,7 +31,15 @@ function BusinessPage(props) {
                 email: res.data[0].email
             })
         })
-    }, [authState])
+
+        setAuthState(prevState => {
+            return {
+                ...prevState,
+                uploadReady: false
+            }
+        })
+
+    }, [authState.showReview, authState.uploadReady])
 
     return (
         <div className='home'>

@@ -58,9 +58,17 @@ function Review(props) {
     };
 
     async function submitReview() {
-        axios.post(REST_API_SUBMIT_REVIEW+"?businessID="+authState.businessID+"&userID="+authState.user.userId+"&rating="+value+"&message="+review).then(resp => {
+        axios.post(REST_API_SUBMIT_REVIEW + "?businessID=" + authState.businessID + "&userID=" + authState.user.userId + "&rating=" + value + "&message=" + review).then(resp => {
             console.log(resp);
-        }).catch(function() {
+        }).then(resp => {
+            console.log(resp);
+            setAuthState(prevState => {
+                return {
+                    ...prevState,
+                    uploadReady: true
+                }
+            })
+        }).catch(function () {
             console.log('error');
         })
     }
