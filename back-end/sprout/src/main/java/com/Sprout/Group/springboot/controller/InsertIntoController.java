@@ -20,6 +20,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,17 +43,35 @@ public class InsertIntoController {
 	public InsertIntoController(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
 	}
-	@GetMapping("/addReview")
-	public void InsertBusiness(@RequestParam int userID, @RequestParam int businessID,@RequestParam String message,@RequestParam int rating) {
+	@PostMapping("/addReview")
+	public void InsertBusiness(@RequestParam int userID, @RequestParam int businessID,@RequestParam String message,@RequestParam double rating) {
 		String url = dbAddress_nopass;
 		DriverManagerDataSource dataSource = new DriverManagerDataSource(url, "root", "root");
-		SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(dataSource).withTableName("Review");
+		SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(dataSource).withTableName("Reviews");
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("businessID", businessID);
+		parameters.put("userID", userID);
 		parameters.put("message", message);
 		parameters.put("rating", rating);
-		parameters.put("time", getCurrentDate());
+		//parameters.put("time", getCurrentDate());
+		
 		int return_value = simpleJdbcInsert.execute(parameters);
+		
+		//recalculate average rating for this business with new review
+		var reviews =  this.jdbcTemplate.queryForList("SELECT * FROM Reviews where businessID="+businessID+" ORDER BY time").stream()
+				.collect(Collectors.toList());
+		
+		int totalReviews = reviews.size();
+		int totalRating = 0;
+		
+		for(Map<String, Object> review: reviews) {
+			totalRating+=(int) review.get("rating");
+		}
+		
+		int newAverageRating = totalRating/totalReviews;
+		
+		String updateQuery = "update Businesses set average_rating=? where businessID=?";
+		jdbcTemplate.update(updateQuery, newAverageRating, businessID);
 		
 		System.out.println("VALUE RETURNED IS :" + return_value);
 	}

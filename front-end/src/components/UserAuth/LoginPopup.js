@@ -68,10 +68,12 @@ function Login(props) {
                     setAuthState(prevState => { return { ...prevState, showLogin: false, loggedIn: true, user: resp.data } });
                 } else { // The user does not already exist or some other error occured. Refer to error message to determine next steps
                     console.log('error: ' + resp.data.error);
-                    setErr(resp.data.error);
+                    if(resp.data.error == 'googleuser')
+                        setErr('A Google account already exists with this email. Use Google sign-on.');
+                    else
+                        setErr(resp.data.error);
                 }
             }).catch(err => {
-                console.log(err.message);
                 setErr(err.message);
             });
         }
@@ -80,7 +82,6 @@ function Login(props) {
         <div className='login-popup'>
             <div style={{ fontWeight: 'bold', fontSize: '30px', marginTop: '1em' }}>Sign in to Sprout</div>
             <div style={{ marginTop: '1em' }}><GoogleLogin LoggedinStatus={authState.loggedIn} buttonText={"Login to Sprout with Google"} signUporLogin={'Login'} /></div>
-            <hr style={{ width: '30%', marginTop: '3em' }}></hr>
             <form className='login-form' onSubmit={submit}>
                 <TextField
                     size='medium'
@@ -107,8 +108,7 @@ function Login(props) {
                 <br></br>
                 {err ? <Error errorMsg={err}></Error> : null}
                 <br></br>
-
-                <Button className='abc' style={{ width: (isDesktopOrLaptop ? '20%' : '40%'), marginTop: '3em', height: (isDesktopOrLaptop ? 'auto' : '4em') }} className='login-btn' size="small" type="submit" variant="contained" >Log in</Button>
+                <Button style={{ width: (isDesktopOrLaptop ? '20%' : '40%'), height: (isDesktopOrLaptop ? 'auto' : '4em'), marginTop: '3em' , fontWeight:'bold'}} className='login-btn' size="small" type="submit" variant="contained" >Log in</Button>
             </form>
         </div>
     );

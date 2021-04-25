@@ -10,8 +10,7 @@ import Signup from './UserAuth/SignupPopup';
 import Review from './ReviewPopup';
 
 function BusinessPage(props) {
-    const { authState } = useContext(authContext);
-    const [business, setBusiness] = useState();
+    const { authState, setAuthState } = useContext(authContext); const [business, setBusiness] = useState();
 
     useEffect(() => {
         const businessID = props.match.params.businessID;
@@ -32,7 +31,15 @@ function BusinessPage(props) {
                 email: res.data[0].email
             })
         })
-    }, [authState])
+
+        setAuthState(prevState => {
+            return {
+                ...prevState,
+                uploadReady: false
+            }
+        })
+
+    }, [authState.showReview, authState.uploadReady])
 
     return (
         <div className='home'>
@@ -43,7 +50,7 @@ function BusinessPage(props) {
             <Navbar /><br/>
             {business ? <div>
                 <BusinessPageHeader name={business.name} startingTime={business.startingTime} endingTime={business.endingTime} category={business.category} rating={business.rating} reviewCount={business.reviewCount} priceLevel={business.priceLevel} />
-                <BusinessPageBottom description={business.description} otherInfo={business.otherInfo} phone={business.phone} website={business.website} email={business.email} address={business.address} />
+                <BusinessPageBottom currBusinessID={props.match.params.businessID} description={business.description} otherInfo={business.otherInfo} phone={business.phone} website={business.website} email={business.email} address={business.address} />
             </div> : null}
         </div>
     )

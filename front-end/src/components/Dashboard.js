@@ -30,7 +30,6 @@ function Dashboard(props) {
             }
             else { setbusinessArray(resp.data); }
         });
-        console.log(result);
         return result;
     }
 
@@ -88,13 +87,13 @@ function Dashboard(props) {
     }, [showEdit, authState.uploadReady, authState.loggedIn])
 
     useEffect(() => {
-        console.log(businessArray)
         if (businessArray.length > 0) {
             setdivArray(businessArray.map(business => {
                 return (
-                    <div class='business-card'>
-                        <div class='business-name' >{business.name}</div>
-                        <StarRating value={business.rating}></StarRating>
+                    <div className='business-card'>
+                        <div className='business-name' >{business.name}</div>
+                        <div className='stars'><StarRating value={business.average_rating}></StarRating></div>
+                        
                         <MaxLengthString text={business.description} maxLength={300}></MaxLengthString>
                         <input className='edit-button' type='button' value='Edit' onClick={() => {
                             openEditView(business)
@@ -116,7 +115,7 @@ function Dashboard(props) {
                     <div className='my-businesses-title'>My Businesses</div>
                     <div className='my-businesses-container'>
                         {divArray}
-                        <div className='business-card' >
+                        <div className='business-card add' >
                             <div className='add-new'>Add a new business</div>
                             <div className='plus' onClick={() => {
                                 openEditView(emptyBusiness);

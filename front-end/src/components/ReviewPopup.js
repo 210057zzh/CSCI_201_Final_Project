@@ -51,17 +51,39 @@ function Review(props) {
     const { authState, setAuthState } = useContext(authContext);
     const [err, setErr] = useState();
     //const REST_API_CALL = 'http://localhost:8080/api/login'
+    const REST_API_SUBMIT_REVIEW = 'http://localhost:8080/api/addReview'
 
     Review.handleClickOutside = (e) => {
         setAuthState(prevState => { return { ...prevState, showReview: false } });
     };
 
+    async function submitReview() {
+        axios.post(REST_API_SUBMIT_REVIEW + "?businessID=" + authState.businessID + "&userID=" + authState.user.userId + "&rating=" + value + "&message=" + review).then(resp => {
+            console.log(resp);
+        }).then(resp => {
+            console.log(resp);
+            setAuthState(prevState => {
+                return {
+                    ...prevState,
+                    uploadReady: true
+                }
+            })
+        }).catch(function () {
+            console.log('error');
+        })
+    }
+
     function submit() {
         if (review.length == 0) {
             setErr("Please enter the review")
         }
-        console.log(value);
+        submitReview();
+        Review.handleClickOutside()
     }
+
+
+
+
     return (
         <div className='review-popup'>
 

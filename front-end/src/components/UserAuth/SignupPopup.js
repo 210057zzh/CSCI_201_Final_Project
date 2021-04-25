@@ -86,7 +86,6 @@ function Signup(props) {
             <div style={{ fontWeight: 'bold', fontSize: '30px', marginTop: '1em', }}>Sign up to Sprout</div>
             <div style={{ marginTop: '3em' }}><GoogleLogin LoggedinStatus={authState.loggedIn}
                 buttonText="Sign up with Google" signUporLogin={'Signup'} /> </div>
-            <hr style={{ width: '30%', marginTop: '3em' }}></hr>
             <form className='Signup-form' onSubmit={submit}>
                 <TextField
                     size='medium'

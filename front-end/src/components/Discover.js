@@ -12,16 +12,17 @@ import { useMediaQuery } from 'react-responsive';
 
 function Discover(props) {
     const { authState, setAuthState } = useContext(authContext);
-    const REST_API_CALL = 'http://localhost:8080/api/discover'
+    const REST_API_CALL = 'http://localhost:8080/api/businesses'
     const [data, setData] = useState([]);
     const [divArray, setDiv] = useState([]);
     const smallDevice = useMediaQuery({ minWidth: 1050});
+    const value =
+        (props.location && props.location.default) || "";
 
     useEffect(async () => {
-        var category = "";
         const result = await axios.get(REST_API_CALL, {
             params: {
-                category: category
+                search: value
             }
         });
         setData(result.data)
@@ -47,11 +48,10 @@ function Discover(props) {
             <div className='home-search'>
                 <div style={{ paddingTop: "1px" }}></div>
                 <div style={{marginTop: (smallDevice ? '0em' : '5em')}}>
-                    <SearchBar setData={setData} />
+                    <SearchBar setData={setData} default={value} />
                 </div>
                 <div style={{ paddingTop: "2vh" }}></div>
                 {
-                    //TODO make it so all of the info is actually displaying (just naming differences between this and db and # of reviews needs to be added to db)
                     divArray
                 }
             </div>
