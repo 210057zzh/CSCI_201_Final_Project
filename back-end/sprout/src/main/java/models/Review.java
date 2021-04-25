@@ -3,7 +3,7 @@ package models;
 public class Review {
 	private String message;
 	private int rating;
-	private int time;
+	private String time;
 	private String userID;
 	private String username;
 	private int numReviews;
@@ -20,10 +20,10 @@ public class Review {
 	public void setRating(int rating) {
 		this.rating = rating;
 	}
-	public int getTime() {
+	public String getTime() {
 		return time;
 	}
-	public void setTime(int time) {
+	public void setTime(String time) {
 		this.time = time;
 	}
 	public String getUserID() {
