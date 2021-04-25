@@ -18,14 +18,11 @@ function Discover(props) {
         (props.location && props.location.default) || "";
 
     useEffect(async () => {
-        var category = value;
-        console.log("category");
         const result = await axios.get(REST_API_CALL, {
             params: {
                 search: value
             }
         });
-        console.log(result);
         setData(result.data)
     }, [])
 
