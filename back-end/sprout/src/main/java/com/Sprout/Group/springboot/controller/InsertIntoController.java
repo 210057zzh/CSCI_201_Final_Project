@@ -44,7 +44,7 @@ public class InsertIntoController {
 		this.jdbcTemplate = jdbcTemplate;
 	}
 	@PostMapping("/addReview")
-	public void InsertBusiness(@RequestParam int userID, @RequestParam int businessID,@RequestParam String message,@RequestParam int rating) {
+	public void InsertBusiness(@RequestParam int userID, @RequestParam int businessID,@RequestParam String message,@RequestParam double rating) {
 		String url = dbAddress_nopass;
 		DriverManagerDataSource dataSource = new DriverManagerDataSource(url, "root", "root");
 		SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(dataSource).withTableName("Reviews");
