@@ -92,7 +92,7 @@ function Dashboard(props) {
                 return (
                     <div className='business-card'>
                         <div className='business-name' >{business.name}</div>
-                        <div className='stars'><StarRating value={business.rating}></StarRating></div>
+                        <div className='stars'><StarRating value={business.average_rating}></StarRating></div>
                         
                         <MaxLengthString text={business.description} maxLength={300}></MaxLengthString>
                         <input className='edit-button' type='button' value='Edit' onClick={() => {
