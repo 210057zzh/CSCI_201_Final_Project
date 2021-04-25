@@ -23,6 +23,7 @@ function BusinessPageBottomEdit({ description, otherInfo, phone, website, email,
     const { authState, setAuthState } = useContext(authContext);
     const REST_API_CALL_ADD = 'http://localhost:8080/api/addBusiness'
     const REST_API_CALL_UPDATE = 'http://localhost:8080/api/updateBusiness'
+    const REST_API_CALL_YELP = 'http://localhost:8080/api/yelpfill'
     let value = null;
 
     async function addBusiness(business) {
@@ -158,7 +159,14 @@ function BusinessPageBottomEdit({ description, otherInfo, phone, website, email,
     }
 
     function importYelp() {
-        alert('Updating From Yelp!!');
+        axios.get(REST_API_CALL_YELP, {
+            params: {
+                name: authState.BusinessEdit.name,
+                address: authState.BusinessEdit.address
+            }
+        }).then(res => {
+            console.log(res);
+        })
     }
 
     function submit(e) {

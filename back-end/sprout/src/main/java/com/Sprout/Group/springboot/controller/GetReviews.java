@@ -27,6 +27,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import models.Business;
+import models.Review;
 
 
 @CrossOrigin(origins = origins)
@@ -62,11 +63,32 @@ public class GetReviews {
 		if(pageReviews.size()==0) {
 			return "NO RESULTS";
 		}
-
+		
 		Gson gson = new GsonBuilder().create();
-
+		
 		String resultsString = gson.toJson(pageReviews);
-
-		return resultsString;
+		
+		Review[] reviewList = gson.fromJson(resultsString, Review[].class);
+		
+		for(Review r: reviewList) {
+			this.fillInUserDetails(r);
+			System.out.println(r);
+		}
+		
+		String returnString = gson.toJson(reviewList);
+	
+		return returnString;
+	}
+	
+	public void fillInUserDetails(Review r) {
+		var reviews =  this.jdbcTemplate.queryForList("SELECT * FROM Users where userID="+r.getUserID()).stream()
+				.collect(Collectors.toList());
+		
+		r.setUsername((String) reviews.get(0).get("username"));
+		
+		var numReviews = this.jdbcTemplate.queryForList("SELECT * FROM Reviews where userID="+r.getUserID()).stream()
+				.collect(Collectors.toList());
+		
+		r.setNumReviews(numReviews.size());
 	}
 }
