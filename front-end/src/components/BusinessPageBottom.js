@@ -57,9 +57,10 @@ function BusinessPageBottom({ currBusinessID, description, otherInfo, phone, web
             }
             else {
                 let reviewsToDOM = response.data.map(review => { 
+                    let username = review.username.split('@')[0]
                     return (
                         <div>
-                            <ReviewSnippet username={'PLACEHOLDER'} rating={review.rating} reviewCount={100 /*placeholder*/} reviewMessage={review.message} />
+                            <ReviewSnippet username={username} rating={review.rating} reviewCount={review.numReviews} reviewMessage={review.message} />
                             <hr className='reviewLine' /><br />
                         </div>
                     );
