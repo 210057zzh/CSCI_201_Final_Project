@@ -1,27 +1,9 @@
 import '../css/BusinessPage.css';
 import axios from 'axios';
 import ReviewSnippet from './ReviewSnippet';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { authContext } from './contexts/authContext'
 
-function getReviews() {
-    return (
-        [
-            {
-                username: "Mary Jane",
-                rating: 4,
-                reviewCount: 4,
-                reviewMessage: "Absolutely stellar service!  I would recommend Bob to anyone who needs to fix their plumbing issues.  Only drawback is the price... but a fine job is guaranteed!"
-            },
-            {
-                username: "Mary Jane",
-                rating: 4,
-                reviewCount: 4,
-                reviewMessage: "Absolutely stellar service!  I would recommend Bob to anyone who needs to fix their plumbing issues.  Only drawback is the price... but a fine job is guaranteed!"
-            }
-        ]
-    )
-}
 
 function parseText(text) {
     let myString = text.split('\\n').map(function (item, idx) {
@@ -37,6 +19,7 @@ function parseText(text) {
 function BusinessPageBottom({ currBusinessID, description, otherInfo, phone, website, email, address }) {
     const { authState, setAuthState } = useContext(authContext);
     const [currPage, setPage] = useState('');
+    const [ reviews, setReviews ] = useState();
     const REST_API_GET_REVIEWS = 'http://localhost:8080/api/getReviews';
     function toggleReview() {
         setAuthState(prevState => {
@@ -49,16 +32,49 @@ function BusinessPageBottom({ currBusinessID, description, otherInfo, phone, web
     }
 
     function updateReviews(e) {
-        setPage(e.target.title);
-        var pageNum = e.target.title;
+        if(e) {
+            setPage(e.target.title);
+            var pageNum = e.target.title;
+        }
+            
+        else {
+            setPage(1); 
+            var pageNum = 1;
+        }  
+            
+       
         axios.get(REST_API_GET_REVIEWS+"?businessID="+currBusinessID+"&page="+pageNum)
           .then(function (response) {
-            console.log(response);
+              console.log(response);
+            if(response.data == 'NO RESULTS' && !authState.loggedIn && pageNum==1 ) {
+                setReviews(<div style={{textAlign: 'left', marginTop: '1em', marginBottom: '1em' }} >None yet! Be the first to leave a review by logging in.</div>);
+            }
+            else if(response.data == 'NO RESULTS' && authState.loggedIn && pageNum == 1) {
+                setReviews(<div style={{textAlign: 'left', marginTop: '1em', marginBottom: '1em' }} >None yet! Be the first to leave a review.</div>);
+            }
+            else if(response.data == 'NO RESULTS') {
+                setReviews(<div style={{textAlign: 'left', marginTop: '1em', marginBottom: '1em'}} >This page is empty, help this business by adding more reviews!</div>);
+            }
+            else {
+                let reviewsToDOM = response.data.map(review => { 
+                    return (
+                        <div>
+                            <ReviewSnippet username={'PLACEHOLDER'} rating={review.rating} reviewCount={100 /*placeholder*/} reviewMessage={review.message} />
+                            <hr className='reviewLine' /><br />
+                        </div>
+                    );
+                })
+                setReviews(reviewsToDOM);
+            }
           }).catch(function() {
             console.log('error');
         })
         //Update reviews now
     }
+
+    useEffect(()=> {
+        updateReviews(null, 1)
+    }, [])
 
     return (
         <div className='bottomBackground' style={{ padding: '0 2vh 2vh 2vh', marginTop: '0', overflowX: 'hidden' }}>
@@ -69,7 +85,9 @@ function BusinessPageBottom({ currBusinessID, description, otherInfo, phone, web
                         <input className='button' type='button' value='Favorite'></input>
                     </div>
                     : null}
-                <hr className='line' style={{ width: '80em', marginTop: '1.5em' }} /><br /><br />
+                {authState.loggedIn ? <hr className='line' style={{ width: '80em', marginTop: '1.5em' }} /> : null }
+                <br/>
+                {authState.loggedIn? <br/> : null}
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <div style={{ float: 'left', width: '75%' }}>
                         <div style={{ textAlign: 'left' }}>
@@ -104,21 +122,13 @@ function BusinessPageBottom({ currBusinessID, description, otherInfo, phone, web
                 <div>
                     <hr className='line' style={{ width: '95%' }} /><br />
                     <p className='subText' style={{ textAlign: 'left', marginTop: '20px' }}>Reviews</p>
-                    {
-                        getReviews().map(review =>
-                            <div>
-                                <ReviewSnippet username={review.username} rating={review.rating} reviewCount={review.reviewCount} reviewMessage={review.reviewMessage} />
-                                <hr className='reviewLine' /><br />
-                            </div>
-                        )
-
-                    }
+                    {reviews}
                 </div>
                 <div className="pageSection">
-                    <a href="#" className="active" title="1" onClick={updateReviews}>1</a>
-                    <a href="#" title="2" onClick={updateReviews}>2</a>
-                    <a href="#" title="3" onClick={updateReviews}>3</a>
-                    <a href="#" title="4" onClick={updateReviews}>4</a>
+                    <a href="#" title="1" style={{fontWeight: currPage == 1 ? 'bold' : null}} onClick={updateReviews}>1</a>
+                    <a href="#" title="2" style={{fontWeight: currPage == 2 ? 'bold' : null}} onClick={updateReviews}>2</a>
+                    <a href="#" title="3" style={{fontWeight: currPage == 3 ? 'bold' : null}} onClick={updateReviews}>3</a>
+                    <a href="#" title="4" style={{fontWeight: currPage == 4 ? 'bold' : null}} onClick={updateReviews}>4</a>
                 </div>
             </div>
         </div>
