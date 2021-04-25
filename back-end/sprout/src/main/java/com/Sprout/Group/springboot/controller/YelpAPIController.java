@@ -51,12 +51,14 @@ public class YelpAPIController {
         String state;
         String country;
         
+        
+        
         try {
 	        address1 = address.substring(0, address.indexOf(","));
 	        address=address.substring(address.indexOf(",")+1);
 	        city = address.substring(0, address.indexOf(","));
 	        address=address.substring(address.indexOf(",")+1);
-	        state = address;
+	        state = address.substring(0, 2);
 	        country="US";
         }catch(Exception e) {
         	e.printStackTrace();
