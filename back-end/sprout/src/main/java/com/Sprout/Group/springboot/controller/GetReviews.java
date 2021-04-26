@@ -43,7 +43,7 @@ public class GetReviews {
 
 	@GetMapping("/getReviews")
 	public String GetMyBusinesses(@RequestParam int businessID, @RequestParam int page) {
-		var reviews =  this.jdbcTemplate.queryForList("SELECT * FROM Reviews where businessID="+businessID+" ORDER BY time").stream()
+		var reviews =  this.jdbcTemplate.queryForList("SELECT * FROM Reviews where businessID="+businessID+" ORDER BY reviewID DESC").stream()
 				.collect(Collectors.toList());
 		
 		if(reviews.size()==0) {
