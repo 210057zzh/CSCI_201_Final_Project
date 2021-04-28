@@ -69,9 +69,9 @@ public class SignupController {
 		
 		if(success) {
 			int userId = getUserInfo(credentials[0], credentials[1]).getUserID();
-			return "{\"successful\": true, \"userId\": "+userId+", \"username\":\""+credentials[0]+"\"}";//TODO Lint
+			return "{\"successful\": true, \"userId\": "+userId+", \"username\":\""+credentials[0]+"\"}";
 		}else {
-			return "{\"successful\": false, \"error\": \"Unspecified\"}";
+			return "{\"successful\": false, \"error\": \"Sorry, an error has occured\"}";
 		}		
 				
 	}
@@ -99,22 +99,22 @@ public class SignupController {
 			
 			if(registered) {
 				System.out.println("User already exists");
-				return "{\"successful\": false, \"error\": \"User already exists\"}"; 
+				return "{\"successful\": false, \"error\": \"User already exists. Please sign in.\"}"; 
 			}
 			
 			boolean success = addUser(email, userId, true);
 			
 			if(success) {
 				int id = getUserInfo(email, userId).getUserID();
-				return "{\"successful\": true, \"userId\": "+id+", \"username\":\""+email+"\"}";//TODO Lint
+				return "{\"successful\": true, \"userId\": "+id+", \"username\":\""+email+"\"}";
 			}else {
-				return "{\"successful\": false, \"error\": \"Unspecified\"}";
+				return "{\"successful\": false, \"error\": \"Sorry, an error has occured\"}";
 			}	
 			
 
 		} else {
 			System.out.println("Invalid ID token.");
-			return "{\"successful\": false, \"error\": \"Invalid\"}"; 
+			return "{\"successful\": false, \"error\": \"Invalid ID Token\"}"; 
 		}
 						
 	}

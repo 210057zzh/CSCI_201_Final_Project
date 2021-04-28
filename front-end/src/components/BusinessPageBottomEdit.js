@@ -9,6 +9,7 @@ import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
 import { useMediaQuery } from 'react-responsive'
 
+
 function parseText(text) {
     let myString = text.split('\\n').map(function (item, idx) {
         return <span key={idx}>

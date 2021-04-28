@@ -7,6 +7,7 @@ import './MaxLengthString';
 import MaxLengthString from './MaxLengthString';
 import BusinessPageEdit from './BusinessPageEdit'
 import axios from 'axios';
+import { NavLink } from 'react-router-dom';
 
 // Placeholder values, in the future grab by user Id or name
 
@@ -14,10 +15,29 @@ import axios from 'axios';
 
 function Dashboard(props) {
     const REST_API_CALL = 'http://localhost:8080/api/myBusinesses'
+    const REST_API_CALL_ALL_FAVORITES = "http://localhost:8080/api/getUserFavorites";
+    const REST_API_UNFAVORITE = 'http://localhost:8080/api/removeFavorite';
     const { authState, setAuthState } = useContext(authContext);
     const [showEdit, setEdit] = useState();
     const [businessArray, setbusinessArray] = useState([]);
+    const [favoritesArray, setfavoritesArray] = useState([]);
     const [divArray, setdivArray] = useState([]);
+    const [divArray2, setdivArray2] = useState([]);
+
+    function getAllFavorites() {
+        var result = axios.get(REST_API_CALL_ALL_FAVORITES, {
+            params: {
+                userID: authState.user.userId
+            }
+        }).then(resp => {
+            if (typeof resp.data === "string") {
+                setfavoritesArray([]);
+            }
+            else { setfavoritesArray(resp.data); }
+        });
+        return result;
+    }
+
 
     function getOwnedBusinesses() {
         var result = axios.get(REST_API_CALL, {
@@ -49,6 +69,14 @@ function Dashboard(props) {
         address: ''
     }
 
+    function unfavorite(businessID) {
+        axios.post(REST_API_UNFAVORITE + "?businessID=" + businessID + "&userID=" + authState.user.userId).then(resp => {
+        }).catch(function () {
+            console.log('error');
+        })
+    }
+
+
     function openEditView(business) {
         console.log(business);
         business.startingTime = business.startHour;
@@ -77,6 +105,7 @@ function Dashboard(props) {
         if (!authState.loggedIn) {
             window.location.replace('./')
         }
+        getAllFavorites();
         getOwnedBusinesses();
         setAuthState(prevState => {
             return {
@@ -107,6 +136,30 @@ function Dashboard(props) {
         }
     }, [businessArray])
 
+    useEffect(() => {
+        if (favoritesArray.length > 0) {
+            setdivArray2(favoritesArray.map(business => {
+                return (
+                    <NavLink to={'../businesspage/' + business.businessID} style={{textDecoration: 'none', color: 'black'}}>
+                    <div className='business-card'>
+                        <div className='business-name' >{business.name}</div>
+                        <div className='stars'><StarRating value={business.average_rating}></StarRating></div>
+                        <MaxLengthString text={business.description} maxLength={300}></MaxLengthString>
+                    </div>
+                    </NavLink>
+                )
+            }))
+        }
+        else {
+            setdivArray2(
+                <div className='business-card'>
+                <div className='business-name' >No Favorites Yet</div>
+
+            </div>
+            );
+        }
+    }, [favoritesArray])
+
     if (!showEdit) {
         return (
             <div>
@@ -124,10 +177,14 @@ function Dashboard(props) {
                     </div>
                 </div>
 
-                <div className='my-favorites'>
+                <div className='my-businesses'>
+                    <div className='my-businesses-title'>My Favorites</div>
+                    <div className='my-businesses-container'>
+                        {divArray2}
+                        </div>
+                    </div>
 
                 </div>
-            </div>
         )
     }
     else {

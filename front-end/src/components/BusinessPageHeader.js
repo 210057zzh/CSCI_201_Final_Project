@@ -39,7 +39,7 @@ function BusinessPageHeader({ name, startingTime, endingTime, category, rating, 
             <div className="rightContent">
                 <div style={{ display: 'flex' }}>
                     {<StarRating value={rating} />}
-                    {reviewCount > 0 && <p style={{ margin: '8px 8px' }} className='other'>{reviewCount} Reviews</p>}
+                    {reviewCount > 0 && <p style={{ margin: '8px 8px' }} className='other'>{reviewCount} {reviewCount == 1 ? "Review" : "Reviews"}</p>}
                 </div>
                 <p className='cost'>{getStringCost(priceLevel)}</p>
             </div>

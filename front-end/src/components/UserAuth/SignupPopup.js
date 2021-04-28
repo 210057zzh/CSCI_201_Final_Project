@@ -30,7 +30,7 @@ function Signup(props) {
 
     useEffect(() => {
         if (authState.signUpredirect === true) {
-            setErr('Your google account is not registered, please sign up with google first');
+            setErr('Your Google account is not registered. Please sign up with Google first');
             setAuthState(prevState => { return { ...prevState, signUpredirect: false } });
         }
     });
