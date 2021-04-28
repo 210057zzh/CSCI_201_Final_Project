@@ -21,7 +21,7 @@ function BusinessPage(props) {
                 startingTime: res.data[0].startHour,
                 endingTime: res.data[0].endHour,
                 category: res.data[0].business_type,
-                reviewCount: res.data[0].numReviews,
+                reviewCount: res.data[0].review_count,
                 priceLevel: res.data[0].cost,
                 description: res.data[0].description,
                 address: res.data[0].address,
