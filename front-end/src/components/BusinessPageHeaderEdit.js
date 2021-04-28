@@ -132,10 +132,11 @@ function BusinessPageHeaderEdit({ name, startingTime, endingTime, givenCategory,
                                 variant="outlined"
                                 id="startingTime"
                                 defaultValue={startingTime}
+                                value={startingTime}
                                 className='timeInput'
                                 onChange={updateStartTime} />
                             <p className='fieldEditTextHeader' >to</p>
-                            <input type='time' defaultValue={endingTime} id="endingTime" className='timeInput' onChange={updateEndTime}></input>
+                            <input type='time' defaultValue={endingTime} value={endingTime} id="endingTime" className='timeInput' onChange={updateEndTime}></input>
                         </div>
                         {isVerySmall && <img src={Pencil} className="pencil"></img>}
                         <div style={css}>
