@@ -75,7 +75,7 @@ function BusinessPageBottom({ currBusinessID, description, otherInfo, phone, web
 
     useEffect(()=> {
         updateReviews(null, 1)
-    }, [])
+    }, [authState])
 
     return (
         <div className='bottomBackground' style={{ padding: '0 2vh 2vh 2vh', marginTop: '0', overflowX: 'hidden' }}>
