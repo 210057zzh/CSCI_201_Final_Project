@@ -138,7 +138,7 @@ function BusinessPageHeaderEdit({ name, startingTime, endingTime, givenCategory,
                         </div>
                         {isVerySmall && <img src={Pencil} className="pencil"></img>}
                         <div style={css}>
-                            {authState.BusinessEditErrs.time ? <Error errorMsg={authState.BusinessEditErrs.time}></Error> : null}
+                            {authState.BusinessEditErrs.time ? <Error errorMsg={authState.BusinessEditErrs.time} ></Error> : null}
                         </div>
                     </div>
 

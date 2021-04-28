@@ -16,21 +16,13 @@ import { NavLink } from 'react-router-dom';
 function Dashboard(props) {
     const REST_API_CALL = 'http://localhost:8080/api/myBusinesses'
     const REST_API_CALL_ALL_FAVORITES = "http://localhost:8080/api/getUserFavorites";
+    const REST_API_UNFAVORITE = 'http://localhost:8080/api/removeFavorite';
     const { authState, setAuthState } = useContext(authContext);
     const [showEdit, setEdit] = useState();
     const [businessArray, setbusinessArray] = useState([]);
     const [favoritesArray, setfavoritesArray] = useState([]);
     const [divArray, setdivArray] = useState([]);
     const [divArray2, setdivArray2] = useState([]);
-
-    /*function getAllFavorites() {
-        axios.get(REST_API_CALL_ALL_FAVORITES + "?userID=" + authState.user.userId)
-        .then(function (response) {
-            console.log(response);
-        }).catch(function () {
-            console.log('error');
-        })
-    }*/
 
     function getAllFavorites() {
         var result = axios.get(REST_API_CALL_ALL_FAVORITES, {
@@ -75,6 +67,13 @@ function Dashboard(props) {
         website: '',
         email: '',
         address: ''
+    }
+
+    function unfavorite(businessID) {
+        axios.post(REST_API_UNFAVORITE + "?businessID=" + businessID + "&userID=" + authState.user.userId).then(resp => {
+        }).catch(function () {
+            console.log('error');
+        })
     }
 
 
