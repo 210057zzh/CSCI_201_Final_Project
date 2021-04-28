@@ -84,6 +84,7 @@ function Dashboard(props) {
         business.category = business.business_type;
         business.phone = business.phone_number;
         business.priceLevel = business.cost
+
         if (business == emptyBusiness) {
             setAuthState(prevState => {
                 return {

@@ -8,6 +8,7 @@ import MuiPhoneNumber from "material-ui-phone-number";
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
 import { useMediaQuery } from 'react-responsive'
+import YelpPopup from './YelpPopup';
 
 
 function parseText(text) {
@@ -158,7 +159,14 @@ function BusinessPageBottomEdit({ description, otherInfo, phone, website, email,
             }
         });
     }
-
+    function showYelp() {
+        setAuthState(prevState => {
+            return ({
+                ...prevState,
+                showYelp: true
+            })
+        })
+    }
     function importYelp() {
         axios.get(REST_API_CALL_YELP, {
             params: {
@@ -253,12 +261,13 @@ function BusinessPageBottomEdit({ description, otherInfo, phone, website, email,
     return (
         
         <div className='bottomBackground' style={{ padding: '0 2vh 2vh 2vh', marginTop: '0' }}>
-            {console.log('a')}
+            {authState.showYelp ? <div className='darkened'></div> : null}
+            {authState.showYelp ? <YelpPopup></YelpPopup> : null}
             <div style={{ marginLeft: '1em', marginRight: 'auto', overflowX: 'hidden' }}>
                 <div style={{ textAlign: 'left' }}>
                     <input className='button' type='button' value='Save' onClick={submit}></input>
                     <input className='button' type='button' value='Back' onClick={back}></input> {!isSmallDevice && <br/>}
-                    <input className='importButton' type='button' value='Import From' onClick={importYelp}></input>
+                    <input className='importButton' type='button' value='Import From' onClick={showYelp}></input>
                 </div>
                 <hr className='line' style={{ width: '80em', marginTop: '1.5em' }} /><br /><br />
 
@@ -287,7 +296,7 @@ function BusinessPageBottomEdit({ description, otherInfo, phone, website, email,
                                 rowsMax={5} className='textUpdate'
                                 error={authState.BusinessEditErrs.otherInfo}
                                 helperText={authState.BusinessEditErrs.otherInfo ? authState.BusinessEditErrs.otherInfo : ''}
-                                onChange={updateOtherInfo} id="otherInfo" defaultValue={otherInfo.replaceAll("\\n", '\r')}/>
+                                onChange={updateOtherInfo} id="otherInfo" defaultValue={otherInfo.replaceAll("\\n", '\r')} value={otherInfo.replaceAll("\\n", '\r')}/>
                         </div>
                     </div>
                     <div className="contactSection">
@@ -330,7 +339,7 @@ function BusinessPageBottomEdit({ description, otherInfo, phone, website, email,
                                         type='text' label="address" name='address'
                                         error={authState.BusinessEditErrs.address}
                                         helperText={authState.BusinessEditErrs.address ? authState.BusinessEditErrs.address : ''}
-                                        className='contactInput' defaultValue={address} onChange={updateAddress} />
+                                        className='contactInput' defaultValue={address} value={address} onChange={updateAddress} />
                                 </div>
                             </div>
                         </div>

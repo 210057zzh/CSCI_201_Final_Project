@@ -5,6 +5,32 @@
     overflow: auto;
     margin-top: 0em;
 }
+.darkened {
+    position: fixed;
+    top:0;
+    left:0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 1;
+    min-height: 100vh;
+    min-width: 100vw;
+}
+.yelp-window {
+    width: 40vw;
+    top: 30vh;
+    left: 30vw;
+    height: 40vh;
+    position: absolute;
+    margin: auto;
+    z-index: 2;
+    background-color: white;
+}
+
+
+.yelp-window-title {
+    font-size: 38px;
+    font-weight: bold;
+}
+
 .website, .website:visited {
     text-decoration: none;
     color: #3575F1;
