@@ -97,7 +97,9 @@ function BusinessPageBottom({ currBusinessID, description, otherInfo, phone, web
 
 
     function favorite() {
-        axios.post(REST_API_FAVORITE + "?businessID=" + currBusinessID + "&userID=" + authState.user.userId)
+        axios.post(REST_API_FAVORITE + 
+            "?businessID=" + currBusinessID + 
+            "&userID=" + authState.user.userId)
         .then(resp => {
         }).catch(function () {
             console.log('error');
