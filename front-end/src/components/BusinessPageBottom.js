@@ -3,6 +3,8 @@ import axios from 'axios';
 import ReviewSnippet from './ReviewSnippet';
 import { useState, useContext, useEffect } from 'react';
 import { authContext } from './contexts/authContext'
+import solidStar from '../css/img/star-solid.svg';
+import openStar from '../css/img/star-regular.svg';
 
 
 function parseText(text) {
@@ -20,7 +22,11 @@ function BusinessPageBottom({ currBusinessID, description, otherInfo, phone, web
     const { authState, setAuthState } = useContext(authContext);
     const [currPage, setPage] = useState('');
     const [ reviews, setReviews ] = useState();
+    const [isFavorite, toggleFavorite] = useState();
     const REST_API_GET_REVIEWS = 'http://localhost:8080/api/getReviews';
+    const REST_API_IS_FAVORITE = 'http://localhost:8080/api/isFavorite';
+    const REST_API_FAVORITE = 'http://localhost:8080/api/addFavorite';
+    const REST_API_UNFAVORITE = 'http://localhost:8080/api/removeFavorite';
     function toggleReview() {
         setAuthState(prevState => {
             return {
@@ -74,16 +80,65 @@ function BusinessPageBottom({ currBusinessID, description, otherInfo, phone, web
     }
 
     useEffect(()=> {
-        updateReviews(null, 1)
-    }, [authState])
+        updateReviews(null, 1);
+        initialFavorite();
+    }, [authState]);
+
+    function updateFavorite() {
+        console.log(isFavorite);
+        if(isFavorite) {
+            toggleFavorite(false);
+            favorite();
+        } else {
+            toggleFavorite(true);
+            unfavorite();
+        }
+
+    }
+
+
+    async function favorite() {
+        const result = await axios.get(REST_API_FAVORITE, {
+            params: {
+                userID: authState.user.userId,
+                businessID: currBusinessID
+            }
+        }).then(resp => {
+            console.log(resp);
+        });
+    }
+
+    async function unfavorite() {
+        const result = await axios.get(REST_API_UNFAVORITE, {
+            params: {
+                userID: authState.user.userId,
+                businessID: currBusinessID
+            }
+        }).then(resp => {
+            console.log(resp);
+        });
+    }
+
+    async function initialFavorite() {
+        const result = await axios.get(REST_API_IS_FAVORITE, {
+            params: {
+                userID: authState.user.userId,
+                businessID: currBusinessID
+            }
+        }).then(resp => {
+            console.log(resp);
+            toggleFavorite(resp.isFavorite);
+        });
+    }
 
     return (
         <div className='bottomBackground' style={{ padding: '0 2vh 2vh 2vh', marginTop: '0', overflowX: 'hidden' }}>
             <div style={{ marginLeft: '1em' }}>
                 {(authState.loggedIn === true) ?
-                    <div style={{ textAlign: 'left' }}>
+                    <div style={{ textAlign: 'left'}}>
                         <input className='button' type='button' value='Review' onClick={toggleReview}></input>
-                        <input className='button' type='button' value='Favorite'></input>
+                        <input className='button' type='button' value='Favorite' onClick={updateFavorite}></input>
+                        <img src={isFavorite ? solidStar : openStar} width="60px" style={{verticalAlign: 'middle', marginBottom: '15px'}}></img>
                     </div>
                     : null}
                 {authState.loggedIn ? <hr className='line' style={{ width: '80em', marginTop: '1.5em' }} /> : null }

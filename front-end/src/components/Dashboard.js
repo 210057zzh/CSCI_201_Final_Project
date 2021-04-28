@@ -14,10 +14,28 @@ import axios from 'axios';
 
 function Dashboard(props) {
     const REST_API_CALL = 'http://localhost:8080/api/myBusinesses'
+    const REST_API_CALL_ALL_FAVORITES = "http://localhost:8080/api/getUserFavorites";
     const { authState, setAuthState } = useContext(authContext);
     const [showEdit, setEdit] = useState();
     const [businessArray, setbusinessArray] = useState([]);
+    const [favoritesArray, setfavoritesArray] = useState([]);
     const [divArray, setdivArray] = useState([]);
+    const [divArray2, setdivArray2] = useState([]);
+
+    function getAllFavorites() {
+        var result = axios.get(REST_API_CALL, {
+            params: {
+                userID: authState.user.userId
+            }
+        }).then(resp => {
+            if (typeof resp.data === "string") {
+                setfavoritesArray([]);
+            }
+            else { setfavoritesArray(resp.data); }
+        });
+        return result;
+    }
+
 
     function getOwnedBusinesses() {
         var result = axios.get(REST_API_CALL, {
@@ -49,6 +67,7 @@ function Dashboard(props) {
         address: ''
     }
 
+
     function openEditView(business) {
         console.log(business);
         business.startingTime = business.startHour;
@@ -77,6 +96,7 @@ function Dashboard(props) {
         if (!authState.loggedIn) {
             window.location.replace('./')
         }
+        getAllFavorites();
         getOwnedBusinesses();
         setAuthState(prevState => {
             return {
@@ -107,6 +127,24 @@ function Dashboard(props) {
         }
     }, [businessArray])
 
+    useEffect(() => {
+        if (favoritesArray.length > 0) {
+            setdivArray(favoritesArray.map(business => {
+                return (
+                    <div className='business-card'>
+                        <div className='business-name' >{business.name}</div>
+                        <div className='stars'><StarRating value={business.average_rating}></StarRating></div>
+                        
+                        <MaxLengthString text={business.description} maxLength={300}></MaxLengthString>
+                    </div>
+                )
+            }))
+        }
+        else {
+            setdivArray([]);
+        }
+    }, [businessArray])
+
     if (!showEdit) {
         return (
             <div>
@@ -124,10 +162,14 @@ function Dashboard(props) {
                     </div>
                 </div>
 
-                <div className='my-favorites'>
+                <div className='my-businesses'>
+                    <div className='my-businesses-title'>My Favorites</div>
+                    <div className='my-businesses-container'>
+                        {divArray2}
+                        </div>
+                    </div>
 
                 </div>
-            </div>
         )
     }
     else {

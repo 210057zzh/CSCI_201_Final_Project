@@ -20,6 +20,14 @@
     text-align: right;
 }
 
+
+.rightContentEditing {
+    justify-content: space-between;
+    margin-right: 1em;
+    float: right;
+    text-align: right;
+}
+
 .businessName {
     color: white;
     font-size: 38px;
@@ -326,13 +334,17 @@
     display: 'inline-flex';
 }
 
+.starEditRatingEditing {
+    display: 'inline-flex';
+}
+
 @media only screen and (max-width: 1050px) {
     .background {
         margin-top: 3em;
     }
 }
 
-@media only screen and (max-width: 1200px) {
+@media only screen and (max-width: 750px) {
     .starEditRating {
         display: block;
     }
@@ -343,18 +355,26 @@
     }
 }
 
-@media only screen and (max-width: 900px) {
-    .businessName {
-        white-space: normal;
+@media only screen and (max-width: 1110px) {
+    .starEditRatingEditing {
+        display: block;
     }
-    .rightContent {
+    .rightContentEditing {
         float: left;
         color: red;
         margin-left: 1em;
     }
+}
+
+
+@media only screen and (max-width: 900px) {
+    .businessName {
+        white-space: normal;
+    }
     .businessData {
         display: block;
     }
+
     .contactSection {
         margin-top: 2em;
         float: none;

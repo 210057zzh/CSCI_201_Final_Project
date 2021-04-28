@@ -169,7 +169,7 @@ function BusinessPageHeaderEdit({ name, startingTime, endingTime, givenCategory,
 
                 </div>
             </div>
-            <div className="rightContent">
+            <div className="rightContentEditing">
                 <div className="starEditRating">
                     {<StarRating value={rating} />}
                     {reviewCount > 0 && <p style={{ margin: '8px 8px' }} className='other'>{reviewCount} Reviews</p>}
