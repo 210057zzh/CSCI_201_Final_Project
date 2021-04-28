@@ -24,7 +24,7 @@ function Login(props) {
     const [email, setEmail] = useState();
     const [pass, setPass] = useState();
     const [err, setErr] = useState();
-    const REST_API_CALL = 'http://localhost:8080/api/login'
+    const REST_API_CALL = 'http://sprout-env.eba-vmpmw53n.us-west-1.elasticbeanstalk.com//api/login'
     const [emailerr, setEmailerr] = useState();
     const [pwerr, setPwerr] = useState();
     const isDesktopOrLaptop = useMediaQuery({ minWidth: 1224 });
@@ -68,7 +68,7 @@ function Login(props) {
                     setAuthState(prevState => { return { ...prevState, showLogin: false, loggedIn: true, user: resp.data } });
                 } else { // The user does not already exist or some other error occured. Refer to error message to determine next steps
                     console.log('error: ' + resp.data.error);
-                    if(resp.data.error == 'googleuser')
+                    if (resp.data.error == 'googleuser')
                         setErr('A Google account already exists with this email. Use Google sign-on.');
                     else
                         setErr(resp.data.error);
@@ -108,7 +108,7 @@ function Login(props) {
                 <br></br>
                 {err ? <Error errorMsg={err}></Error> : null}
                 <br></br>
-                <Button style={{ width: (isDesktopOrLaptop ? '20%' : '40%'), height: (isDesktopOrLaptop ? 'auto' : '4em'), marginTop: '3em' , fontWeight:'bold'}} className='login-btn' size="small" type="submit" variant="contained" >Log in</Button>
+                <Button style={{ width: (isDesktopOrLaptop ? '20%' : '40%'), height: (isDesktopOrLaptop ? 'auto' : '4em'), marginTop: '3em', fontWeight: 'bold' }} className='login-btn' size="small" type="submit" variant="contained" >Log in</Button>
             </form>
         </div>
     );

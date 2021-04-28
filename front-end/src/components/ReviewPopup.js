@@ -45,8 +45,8 @@ function Review(props) {
     const classes = useStyles();
     const { authState, setAuthState } = useContext(authContext);
     const [err, setErr] = useState();
-    //const REST_API_CALL = 'http://localhost:8080/api/login'
-    const REST_API_SUBMIT_REVIEW = 'http://localhost:8080/api/addReview'
+    //const REST_API_CALL = 'http://sprout-env.eba-vmpmw53n.us-west-1.elasticbeanstalk.com//api/login'
+    const REST_API_SUBMIT_REVIEW = 'http://sprout-env.eba-vmpmw53n.us-west-1.elasticbeanstalk.com//api/addReview'
 
     Review.handleClickOutside = (e) => {
         setAuthState(prevState => { return { ...prevState, showReview: false } });

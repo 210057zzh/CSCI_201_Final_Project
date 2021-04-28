@@ -21,12 +21,12 @@ function parseText(text) {
 function BusinessPageBottom({ currBusinessID, description, otherInfo, phone, website, email, address }) {
     const { authState, setAuthState } = useContext(authContext);
     const [currPage, setPage] = useState('');
-    const [ reviews, setReviews ] = useState();
+    const [reviews, setReviews] = useState();
     const [isFavorite, toggleFavorite] = useState();
-    const REST_API_GET_REVIEWS = 'http://localhost:8080/api/getReviews';
-    const REST_API_IS_FAVORITE = 'http://localhost:8080/api/isFavorite';
-    const REST_API_FAVORITE = 'http://localhost:8080/api/addFavorite';
-    const REST_API_UNFAVORITE = 'http://localhost:8080/api/removeFavorite';
+    const REST_API_GET_REVIEWS = 'http://sprout-env.eba-vmpmw53n.us-west-1.elasticbeanstalk.com//api/getReviews';
+    const REST_API_IS_FAVORITE = 'http://sprout-env.eba-vmpmw53n.us-west-1.elasticbeanstalk.com//api/isFavorite';
+    const REST_API_FAVORITE = 'http://sprout-env.eba-vmpmw53n.us-west-1.elasticbeanstalk.com//api/addFavorite';
+    const REST_API_UNFAVORITE = 'http://sprout-env.eba-vmpmw53n.us-west-1.elasticbeanstalk.com//api/removeFavorite';
     function toggleReview() {
         setAuthState(prevState => {
             return {
@@ -38,55 +38,55 @@ function BusinessPageBottom({ currBusinessID, description, otherInfo, phone, web
     }
 
     function updateReviews(e) {
-        if(e) {
+        if (e) {
             setPage(e.target.title);
             var pageNum = e.target.title;
         }
-            
+
         else {
-            setPage(1); 
+            setPage(1);
             var pageNum = 1;
-        }  
-            
-       
-        axios.get(REST_API_GET_REVIEWS+"?businessID="+currBusinessID+"&page="+pageNum)
-          .then(function (response) {
-              console.log(response);
-            if(response.data == 'NO RESULTS' && !authState.loggedIn && pageNum==1 ) {
-                setReviews(<div style={{textAlign: 'left', marginTop: '1em', marginBottom: '1em' }} >None yet! Be the first to leave a review by logging in.</div>);
-            }
-            else if(response.data == 'NO RESULTS' && authState.loggedIn && pageNum == 1) {
-                setReviews(<div style={{textAlign: 'left', marginTop: '1em', marginBottom: '1em' }} >None yet! Be the first to leave a review.</div>);
-            }
-            else if(response.data == 'NO RESULTS') {
-                setReviews(<div style={{textAlign: 'left', marginTop: '1em', marginBottom: '1em'}} >This page is empty, help this business by adding more reviews!</div>);
-            }
-            else {
-                let reviewsToDOM = response.data.map(review => { 
-                    let username = review.username.split('@')[0]
-                    return (
-                        <div>
-                            <ReviewSnippet username={username} rating={review.rating} reviewCount={review.numReviews} reviewMessage={review.message} />
-                            <hr className='reviewLine' /><br />
-                        </div>
-                    );
-                })
-                setReviews(reviewsToDOM);
-            }
-          }).catch(function() {
-            console.log('error');
-        })
+        }
+
+
+        axios.get(REST_API_GET_REVIEWS + "?businessID=" + currBusinessID + "&page=" + pageNum)
+            .then(function (response) {
+                console.log(response);
+                if (response.data == 'NO RESULTS' && !authState.loggedIn && pageNum == 1) {
+                    setReviews(<div style={{ textAlign: 'left', marginTop: '1em', marginBottom: '1em' }} >None yet! Be the first to leave a review by logging in.</div>);
+                }
+                else if (response.data == 'NO RESULTS' && authState.loggedIn && pageNum == 1) {
+                    setReviews(<div style={{ textAlign: 'left', marginTop: '1em', marginBottom: '1em' }} >None yet! Be the first to leave a review.</div>);
+                }
+                else if (response.data == 'NO RESULTS') {
+                    setReviews(<div style={{ textAlign: 'left', marginTop: '1em', marginBottom: '1em' }} >This page is empty, help this business by adding more reviews!</div>);
+                }
+                else {
+                    let reviewsToDOM = response.data.map(review => {
+                        let username = review.username.split('@')[0]
+                        return (
+                            <div>
+                                <ReviewSnippet username={username} rating={review.rating} reviewCount={review.numReviews} reviewMessage={review.message} />
+                                <hr className='reviewLine' /><br />
+                            </div>
+                        );
+                    })
+                    setReviews(reviewsToDOM);
+                }
+            }).catch(function () {
+                console.log('error');
+            })
         //Update reviews now
     }
 
-    useEffect(()=> {
+    useEffect(() => {
         updateReviews(null, 1);
         initialFavorite();
     }, [authState]);
 
     function updateFavorite() {
         toggleFavorite(!isFavorite);
-        if(isFavorite) {
+        if (isFavorite) {
             unfavorite();
         } else {
             favorite();
@@ -97,13 +97,13 @@ function BusinessPageBottom({ currBusinessID, description, otherInfo, phone, web
 
 
     function favorite() {
-        axios.post(REST_API_FAVORITE + 
-            "?businessID=" + currBusinessID + 
+        axios.post(REST_API_FAVORITE +
+            "?businessID=" + currBusinessID +
             "&userID=" + authState.user.userId)
-        .then(resp => {
-        }).catch(function () {
-            console.log('error');
-        })
+            .then(resp => {
+            }).catch(function () {
+                console.log('error');
+            })
     }
 
     function unfavorite() {
@@ -115,27 +115,27 @@ function BusinessPageBottom({ currBusinessID, description, otherInfo, phone, web
 
     function initialFavorite() {
         axios.get(REST_API_IS_FAVORITE + "?businessID=" + currBusinessID + "&userID=" + authState.user.userId)
-        .then(function (response) {
-            toggleFavorite(response.data.isFavorite);
-            
-        }).catch(function () {
-            console.log('error');
-        })
+            .then(function (response) {
+                toggleFavorite(response.data.isFavorite);
+
+            }).catch(function () {
+                console.log('error');
+            })
     }
 
     return (
         <div className='bottomBackground' style={{ padding: '0 2vh 2vh 2vh', marginTop: '0', overflowX: 'hidden' }}>
             <div style={{ marginLeft: '1em' }}>
                 {(authState.loggedIn === true) ?
-                    <div style={{ textAlign: 'left'}}>
+                    <div style={{ textAlign: 'left' }}>
                         <input className='button' type='button' value='Review' onClick={toggleReview}></input>
                         <input className='button' type='button' value={isFavorite ? 'Unfavorite' : 'Favorite'} onClick={updateFavorite}></input>
-                        <img src={isFavorite ? solidStar : openStar} width="60px" style={{verticalAlign: 'middle', marginBottom: '15px'}}></img>
+                        <img src={isFavorite ? solidStar : openStar} width="60px" style={{ verticalAlign: 'middle', marginBottom: '15px' }}></img>
                     </div>
                     : null}
-                {authState.loggedIn ? <hr className='line' style={{ width: '80em', marginTop: '1.5em' }} /> : null }
-                <br/>
-                {authState.loggedIn? <br/> : null}
+                {authState.loggedIn ? <hr className='line' style={{ width: '80em', marginTop: '1.5em' }} /> : null}
+                <br />
+                {authState.loggedIn ? <br /> : null}
                 <div className="businessData" style={{ justifyContent: 'space-between' }}>
                     <div className="businessInfoSection">
                         <div style={{ textAlign: 'left' }}>
@@ -173,10 +173,10 @@ function BusinessPageBottom({ currBusinessID, description, otherInfo, phone, web
                     {reviews}
                 </div>
                 <div className="pageSection">
-                    <a href="#" title="1" style={{fontWeight: currPage == 1 ? 'bold' : null}} onClick={updateReviews}>1</a>
-                    <a href="#" title="2" style={{fontWeight: currPage == 2 ? 'bold' : null}} onClick={updateReviews}>2</a>
-                    <a href="#" title="3" style={{fontWeight: currPage == 3 ? 'bold' : null}} onClick={updateReviews}>3</a>
-                    <a href="#" title="4" style={{fontWeight: currPage == 4 ? 'bold' : null}} onClick={updateReviews}>4</a>
+                    <a href="#" title="1" style={{ fontWeight: currPage == 1 ? 'bold' : null }} onClick={updateReviews}>1</a>
+                    <a href="#" title="2" style={{ fontWeight: currPage == 2 ? 'bold' : null }} onClick={updateReviews}>2</a>
+                    <a href="#" title="3" style={{ fontWeight: currPage == 3 ? 'bold' : null }} onClick={updateReviews}>3</a>
+                    <a href="#" title="4" style={{ fontWeight: currPage == 4 ? 'bold' : null }} onClick={updateReviews}>4</a>
                 </div>
             </div>
         </div>

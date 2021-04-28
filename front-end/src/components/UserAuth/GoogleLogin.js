@@ -7,8 +7,8 @@ import { authContext } from '../contexts/authContext';
 
 function GoogleLogin(props) {
     const { authState, setAuthState } = useContext(authContext)
-    const REST_API_CALL_Login = 'http://localhost:8080/api/googlelogin'
-    const REST_API_CALL_Signup = 'http://localhost:8080/api/googlesignup'
+    const REST_API_CALL_Login = 'http://sprout-env.eba-vmpmw53n.us-west-1.elasticbeanstalk.com//api/googlelogin'
+    const REST_API_CALL_Signup = 'http://sprout-env.eba-vmpmw53n.us-west-1.elasticbeanstalk.com//api/googlesignup'
     var signUporLogin = null; // 'signup' or 'Login'
     const clientid = "467227431315-qfa0plniiro21687j2ifupq82cd7j6op.apps.googleusercontent.com";
 

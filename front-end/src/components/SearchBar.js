@@ -4,7 +4,7 @@ import axios from 'axios';
 
 function SearchBar(props) {
     const [search, setSearch] = useState(props.default);
-    const REST_API_CALL = 'http://localhost:8080/api/businesses'
+    const REST_API_CALL = 'http://sprout-env.eba-vmpmw53n.us-west-1.elasticbeanstalk.com//api/businesses'
 
     function handleChange(e) {
         setSearch(e.target.value);

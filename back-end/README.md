@@ -10,7 +10,7 @@ Running the server requires installing Apache TomCat and linking it to Eclipse. 
 In the Eclipse Project Explorer, right click the folder Sprout -> select "Run As" -> "Maven Build..."
 In "goals", enter spring-boot:run then click the Run button.
 
-The server will start on localhost:8080
+The server will start on sprout-env.eba-vmpmw53n.us-west-1.elasticbeanstalk.com/
 
 
 # Running with Spring Tools for Development:
@@ -26,7 +26,7 @@ Installing Spring Tools for Eclipse:
 
 7. In the Eclipse Project Explorer, right click the folder Sprout -> select "Run As" -> "Spring Boot App"
 
-7. The server will start on localhost:8080
+7. The server will start on sprout-env.eba-vmpmw53n.us-west-1.elasticbeanstalk.com/
 
 
 

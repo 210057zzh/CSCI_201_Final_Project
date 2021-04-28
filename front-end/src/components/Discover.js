@@ -12,10 +12,10 @@ import { useMediaQuery } from 'react-responsive';
 
 function Discover(props) {
     const { authState, setAuthState } = useContext(authContext);
-    const REST_API_CALL = 'http://localhost:8080/api/businesses'
+    const REST_API_CALL = 'http://sprout-env.eba-vmpmw53n.us-west-1.elasticbeanstalk.com//api/businesses'
     const [data, setData] = useState([]);
     const [divArray, setDiv] = useState([]);
-    const smallDevice = useMediaQuery({ minWidth: 1050});
+    const smallDevice = useMediaQuery({ minWidth: 1050 });
     const value =
         (props.location && props.location.default) || "";
 
@@ -47,7 +47,7 @@ function Discover(props) {
             <Navbar />
             <div className='home-search'>
                 <div style={{ paddingTop: "1px" }}></div>
-                <div style={{marginTop: (smallDevice ? '0em' : '5em')}}>
+                <div style={{ marginTop: (smallDevice ? '0em' : '5em') }}>
                     <SearchBar setData={setData} default={value} />
                 </div>
                 <div style={{ paddingTop: "2vh" }}></div>

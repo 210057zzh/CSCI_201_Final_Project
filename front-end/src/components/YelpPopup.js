@@ -1,4 +1,4 @@
-import {useState, useContext} from 'react';
+import { useState, useContext } from 'react';
 import '../css/BusinessPage.css';
 import onClickOutside from 'react-onclickoutside'
 import { authContext } from './contexts/authContext';
@@ -9,13 +9,13 @@ const clickOutsideConfig = {
     handleClickOutside: () => YelpPopup.handleClickOutside
 }
 
-function YelpPopup (props) {
-    const {authState, setAuthState} = useContext(authContext)
+function YelpPopup(props) {
+    const { authState, setAuthState } = useContext(authContext)
     const [name, setName] = useState();
     const [address, setAddress] = useState('');
     const [nameErr, setNameErr] = useState('');
     const [addressErr, setAddressErr] = useState()
-    const REST_API_CALL_YELP = 'http://localhost:8080/api/yelpfill'
+    const REST_API_CALL_YELP = 'http://sprout-env.eba-vmpmw53n.us-west-1.elasticbeanstalk.com//api/yelpfill'
 
     function changeName(e) {
         setName(e.target.value)
@@ -24,21 +24,21 @@ function YelpPopup (props) {
     function changeAddress(e) {
         setAddress(e.target.value)
     }
-    
+
     YelpPopup.handleClickOutside = (e) => {
         setAuthState(prevState => { return { ...prevState, showYelp: false } });
     };
 
     function submit() {
-        if(name == '' && address == '') {
+        if (name == '' && address == '') {
             setNameErr('Fill out required field');
             setAddressErr('Fill out required field');
         }
-        else if(name == '') {
+        else if (name == '') {
             setNameErr('Fill out required field');
             setAddressErr('');
         }
-        else if(address == '') {
+        else if (address == '') {
             setAddressErr('Fill out required field');
             setNameErr('');
         }
@@ -50,14 +50,14 @@ function YelpPopup (props) {
                 }
             }).then(res => {
                 console.log(res);
-                if(res.data.error) {
+                if (res.data.error) {
                     setNameErr('Could not find that business. Ensure that the name was inputted correctly');
                     setAddressErr('Check that the address is formatted correctly (comma-separated). Example: 3089 Edinger Ave, Tustin, CA');
                 }
                 else {
                     var phoneNumber = res.data.display_phone;
                     var JSONwebsite = res.data.url.split('?')[0];
-                    
+
                     var todaysdate = new Date();
                     var dayNumber = todaysdate.getDay();
                     var JSONstartingTime = res.data.hours[0].open[dayNumber].start.substring(0, 2) + ":" + res.data.hours[0].open[dayNumber].start.substring(2, 5);
@@ -91,10 +91,10 @@ function YelpPopup (props) {
             })
         }
     }
-    return(<div className='yelp-window'>
-        <div style={{width:'70%', margin:'1em auto 0.5em auto',float:'left'}}class='yelp-window-title'>Import from Yelp</div>
+    return (<div className='yelp-window'>
+        <div style={{ width: '70%', margin: '1em auto 0.5em auto', float: 'left' }} class='yelp-window-title'>Import from Yelp</div>
         <div><TextField multiline
-            style={{width: '70%', marginBottom:'0.5em'}}
+            style={{ width: '70%', marginBottom: '0.5em' }}
             variant="outlined"
             rows={1}
             rowsMax={1}
@@ -107,7 +107,7 @@ function YelpPopup (props) {
             helperText={nameErr}
         /></div>
         <div><TextField multiline
-            style={{width: '70%'}}
+            style={{ width: '70%' }}
             variant="outlined"
             rows={1}
             rowsMax={1}
@@ -119,7 +119,7 @@ function YelpPopup (props) {
             error={addressErr}
             helperText={addressErr}
         /></div>
-        <div style={{display:'flex', flexDirection:'row', justifyContent:'center'}}>
+        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
             <button className='button' onClick={YelpPopup.handleClickOutside}>Cancel</button>
             <button className='button' onClick={submit}>Import</button>
         </div>

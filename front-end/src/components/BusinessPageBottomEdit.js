@@ -24,9 +24,9 @@ function parseText(text) {
 function BusinessPageBottomEdit({ description, otherInfo, phone, website, email, address, setEdit }) {
     const isSmallDevice = useMediaQuery({ minWidth: 900 });
     const { authState, setAuthState } = useContext(authContext);
-    const REST_API_CALL_ADD = 'http://localhost:8080/api/addBusiness'
-    const REST_API_CALL_UPDATE = 'http://localhost:8080/api/updateBusiness'
-    const REST_API_CALL_YELP = 'http://localhost:8080/api/yelpfill'
+    const REST_API_CALL_ADD = 'http://sprout-env.eba-vmpmw53n.us-west-1.elasticbeanstalk.com//api/addBusiness'
+    const REST_API_CALL_UPDATE = 'http://sprout-env.eba-vmpmw53n.us-west-1.elasticbeanstalk.com//api/updateBusiness'
+    const REST_API_CALL_YELP = 'http://sprout-env.eba-vmpmw53n.us-west-1.elasticbeanstalk.com//api/yelpfill'
     let value = null;
 
     async function addBusiness(business) {
@@ -181,7 +181,7 @@ function BusinessPageBottomEdit({ description, otherInfo, phone, website, email,
             //Allowed Transaction
             var phoneNumber = res.data.display_phone;
             var JSONwebsite = res.data.url.split('?')[0];
-            
+
             var todaysdate = new Date();
             var dayNumber = todaysdate.getDay();
             var JSONstartingTime = res.data.hours[0].open[dayNumber].start.substring(0, 2) + ":" + res.data.hours[0].open[dayNumber].start.substring(2, 5);
@@ -259,19 +259,19 @@ function BusinessPageBottomEdit({ description, otherInfo, phone, website, email,
     }
 
     return (
-        
+
         <div className='bottomBackground' style={{ padding: '0 2vh 2vh 2vh', marginTop: '0' }}>
             {authState.showYelp ? <div className='darkened'></div> : null}
             {authState.showYelp ? <YelpPopup></YelpPopup> : null}
             <div style={{ marginLeft: '1em', marginRight: 'auto', overflowX: 'hidden' }}>
                 <div style={{ textAlign: 'left' }}>
                     <input className='button' type='button' value='Save' onClick={submit}></input>
-                    <input className='button' type='button' value='Back' onClick={back}></input> {!isSmallDevice && <br/>}
+                    <input className='button' type='button' value='Back' onClick={back}></input> {!isSmallDevice && <br />}
                     <input className='importButton' type='button' value='Import From' onClick={showYelp}></input>
                 </div>
                 <hr className='line' style={{ width: '80em', marginTop: '1.5em' }} /><br /><br />
 
-                <div className="businessData" style={{justifyContent: 'space-between'}}>
+                <div className="businessData" style={{ justifyContent: 'space-between' }}>
                     <div className="businessInfoSection">
                         <div style={{ textAlign: 'left' }}>
                             <div style={{ display: 'inline', whiteSpace: 'nowrap' }}>
@@ -286,7 +286,7 @@ function BusinessPageBottomEdit({ description, otherInfo, phone, website, email,
                                 rowsMax={5} className='textUpdate' onChange={updateDescription}
                                 defaultValue={description.replaceAll("\\n", '\r')} />
                             <br />
-                            <div style={{ display: 'inline',whiteSpace: 'nowrap' }}>
+                            <div style={{ display: 'inline', whiteSpace: 'nowrap' }}>
                                 <p className='fieldEditText' style={{ paddingLeft: '0px', marginTop: '8px' }}>Other Information</p>
                                 <img src={Pencil} className="pencil" style={{ marginTop: '8px' }}></img><br />
                             </div>
@@ -296,13 +296,13 @@ function BusinessPageBottomEdit({ description, otherInfo, phone, website, email,
                                 rowsMax={5} className='textUpdate'
                                 error={authState.BusinessEditErrs.otherInfo}
                                 helperText={authState.BusinessEditErrs.otherInfo ? authState.BusinessEditErrs.otherInfo : ''}
-                                onChange={updateOtherInfo} id="otherInfo" defaultValue={otherInfo.replaceAll("\\n", '\r')} value={otherInfo.replaceAll("\\n", '\r')}/>
+                                onChange={updateOtherInfo} id="otherInfo" defaultValue={otherInfo.replaceAll("\\n", '\r')} value={otherInfo.replaceAll("\\n", '\r')} />
                         </div>
                     </div>
                     <div className="contactSection">
                         <div style={{ margin: '1em 1em 0 0', padding: '0 1em 0 1em', border: 'solid', borderRadius: '10px', borderWidth: '1px' }}>
                             <div style={{ display: 'inline' }}>
-                                <div style={{textAlign: (isSmallDevice ? 'center' : 'left')}}>
+                                <div style={{ textAlign: (isSmallDevice ? 'center' : 'left') }}>
                                     <p className='fieldEditText'>Contact</p>
                                     <img src={Pencil} className="pencil" style={{ marginTop: '7px' }} id="magicPencil"></img><br />
                                 </div>
@@ -316,7 +316,7 @@ function BusinessPageBottomEdit({ description, otherInfo, phone, website, email,
                                         label="phone"
                                         error={authState.BusinessEditErrs.phone}
                                         helperText={authState.BusinessEditErrs.phone ? authState.BusinessEditErrs.phone : ''}
-                                        defaultCountry={'us'} id="phoneNumber" onChange={updatePhone} value={phone}/>
+                                        defaultCountry={'us'} id="phoneNumber" onChange={updatePhone} value={phone} />
                                 </div>
                                 <hr className='contactLine' />
                                 <div style={{ margin: '1em' }}>

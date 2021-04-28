@@ -14,9 +14,9 @@ import { NavLink } from 'react-router-dom';
 
 
 function Dashboard(props) {
-    const REST_API_CALL = 'http://localhost:8080/api/myBusinesses'
-    const REST_API_CALL_ALL_FAVORITES = "http://localhost:8080/api/getUserFavorites";
-    const REST_API_UNFAVORITE = 'http://localhost:8080/api/removeFavorite';
+    const REST_API_CALL = 'http://sprout-env.eba-vmpmw53n.us-west-1.elasticbeanstalk.com//api/myBusinesses'
+    const REST_API_CALL_ALL_FAVORITES = "http://sprout-env.eba-vmpmw53n.us-west-1.elasticbeanstalk.com//api/getUserFavorites";
+    const REST_API_UNFAVORITE = 'http://sprout-env.eba-vmpmw53n.us-west-1.elasticbeanstalk.com//api/removeFavorite';
     const { authState, setAuthState } = useContext(authContext);
     const [showEdit, setEdit] = useState();
     const [businessArray, setbusinessArray] = useState([]);
@@ -123,7 +123,7 @@ function Dashboard(props) {
                     <div className='business-card'>
                         <div className='business-name' >{business.name}</div>
                         <div className='stars'><StarRating value={business.average_rating}></StarRating></div>
-                        
+
                         <MaxLengthString text={business.description} maxLength={300}></MaxLengthString>
                         <input className='edit-button' type='button' value='Edit' onClick={() => {
                             openEditView(business)
@@ -141,12 +141,12 @@ function Dashboard(props) {
         if (favoritesArray.length > 0) {
             setdivArray2(favoritesArray.map(business => {
                 return (
-                    <NavLink to={'../businesspage/' + business.businessID} style={{textDecoration: 'none', color: 'black'}}>
-                    <div className='business-card'>
-                        <div className='business-name' >{business.name}</div>
-                        <div className='stars'><StarRating value={business.average_rating}></StarRating></div>
-                        <MaxLengthString text={business.description} maxLength={300}></MaxLengthString>
-                    </div>
+                    <NavLink to={'../businesspage/' + business.businessID} style={{ textDecoration: 'none', color: 'black' }}>
+                        <div className='business-card'>
+                            <div className='business-name' >{business.name}</div>
+                            <div className='stars'><StarRating value={business.average_rating}></StarRating></div>
+                            <MaxLengthString text={business.description} maxLength={300}></MaxLengthString>
+                        </div>
                     </NavLink>
                 )
             }))
@@ -154,9 +154,9 @@ function Dashboard(props) {
         else {
             setdivArray2(
                 <div className='business-card'>
-                <div className='business-name' >No Favorites Yet</div>
+                    <div className='business-name' >No Favorites Yet</div>
 
-            </div>
+                </div>
             );
         }
     }, [favoritesArray])
@@ -164,14 +164,14 @@ function Dashboard(props) {
     if (!showEdit) {
         return (
             <div>
-                <Navbar /><br/>
+                <Navbar /><br />
                 <div className='my-businesses'>
                     <div className='my-businesses-title'>My Businesses</div>
                     <div className='my-businesses-container'>
                         {divArray}
                         <div className='business-card add' onClick={() => {
-                                openEditView(emptyBusiness);
-                            }}>
+                            openEditView(emptyBusiness);
+                        }}>
                             <div className='add-new'>Add a new business</div>
                             <div className='plus'>+</div>
                         </div>
@@ -182,10 +182,10 @@ function Dashboard(props) {
                     <div className='my-businesses-title'>My Favorites</div>
                     <div className='my-businesses-container'>
                         {divArray2}
-                        </div>
                     </div>
-
                 </div>
+
+            </div>
         )
     }
     else {

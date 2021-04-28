@@ -10,12 +10,12 @@ import Signup from './UserAuth/SignupPopup';
 import Review from './ReviewPopup';
 
 function BusinessPage(props) {
-    const { authState, setAuthState } = useContext(authContext); 
+    const { authState, setAuthState } = useContext(authContext);
     const [business, setBusiness] = useState();
 
     useEffect(() => {
         const businessID = props.match.params.businessID;
-        axios.get('http://localhost:8080/api/businessInfo?businessID=' + businessID).then(res => {
+        axios.get('http://sprout-env.eba-vmpmw53n.us-west-1.elasticbeanstalk.com//api/businessInfo?businessID=' + businessID).then(res => {
             console.log(res);
             setBusiness({
                 name: res.data[0].name,
@@ -49,7 +49,7 @@ function BusinessPage(props) {
             {authState.showSignup ? <Signup /> : null}
             {authState.showReview ? <Review /> : null}
             {(authState.showLogin || authState.showSignup || authState.showReview) ? <div className='darkened'></div> : null}
-            <Navbar /><br/>
+            <Navbar /><br />
             {business ? <div>
                 <BusinessPageHeader name={business.name} startingTime={business.startingTime} endingTime={business.endingTime} category={business.category} rating={business.rating} reviewCount={business.reviewCount} priceLevel={business.priceLevel} />
                 <BusinessPageBottom currBusinessID={props.match.params.businessID} description={business.description} otherInfo={business.otherInfo} phone={business.phone} website={business.website} email={business.email} address={business.address} />
