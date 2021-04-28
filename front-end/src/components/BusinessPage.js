@@ -10,7 +10,8 @@ import Signup from './UserAuth/SignupPopup';
 import Review from './ReviewPopup';
 
 function BusinessPage(props) {
-    const { authState, setAuthState } = useContext(authContext); const [business, setBusiness] = useState();
+    const { authState, setAuthState } = useContext(authContext); 
+    const [business, setBusiness] = useState();
 
     useEffect(() => {
         const businessID = props.match.params.businessID;

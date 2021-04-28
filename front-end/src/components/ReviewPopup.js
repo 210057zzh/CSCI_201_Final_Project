@@ -12,11 +12,6 @@ import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
 
 
-/*
- Needs: 
-    -Google sign-in api implementation
-    -regex for email/pass
-*/
 const clickOutsideConfig = {
     handleClickOutside: () => Review.handleClickOutside
 };
