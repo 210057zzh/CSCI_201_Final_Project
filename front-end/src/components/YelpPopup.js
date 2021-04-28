@@ -119,7 +119,7 @@ function YelpPopup (props) {
             error={addressErr}
             helperText={addressErr}
         /></div>
-        <div>
+        <div style={{display:'flex', flexDirection:'row', justifyContent:'center'}}>
             <button className='button' onClick={YelpPopup.handleClickOutside}>Cancel</button>
             <button className='button' onClick={submit}>Import</button>
         </div>
