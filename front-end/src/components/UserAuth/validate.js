@@ -106,7 +106,7 @@ export const validateBusinessEdit = payload => {
         (tempend - tempstart) <= 0
     ) {
         isFormValid = false;
-        errors.time = "start time and end time is invalid";
+        errors.time = "Start time and end time are invalid";
     }
 
     if (payload.category) {
