@@ -72,7 +72,6 @@ function BusinessPageBottomEdit({ description, otherInfo, phone, website, email,
                 businessID: business.businessID
             }
         }).then(resp => {
-            console.log(resp);
             setAuthState(prevState => {
                 return {
                     ...prevState,
@@ -166,8 +165,54 @@ function BusinessPageBottomEdit({ description, otherInfo, phone, website, email,
                 address: authState.BusinessEdit.address
             }
         }).then(res => {
-            console.log(res);
+            // Bottom portion
+            //phone
+            //website
+            //Allowed Transaction
+            var phoneNumber = res.data.display_phone;
+            var JSONwebsite = res.data.url;
+            
+            var todaysdate = new Date();
+            var dayNumber = todaysdate.getDay();
+            console.log();
+            var JSONstartingTime = res.data.hours[0].open[dayNumber].start.substring(0, 2) + ":" + res.data.hours[0].open[dayNumber].start.substring(2, 5);
+            var JSONendingTime = res.data.hours[0].open[dayNumber].end.substring(0, 2) + ":" + res.data.hours[0].open[dayNumber].end.substring(2, 5);
+
+            //Setting auth state like this doesn't work
+            setAuthState(prevState => {
+                return {
+                    ...prevState,
+                    BusinessEdit: {
+                        ...prevState.BusinessEdit,
+                        phone: phoneNumber,
+                        startingTime: JSONstartingTime,
+                        endingTime: JSONendingTime
+                    }
+                }
+            });
+
+            //Top portion
+            //hours for today
+            //category title
+            //price
+
+        }).catch(function (error) {
+
         })
+    }
+
+    function setNativeValue(element, value) {
+        let lastValue = element.value;
+        element.value = value;
+        let event = new Event("input", { target: element, bubbles: true });
+        // React 15
+        event.simulated = true;
+        // React 16
+        let tracker = element._valueTracker;
+        if (tracker) {
+            tracker.setValue(lastValue);
+        }
+        element.dispatchEvent(event);
     }
 
     function submit(e) {
@@ -236,7 +281,7 @@ function BusinessPageBottomEdit({ description, otherInfo, phone, website, email,
                                 rowsMax={5} className='textUpdate'
                                 error={authState.BusinessEditErrs.otherInfo}
                                 helperText={authState.BusinessEditErrs.otherInfo ? authState.BusinessEditErrs.otherInfo : ''}
-                                onChange={updateOtherInfo} defaultValue={otherInfo.replaceAll("\\n", '\r')} />
+                                onChange={updateOtherInfo} id="otherInfo" defaultValue={otherInfo.replaceAll("\\n", '\r')} />
                         </div>
                     </div>
                     <div className="contactSection">
@@ -257,7 +302,7 @@ function BusinessPageBottomEdit({ description, otherInfo, phone, website, email,
                                         label="phone"
                                         error={authState.BusinessEditErrs.phone}
                                         helperText={authState.BusinessEditErrs.phone ? authState.BusinessEditErrs.phone : ''}
-                                        defaultCountry={'us'} onChange={updatePhone} />
+                                        defaultCountry={'us'} id="phoneNumber" onChange={updatePhone} />
                                 </div>
                                 <hr className='contactLine' />
                                 <div style={{ margin: '1em' }}>
@@ -265,7 +310,7 @@ function BusinessPageBottomEdit({ description, otherInfo, phone, website, email,
                                         label="website" name='website' className='contactInput'
                                         error={authState.BusinessEditErrs.website}
                                         helperText={authState.BusinessEditErrs.website ? authState.BusinessEditErrs.website : ''}
-                                        defaultValue={website} onChange={updateWebsite} />
+                                        defaultValue={website} id="website" onChange={updateWebsite} />
                                 </div>
                                 <hr className='contactLine' />
                                 <div style={{ margin: '1em' }}>
