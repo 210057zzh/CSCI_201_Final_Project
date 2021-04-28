@@ -85,50 +85,40 @@ function BusinessPageBottom({ currBusinessID, description, otherInfo, phone, web
     }, [authState]);
 
     function updateFavorite() {
-        console.log(isFavorite);
+        toggleFavorite(!isFavorite);
         if(isFavorite) {
-            toggleFavorite(false);
-            favorite();
-        } else {
-            toggleFavorite(true);
             unfavorite();
+        } else {
+            favorite();
         }
+        console.log(isFavorite);
 
     }
 
 
-    async function favorite() {
-        const result = await axios.get(REST_API_FAVORITE, {
-            params: {
-                userID: authState.user.userId,
-                businessID: currBusinessID
-            }
-        }).then(resp => {
-            console.log(resp);
-        });
+    function favorite() {
+        axios.post(REST_API_FAVORITE + "?businessID=" + currBusinessID + "&userID=" + authState.user.userId)
+        .then(resp => {
+        }).catch(function () {
+            console.log('error');
+        })
     }
 
-    async function unfavorite() {
-        const result = await axios.get(REST_API_UNFAVORITE, {
-            params: {
-                userID: authState.user.userId,
-                businessID: currBusinessID
-            }
-        }).then(resp => {
-            console.log(resp);
-        });
+    function unfavorite() {
+        axios.post(REST_API_UNFAVORITE + "?businessID=" + currBusinessID + "&userID=" + authState.user.userId).then(resp => {
+        }).catch(function () {
+            console.log('error');
+        })
     }
 
-    async function initialFavorite() {
-        const result = await axios.get(REST_API_IS_FAVORITE, {
-            params: {
-                userID: authState.user.userId,
-                businessID: currBusinessID
-            }
-        }).then(resp => {
-            console.log(resp);
-            toggleFavorite(resp.isFavorite);
-        });
+    function initialFavorite() {
+        axios.get(REST_API_IS_FAVORITE + "?businessID=" + currBusinessID + "&userID=" + authState.user.userId)
+        .then(function (response) {
+            toggleFavorite(response.data.isFavorite);
+            
+        }).catch(function () {
+            console.log('error');
+        })
     }
 
     return (
@@ -137,7 +127,7 @@ function BusinessPageBottom({ currBusinessID, description, otherInfo, phone, web
                 {(authState.loggedIn === true) ?
                     <div style={{ textAlign: 'left'}}>
                         <input className='button' type='button' value='Review' onClick={toggleReview}></input>
-                        <input className='button' type='button' value='Favorite' onClick={updateFavorite}></input>
+                        <input className='button' type='button' value={isFavorite ? 'Unfavorite' : 'Favorite'} onClick={updateFavorite}></input>
                         <img src={isFavorite ? solidStar : openStar} width="60px" style={{verticalAlign: 'middle', marginBottom: '15px'}}></img>
                     </div>
                     : null}

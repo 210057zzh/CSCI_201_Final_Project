@@ -7,6 +7,7 @@ import './MaxLengthString';
 import MaxLengthString from './MaxLengthString';
 import BusinessPageEdit from './BusinessPageEdit'
 import axios from 'axios';
+import { NavLink } from 'react-router-dom';
 
 // Placeholder values, in the future grab by user Id or name
 
@@ -22,8 +23,17 @@ function Dashboard(props) {
     const [divArray, setdivArray] = useState([]);
     const [divArray2, setdivArray2] = useState([]);
 
+    /*function getAllFavorites() {
+        axios.get(REST_API_CALL_ALL_FAVORITES + "?userID=" + authState.user.userId)
+        .then(function (response) {
+            console.log(response);
+        }).catch(function () {
+            console.log('error');
+        })
+    }*/
+
     function getAllFavorites() {
-        var result = axios.get(REST_API_CALL, {
+        var result = axios.get(REST_API_CALL_ALL_FAVORITES, {
             params: {
                 userID: authState.user.userId
             }
@@ -129,21 +139,27 @@ function Dashboard(props) {
 
     useEffect(() => {
         if (favoritesArray.length > 0) {
-            setdivArray(favoritesArray.map(business => {
+            setdivArray2(favoritesArray.map(business => {
                 return (
+                    <NavLink to={'../businesspage/' + business.businessID} style={{textDecoration: 'none', color: 'black'}}>
                     <div className='business-card'>
                         <div className='business-name' >{business.name}</div>
                         <div className='stars'><StarRating value={business.average_rating}></StarRating></div>
-                        
                         <MaxLengthString text={business.description} maxLength={300}></MaxLengthString>
                     </div>
+                    </NavLink>
                 )
             }))
         }
         else {
-            setdivArray([]);
+            setdivArray2(
+                <div className='business-card'>
+                <div className='business-name' >No Favorites Yet</div>
+
+            </div>
+            );
         }
-    }, [businessArray])
+    }, [favoritesArray])
 
     if (!showEdit) {
         return (
