@@ -5,7 +5,10 @@
     overflow: auto;
     margin-top: 0em;
 }
-
+.website, .website:visited {
+    text-decoration: none;
+    color: #3575F1;
+}
 .leftContent {
     display: flex;
     justify-content: space-between;

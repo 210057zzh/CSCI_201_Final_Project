@@ -110,7 +110,7 @@ function BusinessPageBottom({ currBusinessID, description, otherInfo, phone, web
 
                                 <p>{phone}</p>
                                 <hr className='contactLine' />
-                                <p>{website}</p>
+                                <a class='website' target='_blank' href={website}>{website}</a>
                                 <hr className='contactLine' />
                                 <p>{email}</p>
                                 <hr className='contactLine' />
