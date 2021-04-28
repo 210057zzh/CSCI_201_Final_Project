@@ -15,7 +15,8 @@ const initialState = {
     newBusiness: false,
     uploadReady: false,
     showReview: false,
-    businessID: ''
+    businessID: '',
+    showYelp: false
     /**
      *  Can add any more 'global variables' related to user login/signup here
      */

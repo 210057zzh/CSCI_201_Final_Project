@@ -118,7 +118,7 @@ function BusinessPageHeaderEdit({ name, startingTime, endingTime, givenCategory,
                 <div style={{ textAlign: 'left' }}>
                     <div style={{ display: 'inline' }}>
                         <div className='fieldBackground'>
-                            <input className='businessInput' type='text' defaultValue={name} onChange={updateName}></input>
+                            <input className='businessInput' type='text' defaultValue={name} value={name} onChange={updateName}></input>
                         </div>
                         {isVerySmall && <span><img src={Pencil} className="pencil"></img><br /></span>}
                         <div style={css}>
@@ -132,10 +132,11 @@ function BusinessPageHeaderEdit({ name, startingTime, endingTime, givenCategory,
                                 variant="outlined"
                                 id="startingTime"
                                 defaultValue={startingTime}
+                                value={startingTime}
                                 className='timeInput'
                                 onChange={updateStartTime} />
                             <p className='fieldEditTextHeader' >to</p>
-                            <input type='time' defaultValue={endingTime} id="endingTime" className='timeInput' onChange={updateEndTime}></input>
+                            <input type='time' defaultValue={endingTime} value={endingTime} id="endingTime" className='timeInput' onChange={updateEndTime}></input>
                         </div>
                         {isVerySmall && <img src={Pencil} className="pencil"></img>}
                         <div style={css}>

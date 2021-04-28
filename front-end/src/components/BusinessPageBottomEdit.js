@@ -8,6 +8,7 @@ import MuiPhoneNumber from "material-ui-phone-number";
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
 import { useMediaQuery } from 'react-responsive'
+import YelpPopup from './YelpPopup';
 
 
 function parseText(text) {
@@ -158,7 +159,14 @@ function BusinessPageBottomEdit({ description, otherInfo, phone, website, email,
             }
         });
     }
-
+    function showYelp() {
+        setAuthState(prevState => {
+            return ({
+                ...prevState,
+                showYelp: true
+            })
+        })
+    }
     function importYelp() {
         axios.get(REST_API_CALL_YELP, {
             params: {
@@ -166,20 +174,21 @@ function BusinessPageBottomEdit({ description, otherInfo, phone, website, email,
                 address: authState.BusinessEdit.address
             }
         }).then(res => {
+            console.log(res);
             // Bottom portion
             //phone
             //website
             //Allowed Transaction
             var phoneNumber = res.data.display_phone;
-            var JSONwebsite = res.data.url;
+            var JSONwebsite = res.data.url.split('?')[0];
             
             var todaysdate = new Date();
             var dayNumber = todaysdate.getDay();
-            console.log();
             var JSONstartingTime = res.data.hours[0].open[dayNumber].start.substring(0, 2) + ":" + res.data.hours[0].open[dayNumber].start.substring(2, 5);
             var JSONendingTime = res.data.hours[0].open[dayNumber].end.substring(0, 2) + ":" + res.data.hours[0].open[dayNumber].end.substring(2, 5);
+            var category = res.data.categories[0].title;
+            var transactions = res.data.transactions.join(', ');
 
-            //Setting auth state like this doesn't work
             setAuthState(prevState => {
                 return {
                     ...prevState,
@@ -187,7 +196,10 @@ function BusinessPageBottomEdit({ description, otherInfo, phone, website, email,
                         ...prevState.BusinessEdit,
                         phone: phoneNumber,
                         startingTime: JSONstartingTime,
-                        endingTime: JSONendingTime
+                        endingTime: JSONendingTime,
+                        website: JSONwebsite,
+                        category: category,
+                        otherInfo: transactions
                     }
                 }
             });
@@ -247,13 +259,15 @@ function BusinessPageBottomEdit({ description, otherInfo, phone, website, email,
     }
 
     return (
+        
         <div className='bottomBackground' style={{ padding: '0 2vh 2vh 2vh', marginTop: '0' }}>
-
+            {authState.showYelp ? <div className='darkened'></div> : null}
+            {authState.showYelp ? <YelpPopup></YelpPopup> : null}
             <div style={{ marginLeft: '1em', marginRight: 'auto', overflowX: 'hidden' }}>
                 <div style={{ textAlign: 'left' }}>
                     <input className='button' type='button' value='Save' onClick={submit}></input>
                     <input className='button' type='button' value='Back' onClick={back}></input> {!isSmallDevice && <br/>}
-                    <input className='importButton' type='button' value='Import From' onClick={importYelp}></input>
+                    <input className='importButton' type='button' value='Import From' onClick={showYelp}></input>
                 </div>
                 <hr className='line' style={{ width: '80em', marginTop: '1.5em' }} /><br /><br />
 
@@ -282,7 +296,7 @@ function BusinessPageBottomEdit({ description, otherInfo, phone, website, email,
                                 rowsMax={5} className='textUpdate'
                                 error={authState.BusinessEditErrs.otherInfo}
                                 helperText={authState.BusinessEditErrs.otherInfo ? authState.BusinessEditErrs.otherInfo : ''}
-                                onChange={updateOtherInfo} id="otherInfo" defaultValue={otherInfo.replaceAll("\\n", '\r')} />
+                                onChange={updateOtherInfo} id="otherInfo" defaultValue={otherInfo.replaceAll("\\n", '\r')} value={otherInfo.replaceAll("\\n", '\r')}/>
                         </div>
                     </div>
                     <div className="contactSection">
@@ -299,11 +313,10 @@ function BusinessPageBottomEdit({ description, otherInfo, phone, website, email,
                                     <MuiPhoneNumber
                                         onlyCountries={["us"]}
                                         disableCountryCode
-                                        value={phone}
                                         label="phone"
                                         error={authState.BusinessEditErrs.phone}
                                         helperText={authState.BusinessEditErrs.phone ? authState.BusinessEditErrs.phone : ''}
-                                        defaultCountry={'us'} id="phoneNumber" onChange={updatePhone} />
+                                        defaultCountry={'us'} id="phoneNumber" onChange={updatePhone} value={phone}/>
                                 </div>
                                 <hr className='contactLine' />
                                 <div style={{ margin: '1em' }}>
@@ -311,7 +324,7 @@ function BusinessPageBottomEdit({ description, otherInfo, phone, website, email,
                                         label="website" name='website' className='contactInput'
                                         error={authState.BusinessEditErrs.website}
                                         helperText={authState.BusinessEditErrs.website ? authState.BusinessEditErrs.website : ''}
-                                        defaultValue={website} id="website" onChange={updateWebsite} />
+                                        defaultValue={website} id="website" onChange={updateWebsite} value={website} />
                                 </div>
                                 <hr className='contactLine' />
                                 <div style={{ margin: '1em' }}>
@@ -326,7 +339,7 @@ function BusinessPageBottomEdit({ description, otherInfo, phone, website, email,
                                         type='text' label="address" name='address'
                                         error={authState.BusinessEditErrs.address}
                                         helperText={authState.BusinessEditErrs.address ? authState.BusinessEditErrs.address : ''}
-                                        className='contactInput' defaultValue={address} onChange={updateAddress} />
+                                        className='contactInput' defaultValue={address} value={address} onChange={updateAddress} />
                                 </div>
                             </div>
                         </div>

@@ -84,6 +84,7 @@ function Dashboard(props) {
         business.category = business.business_type;
         business.phone = business.phone_number;
         business.priceLevel = business.cost
+
         if (business == emptyBusiness) {
             setAuthState(prevState => {
                 return {
@@ -168,11 +169,11 @@ function Dashboard(props) {
                     <div className='my-businesses-title'>My Businesses</div>
                     <div className='my-businesses-container'>
                         {divArray}
-                        <div className='business-card add' >
-                            <div className='add-new'>Add a new business</div>
-                            <div className='plus' onClick={() => {
+                        <div className='business-card add' onClick={() => {
                                 openEditView(emptyBusiness);
-                            }}>+</div>
+                            }}>
+                            <div className='add-new'>Add a new business</div>
+                            <div className='plus'>+</div>
                         </div>
                     </div>
                 </div>
@@ -189,7 +190,7 @@ function Dashboard(props) {
     }
     else {
         return (
-            <BusinessPageEdit business={showEdit} setEdit={setEdit} />
+            <BusinessPageEdit business={authState.BusinessEdit} setEdit={setEdit} />
         )
     }
 
