@@ -39,11 +39,6 @@ public class HomePageController {
 	public String getSearchResponse(@RequestParam String search) {
 		var businesses =  this.jdbcTemplate.queryForList("SELECT * FROM Businesses WHERE name LIKE \"%"+search+"%\" OR business_type LIKE \"%"+search+"%\" OR address LIKE \"%"+search+"%\" or phone_number LIKE \"%"+search+"%\"").stream()
 				.collect(Collectors.toList());
-		
-		// Jsonifies and returns results or "NO RESULTS"
-		if (businesses.size() == 0) {
-			return "NO RESULTS";
-		}
 
 		Gson gson = new GsonBuilder().create();
 

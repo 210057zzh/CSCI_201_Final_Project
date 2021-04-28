@@ -96,7 +96,7 @@ public class LoginController {
 		
 		//If they did not provide a password or username, send back the unsuccessful default with blankfield error
 		if(username.equals("")||password.equals("")) {
-			return "{\"successful\": false, \"userId\":-1, \"error\":\"blankfield\"}";
+			return "{\"successful\": false, \"userId\":-1, \"error\":\"Please fill out all fields\"}";
 		}
 		
 		//First get the user data associated with the email
@@ -106,25 +106,25 @@ public class LoginController {
 		//Now that we have user data, check if user is real
 		if(user ==null) {
 			//Return the unsuccessful defaults
-			return  "{\"successful\": false, \"userId\":-1, \"error\":\"mustSignup\"}";
+			return  "{\"successful\": false, \"userId\":-1, \"error\":\"Please sign up for an account\"}";
 		}
 		
 		if(user.getUserID()==-1) {
 			//Return the unsuccessful defaults
-			return  "{\"successful\": false, \"userId\":-1, \"error\":\"mustSignup\"}";
+			return  "{\"successful\": false, \"userId\":-1, \"error\":\"Please sign up for an account\"}";
 		}
 		
 		
 		//Check if the user is a google user
 		if(user.isGoogleUser()) {
 			//Return the unsuccessful defaults
-			return "{\"successful\": false, \"userId\":-1, \"error\":\"googleuser\"}";
+			return "{\"successful\": false, \"userId\":-1, \"error\":\"Please sign in with Google\"}";
 		}
 		
 		//Check if the user entered the right password
 		if(!user.getPassword().equals(password)) {
 			//Return the unsuccessful defaults
-			return "{\"successful\": false, \"userId\":-1, \"error\":\"incorrectPassword\"}";
+			return "{\"successful\": false, \"userId\":-1, \"error\":\"Incorrect Password\"}";
 		}
 		
 		

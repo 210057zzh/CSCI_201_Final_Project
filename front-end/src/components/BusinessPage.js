@@ -15,13 +15,14 @@ function BusinessPage(props) {
     useEffect(() => {
         const businessID = props.match.params.businessID;
         axios.get('http://localhost:8080/api/businessInfo?businessID=' + businessID).then(res => {
+            console.log(res);
             setBusiness({
                 name: res.data[0].name,
                 rating: res.data[0].average_rating,
                 startingTime: res.data[0].startHour,
                 endingTime: res.data[0].endHour,
                 category: res.data[0].business_type,
-                reviewCount: res.data[0].numReviews,
+                reviewCount: res.data[0].review_count,
                 priceLevel: res.data[0].cost,
                 description: res.data[0].description,
                 address: res.data[0].address,

@@ -73,6 +73,9 @@ public class InsertIntoController {
 		String updateQuery = "update Businesses set average_rating=? where businessID=?";
 		jdbcTemplate.update(updateQuery, newAverageRating, businessID);
 		
+		updateQuery = "update Businesses set review_count=review_count+1 where businessID=?";
+		jdbcTemplate.update(updateQuery, businessID);
+		
 		System.out.println("VALUE RETURNED IS :" + return_value);
 	}
 	@GetMapping("/addBusiness")

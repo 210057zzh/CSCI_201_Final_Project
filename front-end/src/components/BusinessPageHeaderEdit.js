@@ -130,15 +130,16 @@ function BusinessPageHeaderEdit({ name, startingTime, endingTime, givenCategory,
                             <p className='fieldEditTextHeader'>Open</p>
                             <input type='time'
                                 variant="outlined"
+                                id="startingTime"
                                 defaultValue={startingTime}
                                 className='timeInput'
                                 onChange={updateStartTime} />
                             <p className='fieldEditTextHeader' >to</p>
-                            <input type='time' defaultValue={endingTime} className='timeInput' onChange={updateEndTime}></input>
+                            <input type='time' defaultValue={endingTime} id="endingTime" className='timeInput' onChange={updateEndTime}></input>
                         </div>
                         {isVerySmall && <img src={Pencil} className="pencil"></img>}
                         <div style={css}>
-                            {authState.BusinessEditErrs.time ? <Error errorMsg={authState.BusinessEditErrs.time}></Error> : null}
+                            {authState.BusinessEditErrs.time ? <Error errorMsg={authState.BusinessEditErrs.time} ></Error> : null}
                         </div>
                     </div>
 
@@ -169,7 +170,7 @@ function BusinessPageHeaderEdit({ name, startingTime, endingTime, givenCategory,
 
                 </div>
             </div>
-            <div className="rightContent">
+            <div className="rightContentEditing">
                 <div className="starEditRating">
                     {<StarRating value={rating} />}
                     {reviewCount > 0 && <p style={{ margin: '8px 8px' }} className='other'>{reviewCount} Reviews</p>}

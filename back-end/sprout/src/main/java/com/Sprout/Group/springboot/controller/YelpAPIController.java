@@ -43,8 +43,8 @@ public class YelpAPIController {
 		// Formats params for url
 		// TODO may have to do more replaces than just spaces
 		address=address.replace(", ",",");
-        address=address.replace(" ", "%20");
-        name = name.replace(" ", "%20");
+        address=address.replace(" ", "%20").replace("'", "%27").replace("&", "%26");
+        name = name.replace(" ", "%20").replace("'", "%27").replace("&", "%26");
         
         String address1;
         String city;
