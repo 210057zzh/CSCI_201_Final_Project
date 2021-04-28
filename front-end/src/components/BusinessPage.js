@@ -15,6 +15,7 @@ function BusinessPage(props) {
     useEffect(() => {
         const businessID = props.match.params.businessID;
         axios.get('http://localhost:8080/api/businessInfo?businessID=' + businessID).then(res => {
+            console.log(res);
             setBusiness({
                 name: res.data[0].name,
                 rating: res.data[0].average_rating,
