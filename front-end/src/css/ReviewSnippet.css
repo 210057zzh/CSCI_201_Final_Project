@@ -9,6 +9,7 @@
     padding-top: 2px;
     margin-left: 10px;
     margin-bottom: 0px;
+    display: inline;
 }
 
 .reviewText {
@@ -16,4 +17,10 @@
     text-align: left;
     margin-right: 15%;
     margin-top: 5px;
+}
+
+@media only screen and (max-width: 400px) {
+    .reviewCount {
+        display: none;
+    }
 }
