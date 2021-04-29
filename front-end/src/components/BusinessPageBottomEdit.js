@@ -283,6 +283,7 @@ function BusinessPageBottomEdit({ description, otherInfo, phone, website, email,
                                 error={authState.BusinessEditErrs.description}
                                 helperText={authState.BusinessEditErrs.description ? authState.BusinessEditErrs.description : ''}
                                 rows={5}
+                                inputProps={{ maxLength: 1024 }}
                                 rowsMax={5} className='textUpdate' onChange={updateDescription}
                                 defaultValue={description.replaceAll("\\n", '\r')} />
                             <br />
@@ -295,7 +296,9 @@ function BusinessPageBottomEdit({ description, otherInfo, phone, website, email,
                                 rows={5}
                                 rowsMax={5} className='textUpdate'
                                 error={authState.BusinessEditErrs.otherInfo}
+                                inputProps={{ maxLength: 1024 }}
                                 helperText={authState.BusinessEditErrs.otherInfo ? authState.BusinessEditErrs.otherInfo : ''}
+                                inputProps={{ maxLength: 255 }}
                                 onChange={updateOtherInfo} id="otherInfo" defaultValue={otherInfo.replaceAll("\\n", '\r')} value={otherInfo.replaceAll("\\n", '\r')}/>
                         </div>
                     </div>

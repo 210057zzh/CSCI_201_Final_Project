@@ -14,7 +14,7 @@ function DiscoverSnippet(props) {
                         <p className='title'>{props.businessName}</p>
                         <div className="leftData">
                             <StarRating value={props.rating} style={{ float: 'left' }} />
-                            {props.reviewCount > 0 && <p className='MoreInfo other'>{props.reviewCount} Reviews</p>}
+                            {props.reviewCount > 0 && <p className='MoreInfo other'>{props.reviewCount} {props.reviewCount == 1 ? 'Review' : 'Reviews'}</p>}
                         </div>
                     </div><br/>
                     <p className='other' >{props.phoneNumber}<br />{props.address}</p>
