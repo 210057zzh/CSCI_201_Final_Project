@@ -16,6 +16,7 @@ function getStringCost(cost) {
 function BusinessPageHeader({ name, startingTime, endingTime, category, rating, reviewCount, priceLevel }) {
 
     const isDesktopOrLaptop = useMediaQuery({ minWidth: 1224 });
+    const isVerySmall = useMediaQuery({ minWidth: 480 });
 
     function formatTime(time) {
         //Stackoverflow https://stackoverflow.com/questions/13898423/javascript-convert-24-hour-time-of-day-string-to-12-hour-time-with-am-pm-and-no/13899011#13899011
@@ -39,7 +40,7 @@ function BusinessPageHeader({ name, startingTime, endingTime, category, rating, 
             <div className="rightContent">
                 <div style={{ display: 'flex' }}>
                     {<StarRating value={rating} />}
-                    {reviewCount > 0 && <p style={{ margin: '8px 8px' }} className='other'>{reviewCount} {reviewCount == 1 ? "Review" : "Reviews"}</p>}
+                    {isVerySmall && reviewCount > 0 && <p style={{ margin: '8px 8px' }} className='other'>{reviewCount} {reviewCount == 1 ? "Review" : "Reviews"}</p>}
                 </div>
                 <p className='cost'>{getStringCost(priceLevel)}</p>
             </div>

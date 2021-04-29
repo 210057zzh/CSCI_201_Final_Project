@@ -27,6 +27,8 @@ function BusinessPageBottom({ currBusinessID, description, otherInfo, phone, web
     const REST_API_IS_FAVORITE = 'http://localhost:8080/api/isFavorite';
     const REST_API_FAVORITE = 'http://localhost:8080/api/addFavorite';
     const REST_API_UNFAVORITE = 'http://localhost:8080/api/removeFavorite';
+
+
     function toggleReview() {
         setAuthState(prevState => {
             return {
@@ -130,7 +132,7 @@ function BusinessPageBottom({ currBusinessID, description, otherInfo, phone, web
                     <div style={{ textAlign: 'left'}}>
                         <input className='button' type='button' value='Review' onClick={toggleReview}></input>
                         <input className='button' type='button' value={isFavorite ? 'Unfavorite' : 'Favorite'} onClick={updateFavorite}></input>
-                        <img src={isFavorite ? solidStar : openStar} width="60px" style={{verticalAlign: 'middle', marginBottom: '15px'}}></img>
+                        <img src={isFavorite ? solidStar : openStar} width="60px" style={{verticalAlign: 'middle', marginBottom: '15px', marginTop: '5px'}}></img>
                     </div>
                     : null}
                 {authState.loggedIn ? <hr className='line' style={{ width: '80em', marginTop: '1.5em' }} /> : null }
