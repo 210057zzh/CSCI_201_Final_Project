@@ -53,7 +53,7 @@ function BusinessPageBottom({ currBusinessID, description, otherInfo, phone, web
        
         axios.get(REST_API_GET_REVIEWS+"?businessID="+currBusinessID+"&page="+pageNum)
           .then(function (response) {
-              console.log(response);
+              
             if(response.data == 'NO RESULTS' && !authState.loggedIn && pageNum==1 ) {
                 setReviews(<div style={{textAlign: 'left', marginTop: '1em', marginBottom: '1em' }} >None yet! Be the first to leave a review by logging in.</div>);
             }
@@ -93,7 +93,7 @@ function BusinessPageBottom({ currBusinessID, description, otherInfo, phone, web
         } else {
             favorite();
         }
-        console.log(isFavorite);
+        
 
     }
 

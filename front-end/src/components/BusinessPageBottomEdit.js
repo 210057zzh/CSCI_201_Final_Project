@@ -46,7 +46,7 @@ function BusinessPageBottomEdit({ description, otherInfo, phone, website, email,
                 address: business.address
             }
         }).then(resp => {
-            console.log(resp);
+            
             setAuthState(prevState => {
                 return {
                     ...prevState,
@@ -174,7 +174,7 @@ function BusinessPageBottomEdit({ description, otherInfo, phone, website, email,
                 address: authState.BusinessEdit.address
             }
         }).then(res => {
-            console.log(res);
+            
             // Bottom portion
             //phone
             //website
@@ -237,7 +237,7 @@ function BusinessPageBottomEdit({ description, otherInfo, phone, website, email,
             }
         });
         if (result.success === true) {
-            console.log(authState.BusinessEdit);
+            
             if (authState.newBusiness === true) {
                 addBusiness(authState.BusinessEdit);
             }

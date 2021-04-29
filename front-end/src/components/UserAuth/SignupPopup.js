@@ -58,25 +58,25 @@ function Signup(props) {
             password: pass,
             pwconfirm: pwconfirm,
         };
-        console.log(payload);
+        
         var result = validateSignUpForm(payload);
         setEmailerr(result.errors.email);
         setPwerr(result.errors.password);
         setpwce(result.errors.pwconfirm);
-        console.log(result);
+        
         e.preventDefault();
         if (result.success === true) {
             axios.post(REST_API_CALL, [email, pass]).then(async (resp) => {
-                console.log(resp);
+                
                 if (resp.data.successful === true) { // The user already exists and has successfully logged in
-                    console.log('Signup Success: currentUser:', resp.data);
+                    
                     setAuthState(prevState => { return { ...prevState, showSignup: false, loggedIn: true, user: resp.data } });
                 } else { // The user does not already exist or some other error occured. Refer to error message to determine next steps
-                    console.log('error: ' + resp.data.error);
+                    
                     setErr(resp.data.error);
                 }
             }).catch(err => {
-                console.log(err.message);
+                
                 setErr(err.message);
             });
         }

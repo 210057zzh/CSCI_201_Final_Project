@@ -27,7 +27,7 @@ function GoogleLogin(props) {
         const refreshToken = async () => {
             const newAuthRes = await res.reloadAuthResponse();
             refreshTiming = (newAuthRes.expires_in || 3600 - 5 * 60) * 1000;
-            console.log('newAuthRes:', newAuthRes);
+            
             // saveUserToken(newAuthRes.access_token);  
             setAuthState(prevState => { return { ...prevState, googleToken: newAuthRes.access_token } }); //< --save new token
             localStorage.setItem('authToken', newAuthRes.id_token);
@@ -43,12 +43,12 @@ function GoogleLogin(props) {
     const onSuccess = (res) => {
         console.log('success');
         var id_token = res.getAuthResponse().id_token;
-        console.log(id_token);
+        
         // Post to the backend to check if the user currently exists or if they need to set up their account
         if (signUporLogin === 'Login') {
             axios.post(REST_API_CALL_Login, id_token).then(resp => {
                 if (resp.data.successful === true) { // The user already exists and has successfully logged in
-                    console.log('Login Success: currentUser:', resp);
+                    
                     toggleLoginStatusOn();
                     setAuthState(prevState => { return { ...prevState, googleToken: id_token, user: resp.data, showLogin: false } });
                     refreshTokenSetup(res);
@@ -61,7 +61,7 @@ function GoogleLogin(props) {
         else if (signUporLogin === 'Signup') {
             axios.post(REST_API_CALL_Signup, id_token).then(resp => {
                 if (resp.data.successful === true) { // The user has successfully registered with google
-                    console.log('Signup Success: currentUser:', resp);
+                    
                     toggleLoginStatusOn();
                     setAuthState(prevState => { return { ...prevState, googleToken: id_token, user: resp.data, showSignup: false } });
                     refreshTokenSetup(res);
@@ -76,7 +76,7 @@ function GoogleLogin(props) {
 
 
     const onFailure = (res) => {
-        console.log(authState.loggedIn)
+        
         console.log('Login failed: res:', res);
     };
 

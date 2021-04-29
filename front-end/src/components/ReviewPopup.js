@@ -18,15 +18,15 @@ const clickOutsideConfig = {
 function Review(props) {
     const labels = {
         0.5: 'Useless',
-        1: 'Useless+',
+        1: 'Terrible',
         1.5: 'Poor',
-        2: 'Poor+',
+        2: 'Poor',
         2.5: 'Ok',
-        3: 'Ok+',
+        3: 'Ok',
         3.5: 'Good',
-        4: 'Good+',
+        4: 'Good',
         4.5: 'Excellent',
-        5: 'Excellent+',
+        5: 'Excellent',
     };
 
     const useStyles = makeStyles({
@@ -36,7 +36,7 @@ function Review(props) {
             alignItems: 'center',
         },
     });
-    const [value, setValue] = useState(2);
+    const [value, setValue] = useState(3);
     const [hover, setHover] = useState(-1);
     const [review, setreview] = useState("");
     function updateReview(e) {
@@ -54,9 +54,9 @@ function Review(props) {
 
     async function submitReview() {
         axios.post(REST_API_SUBMIT_REVIEW + "?businessID=" + authState.businessID + "&userID=" + authState.user.userId + "&rating=" + value + "&message=" + review).then(resp => {
-            console.log(resp);
+            
         }).then(resp => {
-            console.log(resp);
+            
             setAuthState(prevState => {
                 return {
                     ...prevState,
@@ -88,7 +88,7 @@ function Review(props) {
                     size="large"
                     name="hover-feedback"
                     value={value}
-                    precision={0.5}
+                    precision={1}
                     onChange={(event, newValue) => {
                         setValue(newValue);
                     }}

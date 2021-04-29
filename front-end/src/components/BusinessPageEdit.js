@@ -17,7 +17,7 @@ function outputBusinessPage(business, setEdit) {
 
 function BusinessPageEdit(props) {
     const { authState, setAuthState } = useContext(authContext);
-    console.log(authState);
+    
     return (
         <div className='home'>
             {authState.showLogin ? <Login /> : null}

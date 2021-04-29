@@ -49,7 +49,7 @@ function YelpPopup (props) {
                     address: address
                 }
             }).then(res => {
-                console.log(res);
+                
                 if(res.data.error) {
                     setNameErr('Could not find that business. Ensure that the name was inputted correctly');
                     setAddressErr('Check that the address is formatted correctly (comma-separated). Example: 3089 Edinger Ave, Tustin, CA');

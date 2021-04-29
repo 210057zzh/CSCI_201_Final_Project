@@ -54,20 +54,20 @@ function Login(props) {
             email: email,
             password: pass,
         };
-        console.log(payload);
+        
         var result = validateLoginForm(payload);
         setEmailerr(result.errors.email);
         setPwerr(result.errors.password);
-        console.log(result);
+        
         e.preventDefault();
         if (result.success === true) {
             axios.post(REST_API_CALL, [email, pass]).then(async (resp) => {
-                console.log(resp);
+                
                 if (resp.data.successful === true) { // The user already exists and has successfully logged in
-                    console.log('Login Success: currentUser:', resp.data);
+                    
                     setAuthState(prevState => { return { ...prevState, showLogin: false, loggedIn: true, user: resp.data } });
                 } else { // The user does not already exist or some other error occured. Refer to error message to determine next steps
-                    console.log('error: ' + resp.data.error);
+                    
                     if(resp.data.error == 'googleuser')
                         setErr('A Google account already exists with this email. Use Google sign-on.');
                     else
